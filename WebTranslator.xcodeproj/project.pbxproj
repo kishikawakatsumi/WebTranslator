@@ -104,6 +104,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		142049E028DCEF6700129EBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		147D1B5F28DA02F10026A73F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
 		147D1B6028DA02F10026A73F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		147D1B6128DA02F10026A73F /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
@@ -273,6 +274,7 @@
 			children = (
 				147D1B8828DA02F20026A73F /* AppDelegate.swift */,
 				147D1B8A28DA02F20026A73F /* Main.storyboard */,
+				142049E028DCEF6700129EBB /* Info.plist */,
 				147D1B8D28DA02F20026A73F /* WebTranslator.entitlements */,
 			);
 			path = "macOS (App)";
@@ -897,6 +899,7 @@
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WebTranslator;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -931,6 +934,7 @@
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WebTranslator;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
