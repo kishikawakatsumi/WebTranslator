@@ -1,0 +1,150 @@
+{
+  "extension_name": {
+    "description": "The display name for the extension.",
+    "message": "WebTranslator for DeepL"
+  },
+  "extension_description": {
+    "description": "Description of what the extension does.",
+    "message": "Translate webpages with DeepL Translate, the world’s most accurate translator."
+  },
+  "ui_login_body": {
+    "message": "ページ全体を翻訳するにはDeepL Proにログインしてください。"
+  },
+  "login_link_label": {
+    "description": "Login to DeepL Pro link label",
+    "message": "DeepL Proにログインする"
+  },
+  "login_button_label": {
+    "description": "Login to DeepL Pro button label",
+    "message": "ログイン"
+  },
+  "login_error_default_message": {
+    "message": "ログインに失敗しました。"
+  },
+  "login_error_session_expired_message": {
+    "message": "ログインセッションが期限切れです。再度ログインしてください。"
+  },
+  "login_error_not_pro_message": {
+    "message": "DeepL Proアカウントではありません。"
+  },
+  "ui_target_language_select": {
+    "message": "どの言語に翻訳しますか？"
+  },
+  "full_page_translation_menu_translate_button": {
+    "message": "翻訳"
+  },
+  "full_page_translation_auto_translate_message": {
+    "message": "次の原文言語を自動で翻訳済み："
+  },
+  "full_page_translation_show_original": {
+    "message": "元の言語で表示する"
+  },
+  "supported_languages_BG": {
+    "description": "Name of language",
+    "message": "ブルガリア語"
+  },
+  "supported_languages_CS": {
+    "description": "Name of language",
+    "message": "チェコ語"
+  },
+  "supported_languages_DA": {
+    "description": "Name of language",
+    "message": "デンマーク語"
+  },
+  "supported_languages_DE": {
+    "description": "Name of language",
+    "message": "ドイツ語"
+  },
+  "supported_languages_EL": {
+    "description": "Name of language",
+    "message": "ギリシャ語"
+  },
+  "supported_languages_EN": {
+    "description": "Name of language",
+    "message": "英語"
+  },
+  "supported_languages_ES": {
+    "description": "Name of language",
+    "message": "スペイン語"
+  },
+  "supported_languages_ET": {
+    "description": "Name of language",
+    "message": "エストニア語"
+  },
+  "supported_languages_FI": {
+    "description": "Name of language",
+    "message": "フィンランド語"
+  },
+  "supported_languages_FR": {
+    "description": "Name of language",
+    "message": "フランス語"
+  },
+  "supported_languages_HU": {
+    "description": "Name of language",
+    "message": "ハンガリー語"
+  },
+  "supported_languages_ID": {
+    "description": "Name of language",
+    "message": "インドネシア語"
+  },
+  "supported_languages_IT": {
+    "description": "Name of language",
+    "message": "イタリア語"
+  },
+  "supported_languages_JA": {
+    "description": "Name of language",
+    "message": "日本語"
+  },
+  "supported_languages_LT": {
+    "description": "Name of language",
+    "message": "リトアニア語"
+  },
+  "supported_languages_LV": {
+    "description": "Name of language",
+    "message": "ラトビア語"
+  },
+  "supported_languages_NL": {
+    "description": "Name of language",
+    "message": "オランダ語"
+  },
+  "supported_languages_PL": {
+    "description": "Name of language",
+    "message": "ポーランド語"
+  },
+  "supported_languages_PT": {
+    "description": "Name of language",
+    "message": "ポルトガル語"
+  },
+  "supported_languages_RO": {
+    "description": "Name of language",
+    "message": "ルーマニア語"
+  },
+  "supported_languages_RU": {
+    "description": "Name of language",
+    "message": "ロシア語"
+  },
+  "supported_languages_SK": {
+    "description": "Name of language",
+    "message": "スロバキア語"
+  },
+  "supported_languages_SL": {
+    "description": "Name of language",
+    "message": "スロベニア語"
+  },
+  "supported_languages_SV": {
+    "description": "Name of language",
+    "message": "スウェーデン語"
+  },
+  "supported_languages_TR": {
+    "description": "Name of language",
+    "message": "トルコ語"
+  },
+  "supported_languages_ZH": {
+    "description": "Name of language",
+    "message": "中国語（簡体字）"
+  },
+  "supported_languages_undefined": {
+    "description": "The user has not yet selected a target language.",
+    "message": "お選びください"
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "extension_name": {
+    "description": "The display name for the extension.",
+    "message": "WebTranslator for DeepL"
+  },
+  "extension_description": {
+    "description": "Description of what the extension does.",
+    "message": "Translate webpages with DeepL Translate, the world’s most accurate translator."
+  },
+  "ui_login_body": {
+    "message": "Log in to DeepL Pro to translate full pages"
+  },
+  "login_link_label": {
+    "description": "Login to DeepL Pro link label",
+    "message": "Log in to DeepL Pro"
+  },
+  "login_button_label": {
+    "description": "Login to DeepL Pro button label",
+    "message": "Login"
+  },
+  "login_error_default_message": {
+    "message": "Login failed."
+  },
+  "login_error_session_expired_message": {
+    "message": "Your session has expired. Please log in again."
+  },
+  "login_error_not_pro_message": {
+    "message": "You are not a DeepL Pro user."
+  },
+  "ui_target_language_select": {
+    "message": "Which language do you want to translate into?"
+  },
+  "full_page_translation_menu_translate_button": {
+    "message": "Translate"
+  },
+  "full_page_translation_auto_translate_message": {
+    "message": "Translated automatically from:"
+  },
+  "full_page_translation_show_original": {
+    "message": "Show original"
+  },
+  "supported_languages_BG": {
+    "description": "Name of language",
+    "message": "Bulgarian"
+  },
+  "supported_languages_CS": {
+    "description": "Name of language",
+    "message": "Czech"
+  },
+  "supported_languages_DA": {
+    "description": "Name of language",
+    "message": "Danish"
+  },
+  "supported_languages_DE": {
+    "description": "Name of language",
+    "message": "German"
+  },
+  "supported_languages_EL": {
+    "description": "Name of language",
+    "message": "Greek"
+  },
+  "supported_languages_EN": {
+    "description": "Name of language",
+    "message": "English"
+  },
+  "supported_languages_ES": {
+    "description": "Name of language",
+    "message": "Spanish"
+  },
+  "supported_languages_ET": {
+    "description": "Name of language",
+    "message": "Estonian"
+  },
+  "supported_languages_FI": {
+    "description": "Name of language",
+    "message": "Finnish"
+  },
+  "supported_languages_FR": {
+    "description": "Name of language",
+    "message": "French"
+  },
+  "supported_languages_HU": {
+    "description": "Name of language",
+    "message": "Hungarian"
+  },
+  "supported_languages_ID": {
+    "description": "Name of language",
+    "message": "Indonesian"
+  },
+  "supported_languages_IT": {
+    "description": "Name of language",
+    "message": "Italian"
+  },
+  "supported_languages_JA": {
+    "description": "Name of language",
+    "message": "Japanese"
+  },
+  "supported_languages_LT": {
+    "description": "Name of language",
+    "message": "Lithuanian"
+  },
+  "supported_languages_LV": {
+    "description": "Name of language",
+    "message": "Latvian"
+  },
+  "supported_languages_NL": {
+    "description": "Name of language",
+    "message": "Dutch"
+  },
+  "supported_languages_PL": {
+    "description": "Name of language",
+    "message": "Polish"
+  },
+  "supported_languages_PT": {
+    "description": "Name of language",
+    "message": "Portuguese"
+  },
+  "supported_languages_RO": {
+    "description": "Name of language",
+    "message": "Romanian"
+  },
+  "supported_languages_RU": {
+    "description": "Name of language",
+    "message": "Russian"
+  },
+  "supported_languages_SK": {
+    "description": "Name of language",
+    "message": "Slovak"
+  },
+  "supported_languages_SL": {
+    "description": "Name of language",
+    "message": "Slovenian"
+  },
+  "supported_languages_SV": {
+    "description": "Name of language",
+    "message": "Swedish"
+  },
+  "supported_languages_TR": {
+    "description": "Name of language",
+    "message": "Turkish"
+  },
+  "supported_languages_UK": {
+    "message": "Ukrainian"
+  },
+  "supported_languages_ZH": {
+    "description": "Name of language",
+    "message": "Chinese (simplified)"
+  },
+  "supported_languages_undefined": {
+    "description": "The user has not yet selected a target language.",
+    "message": "Please select"
+  }
+}
