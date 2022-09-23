@@ -49,3 +49,25 @@ export function scrollStop(callback, refresh = 200) {
     false
   );
 }
+
+export function once(fn, context) {
+  let result;
+  return function () {
+    if (fn) {
+      result = fn.apply(context || this, arguments);
+      fn = undefined;
+    }
+    return result;
+  };
+}
+
+export function debounce(cb, delay = 250) {
+  let timeout;
+
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      cb(...args);
+    }, delay);
+  };
+}

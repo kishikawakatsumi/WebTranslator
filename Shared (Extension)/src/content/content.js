@@ -4,6 +4,8 @@ import {
   isVisible,
   hasTextNode,
   hasInlineElement,
+  once,
+  debounce,
   scrollStop,
 } from "./utils.js";
 
@@ -36,11 +38,20 @@ class App {
 
           await this.#translatePage(request);
 
-          scrollStop(async () => {
-            if (this.#shouldProcessAfterScrolling) {
-              await this.#translatePage(request);
-            }
-          });
+          once(
+            scrollStop(async () => {
+              const translatePage = debounce(async () => {
+                await this.#translatePage({
+                  sourceLanguage: this.#sourceLanguage,
+                  targetLanguage: this.#targetLanguage,
+                });
+              }, 250);
+
+              if (this.#shouldProcessAfterScrolling) {
+                translatePage();
+              }
+            })
+          )();
 
           sendResponse();
         } else if (request && request.method === "getContentState") {
