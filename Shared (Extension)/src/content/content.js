@@ -81,15 +81,17 @@ class App {
   async #translatePage(request) {
     this.#startTranslation();
 
-    // Restore translated texts
     const translatedElements = document.querySelectorAll(
       '[data-wtdl-translated="false"]'
     );
-    for (const element of translatedElements) {
-      const uid = element.dataset.wtdlUid;
-      const translatedText = this.#translatedTexts[uid];
-      element.innerHTML = translatedText;
-      element.dataset.wtdlTranslated = "true";
+    if (this.#targetLanguage === request.targetLanguage) {
+      // Restore translated texts
+      for (const element of translatedElements) {
+        const uid = element.dataset.wtdlUid;
+        const translatedText = this.#translatedTexts[uid];
+        element.innerHTML = translatedText;
+        element.dataset.wtdlTranslated = "true";
+      }
     }
 
     const visibleElements = await collectVisibleElements();
@@ -163,7 +165,11 @@ async function collectVisibleElements() {
   const visibleElements = [];
   for (const element of blockElements) {
     const visible = await isVisible(element);
-    if (visible && element.dataset.wtdlUid === undefined) {
+    if (
+      visible &&
+      (element.dataset.wtdlUid === undefined ||
+        element.dataset.wtdlTranslated === "false")
+    ) {
       visibleElements.push({ element, text: element.innerHTML });
     }
   }
