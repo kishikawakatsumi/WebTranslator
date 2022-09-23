@@ -38,6 +38,15 @@ class App {
   }
 
   #init() {
+    if (window.screen.width < 768) {
+      document.body.style.width = "100%";
+    }
+    browser.runtime.getPlatformInfo().then((info) => {
+      if (info.os === "ios" && window.screen.width < 768) {
+        document.getElementById("header-title").classList.add("d-hide");
+      }
+    });
+
     this.#loginView = new LoginView();
     this.#loginView.on("login", this.#onLogin.bind(this));
 
