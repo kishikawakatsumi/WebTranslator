@@ -39,6 +39,9 @@
   "full_page_translation_show_original": {
     "message": "Show original"
   },
+  "full_page_translation_ongoing_translation": {
+    "message": "Translation in progress"
+  },
   "supported_languages_BG": {
     "description": "Name of language",
     "message": "Bulgarian"

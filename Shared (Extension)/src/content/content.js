@@ -1,5 +1,8 @@
 "use strict";
 
+import "node-snackbar/dist/snackbar.min.css";
+import Snackbar from "node-snackbar/dist/snackbar.min.js";
+
 import {
   isVisible,
   hasTextNode,
@@ -9,6 +12,9 @@ import {
   scrollStop,
 } from "./utils.js";
 
+const progressMessage = browser.i18n.getMessage(
+  "full_page_translation_ongoing_translation"
+);
 new App();
 
 class App {
@@ -21,6 +27,8 @@ class App {
   #isProcessing = false;
   #shouldProcessAfterScrolling = false;
   #isShowingOriginal = false;
+
+  #snackbarStack = [];
 
   constructor() {
     this.#init();
@@ -146,6 +154,17 @@ class App {
   }
 
   #startTranslation() {
+    if (this.#snackbarStack.length === 0) {
+      Snackbar.show({
+        text: `<svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.72,19.9a8,8,0,0,1-6.5-9.79A7.77,7.77,0,0,1,10.4,4.16a8,8,0,0,1,9.49,6.52A1.54,1.54,0,0,0,21.38,12h.13a1.37,1.37,0,0,0,1.38-1.54,11,11,0,1,0-12.7,12.39A1.54,1.54,0,0,0,12,21.34h0A1.47,1.47,0,0,0,10.72,19.9Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg><span style="line-height: 24px; vertical-align: top; padding: 0 12px 0 12px; font-size: 1.2em;">${progressMessage}...</span>`,
+        actionText: `<span style="line-height: 14px; font-size: 1.8em;">\u00D7</span>`,
+        actionTextColor: "#fff",
+        pos: "bottom-center",
+        duration: undefined,
+      });
+    }
+    this.#snackbarStack.push(true);
+
     this.#isProcessing = true;
     this.#isShowingOriginal = false;
 
@@ -164,6 +183,11 @@ class App {
         targetLanguage: this.#targetLanguage,
       },
     });
+
+    if (this.#snackbarStack.length === 1) {
+      Snackbar.close();
+    }
+    this.#snackbarStack.pop();
   }
 }
 
@@ -179,7 +203,8 @@ async function collectVisibleElements() {
     if (
       visible &&
       (element.dataset.wtdlUid === undefined ||
-        element.dataset.wtdlTranslated === "false")
+        element.dataset.wtdlTranslated === "false") &&
+      !element.parentElement.classList.contains("snackbar-container")
     ) {
       visibleElements.push({ element, text: element.innerHTML });
     }

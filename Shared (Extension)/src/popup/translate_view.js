@@ -82,7 +82,9 @@ export class TranslateView extends EventTarget {
     this.#languageSelect = document.getElementById("language-select");
     for (const supportedLanguage of supportedLanguages) {
       const option = new Option(
-        supportedLanguage.name,
+        browser.i18n.getMessage(
+          `supported_languages_${supportedLanguage.code}`
+        ),
         supportedLanguage.code,
         false,
         supportedLanguage.code === locale

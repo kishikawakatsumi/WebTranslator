@@ -39,6 +39,9 @@
   "full_page_translation_show_original": {
     "message": "元の言語で表示する"
   },
+  "full_page_translation_ongoing_translation": {
+    "message": "翻訳しています"
+  },
   "supported_languages_BG": {
     "description": "Name of language",
     "message": "ブルガリア語"
