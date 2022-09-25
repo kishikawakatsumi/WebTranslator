@@ -217,7 +217,10 @@ async function collectVisibleElements() {
 
 function splitElements(elements, storage) {
   for (const element of elements) {
-    if (hasTextNode(element) || hasInlineElement(element)) {
+    if (
+      (hasTextNode(element) || hasInlineElement(element)) &&
+      element.clientHeight < window.innerHeight
+    ) {
       storage.push(element);
     } else {
       const children = element.children;
