@@ -135,9 +135,11 @@ class App {
             for (let i = 0; i < visibleElements.length; i++) {
               const element = visibleElements[i].element;
               const text = translatedTexts[i].text;
+              const uid = element.dataset.wtdlUid || this.#uid++;
 
-              const uid = this.#uid++;
-              this.#originalTexts[uid] = element.innerHTML;
+              if (element.dataset.wtdlOriginal !== "true") {
+                this.#originalTexts[uid] = element.innerHTML;
+              }
               this.#translatedTexts[uid] = text;
               element.innerHTML = text;
 
