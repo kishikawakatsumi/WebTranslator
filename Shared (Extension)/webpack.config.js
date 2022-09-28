@@ -29,6 +29,7 @@ module.exports = {
           to: "_locales/",
           globOptions: {
             gitignore: true,
+            ignore: ["**/.DS_Store"],
           },
         },
         { from: "./src/images/*.*", to: "images/[name][ext]" },
