@@ -15,6 +15,7 @@ class App {
   #init() {
     this.#setupListeners();
     this.#setupAlarm();
+    this.#setupContextMenu();
   }
 
   #setupListeners() {
@@ -49,6 +50,45 @@ class App {
     });
   }
 
+  #setupContextMenu() {
+    if (browser.menus.create) {
+      browser.menus.create({
+        id: "translateSelection",
+        title: browser.i18n.getMessage("context_menus_translate_section"),
+        contexts: ["editable", "link", "page", "selection"],
+      });
+
+      browser.menus.onClicked.addListener(async (info, tab) => {
+        switch (info.menuItemId) {
+          case "translateSelection":
+            const selectionText = info.selectionText;
+            if (selectionText) {
+              const locale = browser.i18n
+                .getUILanguage()
+                .split("-")
+                .shift()
+                .toUpperCase();
+              const result = await translate(
+                [selectionText],
+                undefined,
+                locale,
+                false
+              );
+              browser.tabs.query(
+                { active: true, currentWindow: true },
+                (tabs) => {
+                  browser.tabs.sendMessage(tabs[0].id, {
+                    method: "translateSelection",
+                    result,
+                  });
+                }
+              );
+            }
+        }
+      });
+    }
+  }
+
   #getUserDisplayName() {
     const request = { method: "getUserDisplayName" };
     browser.runtime.sendNativeMessage("application.id", request, (response) => {
@@ -61,11 +101,16 @@ class App {
   }
 }
 
-async function translate(texts, sourceLanguage, targetLanguage) {
+async function translate(
+  texts,
+  sourceLanguage,
+  targetLanguage,
+  isHtmlEnabled = true
+) {
   const translator = new Translator();
   translator.setSourceLanguage(sourceLanguage);
   translator.setTargetLanguage(targetLanguage);
 
-  const result = await translator.translate(texts);
+  const result = await translator.translate(texts, isHtmlEnabled);
   return result;
 }

@@ -38,5 +38,5 @@
     }
   },
 
-  "permissions": ["alarms", "nativeMessaging", "storage"]
+  "permissions": ["alarms", "menus", "nativeMessaging", "storage"]
 }

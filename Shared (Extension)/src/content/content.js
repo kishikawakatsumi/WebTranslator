@@ -90,6 +90,12 @@ class App {
             element.dataset.wtdlTranslated = "false";
           }
           sendResponse();
+        } else if (request && request.method === "translateSelection") {
+          const result = request.result;
+          if (result && result.result && result.result.texts) {
+            const text = result.result.texts.map((t) => t.text).join("\n");
+          }
+          sendResponse();
         } else {
           sendResponse();
         }

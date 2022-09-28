@@ -42,6 +42,14 @@
   "full_page_translation_ongoing_translation": {
     "message": "Translation in progress"
   },
+  "context_menus_translate_section": {
+    "description": "The right click context menu action to trigger an inline translation",
+    "message": "Translate this selection"
+  },
+  "layout_header_label_language_switch": {
+    "description": "Label for the \"Translate to\" inline select to translate popup.",
+    "message": "Translate to:"
+  },
   "supported_languages_BG": {
     "description": "Name of language",
     "message": "Bulgarian"

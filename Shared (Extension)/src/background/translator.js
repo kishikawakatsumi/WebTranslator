@@ -16,7 +16,7 @@ export class Translator {
     this.#targetLanguage = targetLanguage;
   }
 
-  async translate(texts) {
+  async translate(texts, isHtmlEnabled = true) {
     this.#id++;
 
     let n = 1;
@@ -40,7 +40,8 @@ export class Translator {
             text,
           };
         }),
-        html: "enabled",
+        html: isHtmlEnabled ? "enabled" : undefined,
+        splitting: isHtmlEnabled ? undefined : "newlines",
         lang: {
           target_lang: this.#targetLanguage,
           source_lang_user_selected: this.#sourceLanguage || "auto",
