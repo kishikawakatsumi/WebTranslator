@@ -46,7 +46,7 @@ export function scrollStop(callback, refresh = 200) {
       window.clearTimeout(isScrolling);
       isScrolling = setTimeout(callback, refresh);
     },
-    false
+    true
   );
 }
 
