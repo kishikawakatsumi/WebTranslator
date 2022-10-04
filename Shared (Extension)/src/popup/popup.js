@@ -61,18 +61,25 @@ class App {
     });
 
     browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      if (request && request.method === "startTranslation") {
-        this.#translateView.setLoading(true);
-        sendResponse();
-      } else if (request && request.method === "finishTranslation") {
-        this.#translateView.setLoading(false);
-        this.#translateView.showResultView(
-          request.result.sourceLanguage,
-          request.result.targetLanguage
-        );
-        sendResponse();
-      } else {
-        sendResponse();
+      if (!request) {
+        return;
+      }
+      switch (request.method) {
+        case "startTranslation":
+          this.#translateView.setLoading(true);
+          sendResponse();
+          break;
+        case "finishTranslation":
+          this.#translateView.setLoading(false);
+          this.#translateView.showResultView(
+            request.result.sourceLanguage,
+            request.result.targetLanguage
+          );
+          sendResponse();
+          break;
+        default:
+          sendResponse();
+          break;
       }
     });
   }

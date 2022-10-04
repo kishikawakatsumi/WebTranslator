@@ -22,26 +22,34 @@ class App {
   #setupListeners() {
     browser.runtime.onMessage.addListener(
       async (request, sender, sendResponse) => {
-        if (request && request.method === "getLoginSession") {
-          sendResponse({ result: this.#userDisplayName });
-        } else if (request && request.method === "translate") {
-          const texts = request.texts;
-          const result = await translate(
-            texts,
-            request.sourceLanguage,
-            request.targetLanguage
-          );
+        if (!request) {
+          return;
+        }
+        switch (request.method) {
+          case "getLoginSession":
+            sendResponse({ result: this.#userDisplayName });
+            break;
+          case "translate":
+            const texts = request.texts;
+            const result = await translate(
+              texts,
+              request.sourceLanguage,
+              request.targetLanguage
+            );
 
-          sendResponse({ result });
-        } else if (request && request.method === "translateSelection") {
-          const selectionText = this.#selectionText;
-          if (selectionText && selectionText.trim()) {
-            this.#translateSelection(selectionText);
-          }
+            sendResponse({ result });
+            break;
+          case "translateSelection":
+            const selectionText = this.#selectionText;
+            if (selectionText && selectionText.trim()) {
+              this.#translateSelection(selectionText);
+            }
 
-          sendResponse({ result });
-        } else {
-          sendResponse();
+            sendResponse({ result });
+            break;
+          default:
+            sendResponse();
+            break;
         }
       }
     );

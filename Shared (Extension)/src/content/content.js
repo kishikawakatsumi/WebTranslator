@@ -46,92 +46,108 @@ class App {
   #setupListeners() {
     browser.runtime.onMessage.addListener(
       async (request, sender, sendResponse) => {
-        if (request && request.method === "translate") {
-          this.#shouldProcessAfterScrolling = true;
+        if (!request) {
+          return;
+        }
+        switch (request.method) {
+          case "translate": {
+            this.#shouldProcessAfterScrolling = true;
 
-          await this.#translatePage(request);
+            await this.#translatePage(request);
 
-          once(
-            scrollStop(async () => {
-              const translatePage = debounce(async () => {
-                await this.#translatePage({
+            once(
+              scrollStop(async () => {
+                const translatePage = debounce(async () => {
+                  await this.#translatePage({
+                    sourceLanguage: this.#sourceLanguage,
+                    targetLanguage: this.#targetLanguage,
+                  });
+                }, 250);
+
+                if (this.#shouldProcessAfterScrolling) {
+                  translatePage();
+                }
+              })
+            )();
+
+            sendResponse();
+            break;
+          }
+          case "getContentState": {
+            if (this.#isProcessing) {
+              sendResponse({ result: { isProcessing: this.#isProcessing } });
+            } else if (Object.keys(this.#originalTexts).length > 0) {
+              sendResponse({
+                result: {
                   sourceLanguage: this.#sourceLanguage,
                   targetLanguage: this.#targetLanguage,
-                });
-              }, 250);
-
-              if (this.#shouldProcessAfterScrolling) {
-                translatePage();
-              }
-            })
-          )();
-
-          sendResponse();
-        } else if (request && request.method === "getContentState") {
-          if (this.#isProcessing) {
-            sendResponse({ result: { isProcessing: this.#isProcessing } });
-          } else if (Object.keys(this.#originalTexts).length > 0) {
-            sendResponse({
-              result: {
-                sourceLanguage: this.#sourceLanguage,
-                targetLanguage: this.#targetLanguage,
-                isShowingOriginal: this.#isShowingOriginal,
-              },
-            });
-          } else {
-            sendResponse(undefined);
-          }
-        } else if (request && request.method === "showOriginal") {
-          this.#shouldProcessAfterScrolling = false;
-          this.#isShowingOriginal = true;
-
-          const elements = document.querySelectorAll(
-            '[data-wtdl-translated="true"]'
-          );
-          for (const element of elements) {
-            const uid = element.dataset.wtdlUid;
-            const originalText = this.#originalTexts[uid];
-            element.innerHTML = originalText;
-            element.dataset.wtdlTranslated = "false";
-          }
-          sendResponse();
-        } else if (request && request.method === "startTranslateSelection") {
-          const selection = window.getSelection();
-          const textRange = selection.getRangeAt(0);
-          const clientRect = textRange.getBoundingClientRect();
-
-          const popover = this.#createOrGetPopover({
-            x: clientRect.x,
-            y: clientRect.bottom + window.pageYOffset + 30,
-          });
-          popover.setAttribute("loading", true);
-
-          sendResponse();
-        } else if (request && request.method === "finishTranslateSelection") {
-          const result = request.result;
-          const popover = document.getElementById("translate-popover");
-          if (popover) {
-            if (result.result && result.result.texts) {
-              const text = result.result.texts.map((t) => t.text).join("\n");
-              popover.setAttribute("result", `${text}`);
+                  isShowingOriginal: this.#isShowingOriginal,
+                },
+              });
             } else {
-              if (result.error) {
-                const message = browser.i18n.getMessage(
-                  "error_message_generic_error"
-                );
-                popover.setAttribute("error", message);
-              } else {
-                const message = browser.i18n.getMessage(
-                  "error_message_generic_error"
-                );
-                popover.setAttribute("error", message);
-              }
+              sendResponse(undefined);
             }
-            popover.setAttribute("loading", false);
+            break;
           }
-          sendResponse();
-        } else {
-          sendResponse();
+          case "showOriginal": {
+            this.#shouldProcessAfterScrolling = false;
+            this.#isShowingOriginal = true;
+
+            const elements = document.querySelectorAll(
+              '[data-wtdl-translated="true"]'
+            );
+            for (const element of elements) {
+              const uid = element.dataset.wtdlUid;
+              const originalText = this.#originalTexts[uid];
+              element.innerHTML = originalText;
+              element.dataset.wtdlTranslated = "false";
+            }
+            sendResponse();
+            break;
+          }
+          case "startTranslateSelection": {
+            const selection = window.getSelection();
+            const textRange = selection.getRangeAt(0);
+            const clientRect = textRange.getBoundingClientRect();
+
+            const popover = this.#createOrGetPopover({
+              x: clientRect.x,
+              y: clientRect.bottom + window.pageYOffset + 30,
+            });
+            popover.setAttribute("loading", true);
+
+            sendResponse();
+            break;
+          }
+          case "finishTranslateSelection": {
+            const result = request.result;
+            const popover = document.getElementById("translate-popover");
+            if (popover) {
+              if (result.result && result.result.texts) {
+                const text = result.result.texts.map((t) => t.text).join("\n");
+                popover.setAttribute("result", `${text}`);
+              } else {
+                if (result.error) {
+                  const message = browser.i18n.getMessage(
+                    "error_message_generic_error"
+                  );
+                  popover.setAttribute("error", message);
+                } else {
+                  const message = browser.i18n.getMessage(
+                    "error_message_generic_error"
+                  );
+                  popover.setAttribute("error", message);
+                }
+              }
+              popover.setAttribute("loading", false);
+            }
+            sendResponse();
+            break;
+          }
+          default: {
+            sendResponse();
+            break;
+          }
         }
       }
     );
