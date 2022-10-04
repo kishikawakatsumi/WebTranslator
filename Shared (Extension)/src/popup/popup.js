@@ -188,7 +188,7 @@ class App {
     switch (viewState) {
       case ViewState.LoginView:
         this.#loginView.setHidden(false);
-        this.#translateView.setHidden(true);
+        this.#translateView.setHidden(false);
         break;
       case ViewState.TranslateView:
         this.#loginView.setHidden(true);

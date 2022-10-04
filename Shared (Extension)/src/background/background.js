@@ -99,6 +99,7 @@ class App {
 
   async #translateSelection(selectionText) {
     this.#selectionText = selectionText;
+    const targetLanguage = await getTargetLanguage();
 
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       browser.tabs.sendMessage(tabs[0].id, {
@@ -110,7 +111,7 @@ class App {
     const result = await translate(
       [selectionText],
       undefined,
-      await getTargetLanguage(),
+      targetLanguage,
       false
     );
 
@@ -118,6 +119,7 @@ class App {
       browser.tabs.sendMessage(tabs[0].id, {
         method: "finishTranslateSelection",
         result,
+        targetLanguage,
       });
     });
   }

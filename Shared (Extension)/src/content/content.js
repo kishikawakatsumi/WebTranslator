@@ -126,6 +126,7 @@ class App {
               if (result.result && result.result.texts) {
                 const text = result.result.texts.map((t) => t.text).join("\n");
                 popover.setAttribute("result", `${text}`);
+                popover.setAttribute("lang", `${request.targetLanguage || ""}`);
               } else {
                 if (result.error) {
                   const message = browser.i18n.getMessage(

@@ -46,7 +46,7 @@ const template = `<style>
   </div>
   <div class="translate-content">
     <div class="input-group">
-      <label class="form-label pr-1 text-small" for="language-select" id="language-select-label">Translate to:</label>
+      <label class="form-label text-tiny pt-2 pr-2" for="language-select" id="language-select-label">Translate to:</label>
       <select class="form-select select-sm m-1 px-2" id="language-select" style="font-size: 0.9em;">
       </select>
     </div>
@@ -116,13 +116,21 @@ export class Popover extends HTMLElement {
       "change",
       this.#onLanguageSelectChange.bind(this)
     );
+
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
       this.#setSelectedTargetLanguage(result.selectedTargetLanguage);
+    });
+    browser.storage.onChanged.addListener((changes, areaName) => {
+      if (areaName === "local" && "selectedTargetLanguage" in changes) {
+        this.#setSelectedTargetLanguage(
+          changes.selectedTargetLanguage.newValue
+        );
+      }
     });
   }
 
   static get observedAttributes() {
-    return ["loading", "position", "result", "error"];
+    return ["loading", "position", "result", "error", "lang"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -139,6 +147,18 @@ export class Popover extends HTMLElement {
         break;
       case "error":
         this.#result.innerHTML = `<span class="text-error">${newValue}</span>`;
+        break;
+      case "lang":
+        for (const c of this.#result.classList) {
+          if (c.startsWith("lang-")) {
+            this.#result.classList.remove(c);
+          }
+        }
+        if (newValue === "ZH") {
+          this.#result.classList.add(`lang-zh-hans`);
+        } else if (newValue === "JA") {
+          this.#result.classList.add(`lang-ja`);
+        }
         break;
     }
   }

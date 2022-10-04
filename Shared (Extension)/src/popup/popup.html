@@ -12,6 +12,33 @@
   </div>
 
   <div class="container">
+    <div class="m-2" id="translate-view">
+      <div id="initial-view">
+        <div class="form-group">
+          <label class="form-label text-small text-bold" for="language-select" id="language-select-label">
+            Which language do you want to translate into?
+          </label>
+          <select class="form-select" id="language-select"></select>
+        </div>
+
+        <div class="py-2">
+          <button class="btn btn-primary btn-block" id="translate-button" disabled>Translate</button>
+        </div>
+      </div>
+
+      <div class="d-hide" id="result-view">
+        <div class="text-small py-2">
+          <span id="translation-message">Translated automatically from&nbsp;</span><span class="text-bold"
+            id="translation-source-lang">English</span>
+        </div>
+        <div class="py-2">
+          <button class="btn btn-block" id="show-original-button">Show original</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
     <div class="m-2" id="login-view">
       <div class="text-small text-bold" id="login-label">
         Log in to DeepL Pro to translate full pages
@@ -32,33 +59,6 @@
 
       <div class="py-2">
         <button class="btn btn-primary btn-block" id="login-button">Login</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="m-2 d-hide" id="translate-view">
-      <div id="initial-view">
-        <div class="form-group">
-          <label class="form-label text-small text-bold" for="language-select" id="language-select-label">
-            Which language do you want to translate into?
-          </label>
-          <select class="form-select" id="language-select"></select>
-        </div>
-
-        <div class="py-2">
-          <button class="btn btn-primary btn-block" id="translate-button">Translate</button>
-        </div>
-      </div>
-
-      <div class="d-hide" id="result-view">
-        <div class="text-small py-2">
-          <span id="translation-message">Translated automatically from&nbsp;</span><span class="text-bold"
-            id="translation-source-lang">English</span>
-        </div>
-        <div class="py-2">
-          <button class="btn btn-block" id="show-original-button">Show original</button>
-        </div>
       </div>
     </div>
   </div>
