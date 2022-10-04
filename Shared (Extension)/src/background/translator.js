@@ -16,7 +16,7 @@ export class Translator {
     this.#targetLanguage = targetLanguage;
   }
 
-  async translate(texts) {
+  async translate(texts, isHtmlEnabled = true) {
     this.#id++;
 
     let n = 1;
@@ -40,7 +40,8 @@ export class Translator {
             text,
           };
         }),
-        html: "enabled",
+        html: isHtmlEnabled ? "enabled" : undefined,
+        splitting: isHtmlEnabled ? undefined : "newlines",
         lang: {
           target_lang: this.#targetLanguage,
           source_lang_user_selected: this.#sourceLanguage || "auto",
@@ -59,7 +60,7 @@ export class Translator {
     );
 
     const request = {
-      method: "translate",
+      method: isHtmlEnabled ? "translate" : "translateSelection",
       payload: {
         headers: {
           Accept: "*/*",
@@ -78,7 +79,11 @@ export class Translator {
         "application.id",
         request,
         (response) => {
-          resolve(response.result);
+          if (response && response.result) {
+            resolve(response.result);
+          } else {
+            resolve(undefined);
+          }
         }
       );
     });

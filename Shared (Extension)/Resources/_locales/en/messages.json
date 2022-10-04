@@ -42,6 +42,29 @@
   "full_page_translation_ongoing_translation": {
     "message": "Translation in progress"
   },
+  "context_menus_translate_section": {
+    "description": "The right click context menu action to trigger an inline translation",
+    "message": "Translate this selection"
+  },
+  "layout_header_label_language_switch": {
+    "description": "Label for the \"Translate to\" inline select to translate popup.",
+    "message": "Translate to:"
+  },
+  "error_message_generic_error": {
+    "description": "Genric error to tell the user that there is a technical problem",
+    "message": "Sorry, we couldn't translate your text. Please try again later."
+  },
+  "error_message_quota_has_been_reached": {
+    "description": "There is an API error when the user reaches his quota and therefore is not longer able to use the pro endpoint and if does not get logged out he can not longer use the extension. We need to show him a message so the user knows why he logged out",
+    "message": "You've reached your account usage limit."
+  },
+  "error_message_technical_issue": {
+    "message": "Sorry, we couldn’t translate your text due to a known technical issue. We are working to fix this issue in the near future."
+  },
+  "error_message_too_many_requests": {
+    "description": "Info for free users that too many requests are triggered",
+    "message": "Sorry, we couldn't translate your text. It appears that your network is sending too many requests to our servers."
+  },
   "supported_languages_BG": {
     "description": "Name of language",
     "message": "Bulgarian"

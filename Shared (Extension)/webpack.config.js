@@ -34,6 +34,11 @@ module.exports = {
         },
         { from: "./src/images/*.*", to: "images/[name][ext]" },
         { from: "./src/manifest.json", to: "[name][ext]" },
+        {
+          from: "spectre.css/dist/spectre.min.css",
+          to: "resources/content.css",
+          context: "node_modules",
+        },
       ],
     }),
     new HtmlWebpackPlugin({
