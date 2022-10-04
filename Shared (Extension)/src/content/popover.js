@@ -69,7 +69,7 @@ export class Popover extends HTMLElement {
     super();
 
     this.shadow = this.attachShadow({ mode: "open" });
-    const cssURL = browser.runtime.getURL("resources/content.css");
+    const cssURL = browser.runtime.getURL("assets/content.css");
     this.shadowRoot.innerHTML = `<link rel="stylesheet" href="${cssURL}">`;
 
     const popover = document.createElement("div");

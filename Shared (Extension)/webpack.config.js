@@ -36,7 +36,7 @@ module.exports = {
         { from: "./src/manifest.json", to: "[name][ext]" },
         {
           from: "spectre.css/dist/spectre.min.css",
-          to: "resources/content.css",
+          to: "assets/content.css",
           context: "node_modules",
         },
       ],
