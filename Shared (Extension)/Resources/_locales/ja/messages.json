@@ -42,6 +42,29 @@
   "full_page_translation_ongoing_translation": {
     "message": "翻訳しています"
   },
+  "context_menus_translate_section": {
+    "description": "The right click context menu action to trigger an inline translation",
+    "message": "選択したテキストを翻訳"
+  },
+  "layout_header_label_language_switch": {
+    "description": "Label for the \"Translate to\" inline select to translate popup.",
+    "message": "訳文："
+  },
+  "error_message_generic_error": {
+    "description": "Genric error to tell the user that there is a technical problem",
+    "message": "テキストを翻訳できませんでした。時間をおいてもう一度お試しください。"
+  },
+  "error_message_quota_has_been_reached": {
+    "description": "There is an API error when the user reaches his quota and therefore is not longer able to use the pro endpoint and if does not get logged out he can not longer use the extension. We need to show him a message so the user knows why he logged out",
+    "message": "アカウントの利用上限に達しました。"
+  },
+  "error_message_technical_issue": {
+    "message": "技術的な問題により、テキストを翻訳できませんでした。問題は既知であり、近いうちに解決策を講じられるよう準備を進めています。"
+  },
+  "error_message_too_many_requests": {
+    "description": "Info for free users that too many requests are triggered",
+    "message": "テキストを翻訳できませんでした。ご利用のネットワークから大量のリクエストが送信されているようです。"
+  },
   "supported_languages_BG": {
     "description": "Name of language",
     "message": "ブルガリア語"

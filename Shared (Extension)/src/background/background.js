@@ -6,6 +6,7 @@ new App();
 
 class App {
   #userDisplayName = undefined;
+  #selectionText = undefined;
 
   constructor() {
     this.#init();
@@ -21,7 +22,9 @@ class App {
   #setupListeners() {
     browser.runtime.onMessage.addListener(
       async (request, sender, sendResponse) => {
-        if (request && request.method === "translate") {
+        if (request && request.method === "getLoginSession") {
+          sendResponse({ result: this.#userDisplayName });
+        } else if (request && request.method === "translate") {
           const texts = request.texts;
           const result = await translate(
             texts,
@@ -30,8 +33,13 @@ class App {
           );
 
           sendResponse({ result });
-        } else if (request && request.method === "getLoginSession") {
-          sendResponse({ result: this.#userDisplayName });
+        } else if (request && request.method === "translateSelection") {
+          const selectionText = this.#selectionText;
+          if (selectionText && selectionText.trim()) {
+            this.#translateSelection(selectionText);
+          }
+
+          sendResponse({ result });
         } else {
           sendResponse();
         }
@@ -62,27 +70,8 @@ class App {
         switch (info.menuItemId) {
           case "translateSelection":
             const selectionText = info.selectionText;
-            if (selectionText) {
-              const locale = browser.i18n
-                .getUILanguage()
-                .split("-")
-                .shift()
-                .toUpperCase();
-              const result = await translate(
-                [selectionText],
-                undefined,
-                locale,
-                false
-              );
-              browser.tabs.query(
-                { active: true, currentWindow: true },
-                (tabs) => {
-                  browser.tabs.sendMessage(tabs[0].id, {
-                    method: "translateSelection",
-                    result,
-                  });
-                }
-              );
+            if (selectionText && selectionText.trim()) {
+              this.#translateSelection(selectionText);
             }
         }
       });
@@ -99,6 +88,31 @@ class App {
       }
     });
   }
+
+  async #translateSelection(selectionText) {
+    this.#selectionText = selectionText;
+
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {
+        method: "startTranslateSelection",
+        selectionText,
+      });
+    });
+
+    const result = await translate(
+      [selectionText],
+      undefined,
+      await getTargetLanguage(),
+      false
+    );
+
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {
+        method: "finishTranslateSelection",
+        result,
+      });
+    });
+  }
 }
 
 async function translate(
@@ -113,4 +127,21 @@ async function translate(
 
   const result = await translator.translate(texts, isHtmlEnabled);
   return result;
+}
+
+async function getTargetLanguage() {
+  return new Promise((resolve, reject) => {
+    browser.storage.local.get(["selectedTargetLanguage"], (result) => {
+      if (result && result.selectedTargetLanguage) {
+        resolve(result.selectedTargetLanguage);
+      } else {
+        const locale = browser.i18n
+          .getUILanguage()
+          .split("-")
+          .shift()
+          .toUpperCase();
+        resolve(locale);
+      }
+    });
+  });
 }

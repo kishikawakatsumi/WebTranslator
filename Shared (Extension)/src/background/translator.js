@@ -60,7 +60,7 @@ export class Translator {
     );
 
     const request = {
-      method: "translate",
+      method: isHtmlEnabled ? "translate" : "translateSelection",
       payload: {
         headers: {
           Accept: "*/*",
@@ -79,7 +79,11 @@ export class Translator {
         "application.id",
         request,
         (response) => {
-          resolve(response.result);
+          if (response && response.result) {
+            resolve(response.result);
+          } else {
+            resolve(undefined);
+          }
         }
       );
     });

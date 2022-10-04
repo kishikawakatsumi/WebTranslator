@@ -141,6 +141,22 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         }
       }
       self.translator = translator
+    case "translateSelection":
+      guard let payload = message["payload"] as? [String: Any] else {
+        sendErrorResponse(context: context)
+        return
+      }
+
+      let translator = Translator()
+      translator.translateSelection(payload: payload) { (result) in
+        switch result {
+        case .success(let result):
+          sendResponse(data: ["result": result], context: context)
+        case .failure(_):
+          sendErrorResponse(context: context)
+        }
+      }
+      self.translator = translator
     default:
       sendErrorResponse(context: context)
     }

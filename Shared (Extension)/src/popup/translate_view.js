@@ -1,6 +1,6 @@
 "use strict";
 
-import { supportedLanguages } from "./supported_languages";
+import { supportedLanguages } from "../shared/supported_languages";
 
 export class TranslateView extends EventTarget {
   #languageSelectLabel;
