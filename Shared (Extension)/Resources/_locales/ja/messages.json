@@ -18,6 +18,15 @@
     "description": "Login to DeepL Pro button label",
     "message": "ログイン"
   },
+  "login_error_validation_error_message": {
+    "message": "メールアドレスとパスワードを入力してください。"
+  },
+  "login_error_connection_error_message": {
+    "message": "サーバーに接続できません。時間をおいて再度お試しください。"
+  },
+  "login_error_invalid_credentials_message": {
+    "message": "メールアドレスまたはパスワードが正しくありません。"
+  },
   "login_error_default_message": {
     "message": "ログインに失敗しました。"
   },

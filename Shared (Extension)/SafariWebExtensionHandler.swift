@@ -71,17 +71,17 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
       self.authenticator = authenticator
     case "getUserDisplayName":
       let credentials = Credentials()
-      guard let account = credentials.fetch() else {
+      guard let credential = credentials.fetch() else {
         sendErrorResponse(context: context)
         return
       }
-      guard let session = account["session"] else {
+      guard let session = credential["session"] else {
         sendResponse(
           data: [
             "result": [
               "credentials": [
-                "email": account["email"] ?? "",
-                "password": account["password"] ?? "",
+                "email": credential["email"] ?? "",
+                "password": credential["password"] ?? "",
               ]
             ]
           ],
@@ -103,8 +103,8 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
                 "isPro": result.isPro ?? false,
 
                 "credentials": [
-                  "email": account["email"] ?? "",
-                  "password": account["password"] ?? "",
+                  "email": credential["email"] ?? "",
+                  "password": credential["password"] ?? "",
                 ]
               ]
             ],
@@ -115,8 +115,8 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             data: [
               "result": [
                 "credentials": [
-                  "email": account["email"] ?? "",
-                  "password": account["password"] ?? "",
+                  "email": credential["email"] ?? "",
+                  "password": credential["password"] ?? "",
                 ]
               ]
             ],

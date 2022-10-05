@@ -18,6 +18,15 @@
     "description": "Login to DeepL Pro button label",
     "message": "Login"
   },
+  "login_error_validation_error_message": {
+    "message": "Email and password are required."
+  },
+  "login_error_connection_error_message": {
+    "message": "Could not connect to the server. Please try again later."
+  },
+  "login_error_invalid_credentials_message": {
+    "message": "Your email or password is incorrect."
+  },
   "login_error_default_message": {
     "message": "Login failed."
   },

@@ -31,6 +31,10 @@ export class TranslateView extends EventTarget {
       .classList.toggle("d-hide", hidden);
   }
 
+  setEnabled(enabled) {
+    this.#translateButton.disabled = !enabled;
+  }
+
   setLoading(loading) {
     if (loading) {
       this.showInitialView();

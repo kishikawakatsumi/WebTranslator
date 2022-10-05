@@ -5,17 +5,14 @@ import { Translator } from "./translator";
 new App();
 
 class App {
-  #userDisplayName = undefined;
   #selectionText = undefined;
 
   constructor() {
     this.#init();
-    this.#getUserDisplayName();
   }
 
   #init() {
     this.#setupListeners();
-    this.#setupAlarm();
     this.#setupContextMenu();
   }
 
@@ -26,9 +23,6 @@ class App {
           return;
         }
         switch (request.method) {
-          case "getLoginSession":
-            sendResponse({ result: this.#userDisplayName });
-            break;
           case "translate":
             const texts = request.texts;
             const result = await translate(
@@ -55,17 +49,6 @@ class App {
     );
   }
 
-  #setupAlarm() {
-    browser.alarms.create("getUserDisplayName", {
-      periodInMinutes: 60,
-    });
-    browser.alarms.onAlarm.addListener((alarm) => {
-      if (alarm.name === "getUserDisplayName") {
-        this.#getUserDisplayName();
-      }
-    });
-  }
-
   #setupContextMenu() {
     if (browser.menus.create) {
       browser.menus.create({
@@ -84,17 +67,6 @@ class App {
         }
       });
     }
-  }
-
-  #getUserDisplayName() {
-    const request = { method: "getUserDisplayName" };
-    browser.runtime.sendNativeMessage("application.id", request, (response) => {
-      if (response && response.result) {
-        this.#userDisplayName = response.result;
-      } else {
-        this.#userDisplayName = undefined;
-      }
-    });
   }
 
   async #translateSelection(selectionText) {

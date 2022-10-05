@@ -13,6 +13,8 @@ class App {
   #loginView;
   #translateView;
 
+  #isMobile = false;
+
   constructor() {
     this.#init();
   }
@@ -20,7 +22,8 @@ class App {
   async run() {
     const response = await this.#getContentState();
     if (response && response.result) {
-      this.#toggleView(ViewState.TranslateView);
+      // Transration is already in progress or finished
+      this.#updateViewState(ViewState.TranslateView);
 
       if (response.result.isProcessing) {
         this.#translateView.setLoading(true);
@@ -33,7 +36,8 @@ class App {
         );
       }
     } else {
-      this.#getLoginSession();
+      // No translation is in progress
+      this.#getUserDisplayName();
     }
   }
 
@@ -43,7 +47,9 @@ class App {
     }
     browser.runtime.getPlatformInfo().then((info) => {
       if (info.os === "ios" && window.screen.width < 768) {
+        this.#isMobile = true;
         document.getElementById("header-title").classList.add("d-hide");
+        document.getElementById("translate-view").classList.add("d-hide");
       }
     });
 
@@ -99,53 +105,49 @@ class App {
   }
 
   #login(email, password) {
-    const request = { method: "cf_clearance" };
-    browser.runtime.sendNativeMessage("application.id", request, (response) => {
-      if (response && response.result) {
-        const cookies = response.result;
+    browser.runtime.sendNativeMessage(
+      "application.id",
+      { method: "cf_clearance" },
+      (response) => {
+        if (response && response.result) {
+          const cookies = response.result;
 
-        const request = { method: "login", email, password, cookies };
-        browser.runtime.sendNativeMessage(
-          "application.id",
-          request,
-          (response) => {
-            this.#handleLoginResponse(response);
-            this.#getUserDisplayName();
-          }
-        );
-      } else {
-        this.#handleLoginResponse(undefined);
-        this.#loginView.setLoading(false);
+          const request = { method: "login", email, password, cookies };
+          browser.runtime.sendNativeMessage(
+            "application.id",
+            request,
+            (response) => {
+              if (!response || !response.result) {
+                this.#handleLoginError(LoginErorr.InvalidCredentials);
+              } else {
+                this.#getUserDisplayName();
+              }
+            }
+          );
+        } else {
+          this.#handleLoginError(LoginErorr.ConnectionError);
+        }
       }
-    });
-  }
-
-  #getLoginSession() {
-    this.#loginView.setLoading(true);
-
-    const request = { method: "getLoginSession" };
-    browser.runtime.sendMessage(request, (response) => {
-      if (response && response.result) {
-        this.#handleLoginSession(response);
-        this.#loginView.setLoading(false);
-      } else {
-        this.#getUserDisplayName();
-      }
-    });
+    );
   }
 
   #getUserDisplayName() {
-    const request = { method: "getUserDisplayName" };
-    browser.runtime.sendNativeMessage("application.id", request, (response) => {
-      this.#handleLoginSession(response);
-      this.#loginView.setLoading(false);
-    });
+    this.#loginView.setLoading(true);
+
+    browser.runtime.sendNativeMessage(
+      "application.id",
+      { method: "getUserDisplayName" },
+      (response) => {
+        this.#handleLoginSession(response);
+        this.#loginView.setLoading(false);
+      }
+    );
   }
 
   #handleLoginSession(response) {
     // No stored credentials
     if (!response || !response.result) {
-      this.#toggleView(ViewState.LoginView);
+      this.#updateViewState(ViewState.LoginView);
       return;
     }
 
@@ -154,51 +156,76 @@ class App {
       if (response.result.credentials) {
         this.#loginView.setCredentials(response.result.credentials);
       }
-      this.#loginView.setErrorMessage(
-        browser.i18n.getMessage("login_error_session_expired_message")
-      );
+      this.#handleLoginError(LoginErorr.SessionExpired);
       return;
     }
 
     if (response.result.isPro) {
       // Pro user
-      this.#toggleView(ViewState.TranslateView);
+      this.#updateViewState(ViewState.TranslateView);
     } else {
       // Free user
       if (response.result.credentials) {
         this.#loginView.setCredentials(response.result.credentials);
       }
-      this.#loginView.setErrorMessage(
-        browser.i18n.getMessage("login_error_not_pro_message")
-      );
-      this.#toggleView(ViewState.LoginView);
+      this.#handleLoginError(LoginErorr.NotPro);
+      this.#updateViewState(ViewState.LoginView);
     }
   }
 
-  #handleLoginResponse(response) {
-    if (!response || !response.result) {
-      const errorMessage = browser.i18n.getMessage(
-        "login_error_default_message"
-      );
-      this.#loginView.setErrorMessage(errorMessage);
+  #handleLoginError(error) {
+    switch (error) {
+      case LoginErorr.ConnectionError:
+        this.#loginView.setErrorMessage(
+          browser.i18n.getMessage("login_error_connection_error_message")
+        );
+        break;
+      case LoginErorr.InvalidCredentials:
+        this.#loginView.setErrorMessage(
+          browser.i18n.getMessage("login_error_invalid_credentials_message")
+        );
+        break;
+      case LoginErorr.SessionExpired:
+        this.#loginView.setErrorMessage(
+          browser.i18n.getMessage("login_error_session_expired_message")
+        );
+        break;
+      case LoginErorr.NotPro:
+        this.#loginView.setErrorMessage(
+          browser.i18n.getMessage("login_error_not_pro_message")
+        );
+        break;
+      default:
+        this.#loginView.setErrorMessage(
+          browser.i18n.getMessage("login_error_default_message")
+        );
+        break;
     }
+    this.#loginView.setLoading(false);
   }
 
-  #toggleView(viewState) {
+  #updateViewState(viewState) {
     switch (viewState) {
       case ViewState.LoginView:
         this.#loginView.setHidden(false);
-        this.#translateView.setHidden(false);
+        this.#translateView.setEnabled(false);
+        if (this.#isMobile) {
+          this.#translateView.setHidden(true);
+        }
         break;
       case ViewState.TranslateView:
         this.#loginView.setHidden(true);
-        this.#translateView.setHidden(false);
+        this.#translateView.setEnabled(true);
+        if (this.#isMobile) {
+          this.#translateView.setHidden(false);
+        }
         break;
     }
   }
 
   #onLogin(event) {
     this.#loginView.setLoading(true);
+    this.#loginView.setErrorMessage(null);
 
     const email = event.detail.email;
     const password = event.detail.password;
@@ -235,4 +262,11 @@ class App {
 const ViewState = {
   LoginView,
   TranslateView,
+};
+
+const LoginErorr = {
+  ConnectionError: "ConnectionError",
+  InvalidCredentials: "InvalidCredentials",
+  SessionExpired: "SessionExpired",
+  NotPro: "NotPro",
 };

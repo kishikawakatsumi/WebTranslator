@@ -36,7 +36,6 @@ export class LoginView extends EventTarget {
       this.#passwordInput.disabled = false;
 
       this.#loginButton.disabled = false;
-      this.#loginButton.loading = false;
       this.#loginButton.classList.remove("loading");
     }
   }
@@ -61,10 +60,7 @@ export class LoginView extends EventTarget {
     this.#loginLabel.textContent = browser.i18n.getMessage("ui_login_body");
 
     this.#emailInput = document.getElementById("email-input");
-    this.#emailInput.addEventListener("input", this.#onInput.bind(this));
-
     this.#passwordInput = document.getElementById("password-input");
-    this.#passwordInput.addEventListener("input", this.#onInput.bind(this));
 
     this.#errorLabel = document.getElementById("login-error-label");
 
@@ -79,15 +75,17 @@ export class LoginView extends EventTarget {
     });
   }
 
-  #onInput() {
-    let inputs = [...document.querySelectorAll(".form-input")];
-    let isIncomplete = inputs.some((input) => !input.value);
-    this.#loginButton.disabled = isIncomplete;
-  }
-
   #onLoginButtonClick() {
     const email = this.#emailInput.value;
     const password = this.#passwordInput.value;
+
+    if (!email || !password) {
+      const errorMessage = browser.i18n.getMessage(
+        "login_error_validation_error_message"
+      );
+      this.setErrorMessage(errorMessage);
+      return;
+    }
 
     this.dispatchEvent(
       new CustomEvent("login", { detail: { email, password } })
