@@ -4,6 +4,8 @@ import { supportedLanguages } from "../shared/supported_languages";
 import { makeDraggable } from "./draggable";
 import { escapeHTML } from "./utils";
 
+const styleSheetPath = browser.runtime.getURL("assets/content.css");
+
 const template = `<style>
   .translate-popover {
     position: absolute;
@@ -67,10 +69,8 @@ export class Popover extends HTMLElement {
 
   constructor() {
     super();
-
     this.shadow = this.attachShadow({ mode: "open" });
-    const cssURL = browser.runtime.getURL("assets/content.css");
-    this.shadowRoot.innerHTML = `<link rel="stylesheet" href="${cssURL}">`;
+    this.shadowRoot.innerHTML = `<link rel="stylesheet" href="${styleSheetPath}">`;
 
     const popover = document.createElement("div");
     popover.innerHTML = template;
@@ -161,10 +161,6 @@ export class Popover extends HTMLElement {
         }
         break;
     }
-  }
-
-  on(type, listener) {
-    this.addEventListener(type, listener);
   }
 
   #setSelectedTargetLanguage(language) {

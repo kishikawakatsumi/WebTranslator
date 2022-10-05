@@ -9,10 +9,8 @@ import {
   hasInlineElement,
   once,
   debounce,
-  scrollStop,
+  scrollDidStop,
 } from "./utils";
-
-new App();
 
 class App {
   #uid = 1;
@@ -51,18 +49,14 @@ class App {
             await this.#translatePage(request);
 
             once(
-              scrollStop(async () => {
-                const translatePage = debounce(async () => {
+              scrollDidStop(async () => {
+                if (this.#shouldProcessAfterScrolling) {
                   await this.#translatePage({
                     sourceLanguage: this.#sourceLanguage,
                     targetLanguage: this.#targetLanguage,
                   });
-                }, 250);
-
-                if (this.#shouldProcessAfterScrolling) {
-                  translatePage();
                 }
-              })
+              }, 500)
             )();
 
             sendResponse();
@@ -170,11 +164,11 @@ class App {
       };
 
       document.addEventListener("click", onClick);
-      popover.on("close", async () => {
+      popover.addEventListener("close", async () => {
         popover.remove();
         document.removeEventListener("click", onClick);
       });
-      popover.on("change", async (event) => {
+      popover.addEventListener("change", async (event) => {
         await chrome.storage.local.set(event.detail);
 
         const request = {
@@ -317,3 +311,5 @@ function splitElements(elements, storage) {
     }
   }
 }
+
+new App();

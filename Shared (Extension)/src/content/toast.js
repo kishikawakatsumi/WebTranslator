@@ -18,11 +18,9 @@ const progressMessage = browser.i18n.getMessage(
 export class Toast {
   #snackbarStack = [];
 
-  constructor() {}
-
   show() {
     if (this.#snackbarStack.length === 0) {
-      const snackbar = createOrGetSnackbar();
+      const snackbar = createSnackbar();
       snackbar.show();
     }
     this.#snackbarStack.push(true);
@@ -30,22 +28,29 @@ export class Toast {
 
   close() {
     if (this.#snackbarStack.length === 1) {
-      const snackbar = createOrGetSnackbar();
+      const snackbar = getSnackbar();
       snackbar.close();
+      snackbar.remove();
     }
     this.#snackbarStack.pop();
   }
 }
 
-function createOrGetSnackbar() {
+function createSnackbar() {
   const id = "mwc-snackbar";
+
   const snackber = document.getElementById(id);
-  if (!snackber) {
-    document.body.insertAdjacentHTML(
-      "beforeend",
-      `<mwc-snackbar id="${id}" labelText="${progressMessage}..." timeoutMs="-1" closeOnEscape=false></mwc-snackbar>`
-    );
-    return document.getElementById(id);
+  if (snackber) {
+    snackber.remove();
   }
-  return snackber;
+
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<mwc-snackbar id="${id}" labelText="${progressMessage}..." timeoutMs="-1" closeOnEscape=false></mwc-snackbar>`
+  );
+  return document.getElementById(id);
+}
+
+function getSnackbar() {
+  return document.getElementById("mwc-snackbar");
 }

@@ -6,9 +6,6 @@ import "./popup.css";
 import { TranslateView } from "./translate_view";
 import { LoginView } from "./login_view";
 
-const app = new App();
-app.run();
-
 class App {
   #loginView;
   #translateView;
@@ -274,3 +271,6 @@ const LoginErorr = {
   SessionExpired: "SessionExpired",
   NotPro: "NotPro",
 };
+
+const app = new App();
+app.run();

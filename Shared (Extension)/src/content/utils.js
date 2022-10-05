@@ -29,7 +29,7 @@ export function hasInlineElement(element) {
   }
 }
 
-export function scrollStop(callback, refresh = 200) {
+export function scrollDidStop(callback, refresh = 200) {
   if (!callback || typeof callback !== "function") {
     return;
   }

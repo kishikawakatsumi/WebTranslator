@@ -2,8 +2,6 @@
 
 import { Translator } from "./translator";
 
-new App();
-
 class App {
   #selectionText = undefined;
 
@@ -127,3 +125,5 @@ async function getTargetLanguage() {
     });
   });
 }
+
+new App();
