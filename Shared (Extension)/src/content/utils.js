@@ -1,13 +1,8 @@
 "use strict";
 
 export function isVisible(element) {
-  return new Promise((resolve) => {
-    const o = new IntersectionObserver(([entry]) => {
-      resolve(entry.intersectionRatio === 1);
-      o.disconnect();
-    });
-    o.observe(element);
-  });
+  const rect = element.getBoundingClientRect();
+  return rect.top <= window.innerHeight && rect.left <= window.innerWidth;
 }
 
 export function hasTextNode(element) {
