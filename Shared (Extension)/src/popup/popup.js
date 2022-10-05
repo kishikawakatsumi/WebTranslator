@@ -75,6 +75,10 @@ class App {
           this.#translateView.setLoading(true);
           sendResponse();
           break;
+        case "cancelTranslation":
+          this.#translateView.setLoading(false);
+          sendResponse();
+          break;
         case "finishTranslation":
           this.#translateView.setLoading(false);
           this.#translateView.showResultView(

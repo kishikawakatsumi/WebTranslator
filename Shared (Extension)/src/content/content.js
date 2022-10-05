@@ -206,6 +206,7 @@ class App {
 
     const visibleElements = await collectVisibleElements();
     if (visibleElements.length === 0) {
+      this.#cancelTranslation();
       return;
     }
     this.#startTranslation();
@@ -256,6 +257,12 @@ class App {
 
     browser.runtime.sendMessage({
       method: "startTranslation",
+    });
+  }
+
+  #cancelTranslation() {
+    browser.runtime.sendMessage({
+      method: "cancelTranslation",
     });
   }
 
