@@ -4,10 +4,9 @@ import { supportedLanguages } from "../shared/supported_languages";
 import { makeDraggable } from "./draggable";
 import { escapeHTML } from "./utils";
 
-const styleSheetPath = browser.runtime.getURL("assets/content.css");
-
 const template = `<style>
-  @import url(${styleSheetPath});
+  @import url(${browser.runtime.getURL("assets/spectre.min.css")});
+  @import url(${browser.runtime.getURL("assets/spectre-icons.min.css")});
 
   .translate-popover {
     width: 550px;
@@ -15,7 +14,7 @@ const template = `<style>
     border-radius: 5px;
     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.16);
     background: #fff;
-    z-index: 2147483550;
+    z-index: 9998;
   }
   @media screen and (max-width: 767px) {
     .translate-popover {
@@ -66,6 +65,7 @@ const template = `<style>
     <div class="py-2">
       <div class="loading loading-lg" id="spinner"></div>
       <div class="text-small d-none" id="result"></div>
+      <button class="btn btn-sm mx-1 float-right" style="width: 14px;" id="copy-button"><i class="icon icon-copy"></i></button>
     </div>
   </div>
 </div>`;
@@ -76,6 +76,7 @@ export class Popover extends HTMLElement {
   #languageSelect;
   #result;
   #spinner;
+  #copyButton;
 
   constructor() {
     super();
@@ -96,6 +97,14 @@ export class Popover extends HTMLElement {
 
     this.#result = this.shadowRoot.getElementById("result");
     this.#spinner = this.shadowRoot.getElementById("spinner");
+
+    this.#copyButton = this.shadowRoot.getElementById("copy-button");
+    this.#copyButton.disabled = navigator.clipboard === undefined;
+    this.#copyButton.addEventListener("click", () => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(this.#result.textContent);
+      }
+    });
 
     const languageSelectLabel = this.shadowRoot.getElementById(
       "language-select-label"

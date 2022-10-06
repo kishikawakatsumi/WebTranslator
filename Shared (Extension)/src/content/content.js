@@ -1,5 +1,6 @@
 "use strict";
 
+import "./popover.css";
 import { Popover } from "./popover";
 import { Toast } from "./toast";
 

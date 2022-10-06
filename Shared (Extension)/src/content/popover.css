@@ -1,0 +1,18 @@
+translate-popover {
+  font-family: sans-serif; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 3 */
+  -ms-text-size-adjust: 100%; /* 3 */
+}
+
+translate-popover {
+  margin: 0;
+}
+
+translate-popover {
+  background: #fff;
+  color: #3b4351;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
