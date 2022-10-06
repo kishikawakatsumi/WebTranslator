@@ -21,17 +21,20 @@
   "login_error_validation_error_message": {
     "message": "メールアドレスとパスワードを入力してください。"
   },
-  "login_error_connection_error_message": {
-    "message": "サーバーに接続できません。時間をおいて再度お試しください。"
-  },
   "login_error_invalid_credentials_message": {
     "message": "メールアドレスまたはパスワードが正しくありません。"
+  },
+  "error_message_internet_connection": {
+    "message": "インターネット接続に問題があります。もう一度お試しください。"
+  },
+  "error_message_please_login": {
+    "message": "テキストを翻訳するには再度ログインしてください。"
   },
   "login_error_default_message": {
     "message": "ログインに失敗しました。"
   },
-  "login_error_session_expired_message": {
-    "message": "ログインセッションが期限切れです。再度ログインしてください。"
+  "error_message_session_expired": {
+    "message": "セッションの有効期間が切れました。もう一度ログインしてください。"
   },
   "login_error_not_pro_message": {
     "message": "DeepL Proアカウントではありません。"

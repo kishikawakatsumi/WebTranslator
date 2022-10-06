@@ -208,7 +208,7 @@ class App {
     switch (error) {
       case LoginErorr.ConnectionError:
         this.#loginView.setErrorMessage(
-          browser.i18n.getMessage("login_error_connection_error_message")
+          browser.i18n.getMessage("error_message_internet_connection")
         );
         break;
       case LoginErorr.InvalidCredentials:
@@ -218,7 +218,7 @@ class App {
         break;
       case LoginErorr.SessionExpired:
         this.#loginView.setErrorMessage(
-          browser.i18n.getMessage("login_error_session_expired_message")
+          browser.i18n.getMessage("error_message_session_expired")
         );
         break;
       case LoginErorr.NotPro:

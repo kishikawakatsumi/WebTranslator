@@ -21,17 +21,20 @@
   "login_error_validation_error_message": {
     "message": "Email and password are required."
   },
-  "login_error_connection_error_message": {
-    "message": "Could not connect to the server. Please try again later."
-  },
   "login_error_invalid_credentials_message": {
     "message": "Your email or password is incorrect."
+  },
+  "error_message_internet_connection": {
+    "message": "Sorry, there’s an issue with the internet connection. Please try again."
+  },
+  "error_message_please_login": {
+    "message": "Please log in again to translate this text. "
   },
   "login_error_default_message": {
     "message": "Login failed."
   },
-  "login_error_session_expired_message": {
-    "message": "Your session has expired. Please log in again."
+  "error_message_session_expired": {
+    "message": "Sorry, your session expired. Please log in again."
   },
   "login_error_not_pro_message": {
     "message": "You are not a DeepL Pro user."
