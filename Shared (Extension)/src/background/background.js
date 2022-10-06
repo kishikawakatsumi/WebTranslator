@@ -34,10 +34,12 @@ class App {
           }
           case "translateSelection": {
             const selectionText = this.#selectionText;
-            if (selectionText && selectionText.trim()) {
-              this.#translateSelection(selectionText);
-            } else if (request.selectionText) {
+            if (request.selectionText && request.selectionText.trim()) {
+              // From popup toolbar (Mobile only)
               this.#translateSelection(request.selectionText);
+            } else if (selectionText && selectionText.trim()) {
+              // Language changed in popover window
+              this.#translateSelection(selectionText);
             }
 
             sendResponse();

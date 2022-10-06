@@ -81,7 +81,7 @@ class App {
         })
         .then((response) => {
           this.#translateSelectionButton.setEnabled(
-            response && response.result
+            response && response.result && response.result.trim()
           );
         });
     });
@@ -291,7 +291,7 @@ class App {
       const response = await browser.tabs.sendMessage(tabs[0].id, {
         method: "getSelection",
       });
-      if (response && response.result) {
+      if (response && response.result && response.result.trim()) {
         this.#translateSelectionButton.setLoading(true);
         const request = {
           method: "translateSelection",
