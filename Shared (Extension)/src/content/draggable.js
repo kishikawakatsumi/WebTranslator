@@ -6,25 +6,8 @@ export function makeDraggable(element, dragzone) {
   let pos3 = 0;
   let pos4 = 0;
 
-  const isInside = (point, rect) =>
-    point.x > rect.left &&
-    point.x < rect.right &&
-    point.y > rect.top &&
-    point.y < rect.bottom;
-
   const dragMouseDown = (event) => {
     event.preventDefault();
-    if (
-      !isInside(
-        {
-          x: event.clientX || event.touches[0].clientX,
-          y: event.clientY || event.touches[0].clientY,
-        },
-        dragzone.getBoundingClientRect()
-      )
-    ) {
-      return;
-    }
 
     pos3 = event.clientX || event.touches[0].clientX;
     pos4 = event.clientY || event.touches[0].clientY;
@@ -38,17 +21,6 @@ export function makeDraggable(element, dragzone) {
 
   const dragMouseMove = (event) => {
     event.preventDefault();
-    if (
-      !isInside(
-        {
-          x: event.clientX || event.touches[0].clientX,
-          y: event.clientY || event.touches[0].clientY,
-        },
-        dragzone.getBoundingClientRect()
-      )
-    ) {
-      return;
-    }
 
     pos1 = pos3 - (event.clientX || event.touches[0].clientX);
     pos2 = pos4 - (event.clientY || event.touches[0].clientY);
@@ -60,10 +32,11 @@ export function makeDraggable(element, dragzone) {
   };
 
   const dragMouseUp = () => {
-    document.onmouseup = null;
     document.onmousemove = null;
+    document.onmouseup = null;
 
-    element.classList.remove("drag");
+    document.ontouchmove = null;
+    document.ontouchend = null;
   };
 
   dragzone.onmousedown = dragMouseDown;
