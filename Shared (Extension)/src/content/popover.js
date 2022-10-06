@@ -10,9 +10,11 @@ const template = `<style>
   @import url(${styleSheetPath});
 
   .translate-popover {
+    width: 550px;
     position: absolute;
     border-radius: 5px;
     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.16);
+    background: #fff;
   }
   .title-bar {
     height: 1rem;
@@ -43,7 +45,7 @@ const template = `<style>
   }
 </style>
 
-<div class="translate-popover card" id="draggable" style="width: 550px;">
+<div class="translate-popover card" id="draggable">
   <button class="close-button btn btn-clear btn-lg m-1" id="close-button"></button>
   <div class="title-bar c-move" id="dragzone">
     <div class="drag-handle"></div>

@@ -97,12 +97,12 @@ class App {
           case "startTranslateSelection": {
             const selection = window.getSelection();
             const textRange = selection.getRangeAt(0);
-            const clientRect = textRange.getBoundingClientRect();
+            const selectionRect = textRange.getBoundingClientRect();
 
-            const popover = this.#createOrGetPopover({
-              x: clientRect.x,
-              y: clientRect.bottom + window.pageYOffset + 30,
-            });
+            let x = selectionRect.left + window.scrollX;
+            let y = selectionRect.bottom + window.scrollY + 30;
+
+            const popover = this.#createPopover({ x, y });
             popover.setAttribute("loading", true);
 
             sendResponse();
@@ -143,45 +143,46 @@ class App {
     );
   }
 
-  #createOrGetPopover(position) {
+  #createPopover(position) {
     const id = "translate-popover";
+    (() => {
+      let popover = document.getElementById(id);
+      if (popover) {
+        popover.remove();
+      }
+    })();
+
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<translate-popover id="${id}"></translate-popover>`
+    );
     const popover = document.getElementById(id);
-    if (popover) {
-      return popover;
-    } else {
-      document.body.insertAdjacentHTML(
-        "beforeend",
-        `<translate-popover id="${id}"></translate-popover>`
-      );
-      const popover = document.getElementById(id);
+    popover.setAttribute("position", JSON.stringify(position));
 
-      const onClick = (event) => {
-        if (event.target.closest(id)) {
-          return;
-        }
-        popover.remove();
-        document.removeEventListener("click", onClick);
+    const onClick = (event) => {
+      if (event.target.closest(id)) {
+        return;
+      }
+      popover.remove();
+      document.removeEventListener("click", onClick);
+    };
+
+    document.addEventListener("click", onClick);
+    popover.addEventListener("close", async () => {
+      popover.remove();
+      document.removeEventListener("click", onClick);
+    });
+    popover.addEventListener("change", async (event) => {
+      await chrome.storage.local.set(event.detail);
+
+      const request = {
+        method: "translateSelection",
+        selectionText: event.detail.selectionText,
       };
+      browser.runtime.sendMessage(request);
+    });
 
-      document.addEventListener("click", onClick);
-      popover.addEventListener("close", async () => {
-        popover.remove();
-        document.removeEventListener("click", onClick);
-      });
-      popover.addEventListener("change", async (event) => {
-        await chrome.storage.local.set(event.detail);
-
-        const request = {
-          method: "translateSelection",
-          selectionText: event.detail.selectionText,
-        };
-        browser.runtime.sendMessage(request);
-      });
-
-      popover.setAttribute("position", JSON.stringify(position));
-
-      return popover;
-    }
+    return popover;
   }
 
   async #translatePage(request) {
