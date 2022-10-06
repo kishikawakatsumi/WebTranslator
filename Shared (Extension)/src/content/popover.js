@@ -7,6 +7,8 @@ import { escapeHTML } from "./utils";
 const styleSheetPath = browser.runtime.getURL("assets/content.css");
 
 const template = `<style>
+  @import url(${styleSheetPath});
+
   .translate-popover {
     position: absolute;
     border-radius: 5px;
@@ -70,7 +72,6 @@ export class Popover extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML = `<link rel="stylesheet" href="${styleSheetPath}">`;
 
     const popover = document.createElement("div");
     popover.innerHTML = template;
