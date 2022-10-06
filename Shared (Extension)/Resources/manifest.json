@@ -40,5 +40,5 @@
 
   "permissions": ["menus", "nativeMessaging", "storage"],
 
-  "web_accessible_resources": ["assets/content.css"]
+  "web_accessible_resources": ["assets/*"]
 }
