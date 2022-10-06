@@ -21,7 +21,7 @@ class App {
           return;
         }
         switch (request.method) {
-          case "translate":
+          case "translate": {
             const texts = request.texts;
             const result = await translate(
               texts,
@@ -31,17 +31,22 @@ class App {
 
             sendResponse({ result });
             break;
-          case "translateSelection":
+          }
+          case "translateSelection": {
             const selectionText = this.#selectionText;
             if (selectionText && selectionText.trim()) {
               this.#translateSelection(selectionText);
+            } else if (request.selectionText) {
+              this.#translateSelection(request.selectionText);
             }
 
-            sendResponse({ result });
-            break;
-          default:
             sendResponse();
             break;
+          }
+          default: {
+            sendResponse();
+            break;
+          }
         }
       }
     );
@@ -91,6 +96,9 @@ class App {
         result,
         targetLanguage,
       });
+    });
+    browser.runtime.sendMessage({
+      method: "finishTranslateSelection",
     });
   }
 }

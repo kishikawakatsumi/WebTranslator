@@ -71,7 +71,6 @@ export class LoginView extends EventTarget {
 
     this.#loginButton.addEventListener("click", (event) => {
       this.#onLoginButtonClick(event);
-      return false;
     });
   }
 
