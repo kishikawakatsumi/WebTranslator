@@ -16,7 +16,7 @@
     "webpack-cli": "4.10.0"
   },
   "dependencies": {
-    "@material/mwc-snackbar": "^0.27.0",
+    "@material/mwc-snackbar": "0.27.0",
     "spectre.css": "0.5.9"
   }
 }
