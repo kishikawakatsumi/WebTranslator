@@ -3,6 +3,9 @@
 import "spectre.css/dist/spectre.min.css";
 import "./popup.css";
 
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css";
+
 import { TranslateView } from "./translate_view";
 import { LoginView } from "./login_view";
 import { TranslateSelectionButton } from "./translate_selection_button";
@@ -80,7 +83,7 @@ class App {
           method: "getSelection",
         })
         .then((response) => {
-          this.#translateSelectionButton.setEnabled(
+          this.#setTranslateSelectionButtonEnabled(
             response && response.result && response.result.trim()
           );
         });
@@ -299,9 +302,21 @@ class App {
         };
         browser.runtime.sendMessage(request);
       } else {
-        this.#translateSelectionButton.setEnabled(false);
+        this.#setTranslateSelectionButtonEnabled(false);
       }
     });
+  }
+
+  #setTranslateSelectionButtonEnabled(enabled) {
+    if (enabled) {
+      this.#translateSelectionButton.setEnabled(true);
+    } else {
+      this.#translateSelectionButton.setEnabled(false);
+      tippy(".tooltip-container", {
+        content: browser.i18n.getMessage("translate_selection_button_tooltip"),
+        animation: "fade",
+      });
+    }
   }
 }
 

@@ -59,6 +59,15 @@
     "description": "Label for the \"Translate to\" inline select to translate popup.",
     "message": "Translate to:"
   },
+  "translate_selection_button_tooltip": {
+    "message": "Select text in the browser."
+  },
+  "ui_inline_translation_copied": {
+    "message": "Translation copied"
+  },
+  "ui_inline_translation_copy": {
+    "message": "Copy to clipboard"
+  },
   "error_message_generic_error": {
     "description": "Genric error to tell the user that there is a technical problem",
     "message": "Sorry, we couldn't translate your text. Please try again later."

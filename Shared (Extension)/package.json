@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@material/mwc-snackbar": "0.27.0",
-    "spectre.css": "0.5.9"
+    "spectre.css": "0.5.9",
+    "tippy.js": "6.3.7"
   }
 }

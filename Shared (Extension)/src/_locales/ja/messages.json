@@ -59,6 +59,15 @@
     "description": "Label for the \"Translate to\" inline select to translate popup.",
     "message": "訳文："
   },
+  "translate_selection_button_tooltip": {
+    "message": "先にブラウザでテキストを選択してください。"
+  },
+  "ui_inline_translation_copied": {
+    "message": "訳文をコピーしました"
+  },
+  "ui_inline_translation_copy": {
+    "message": "クリップボードにコピー"
+  },
   "error_message_generic_error": {
     "description": "Genric error to tell the user that there is a technical problem",
     "message": "テキストを翻訳できませんでした。時間をおいてもう一度お試しください。"
