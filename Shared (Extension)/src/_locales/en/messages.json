@@ -53,7 +53,7 @@
   },
   "context_menus_translate_section": {
     "description": "The right click context menu action to trigger an inline translation",
-    "message": "Translate this selection"
+    "message": "Translate Selection"
   },
   "layout_header_label_language_switch": {
     "description": "Label for the \"Translate to\" inline select to translate popup.",

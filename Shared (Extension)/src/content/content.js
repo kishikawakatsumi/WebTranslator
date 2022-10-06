@@ -133,6 +133,13 @@ class App {
             sendResponse();
             break;
           }
+          case "getSelection": {
+            const selection = window.getSelection();
+            sendResponse({
+              result: selection ? selection.toString() : undefined,
+            });
+            break;
+          }
           default: {
             sendResponse();
             break;
@@ -172,7 +179,7 @@ class App {
       document.removeEventListener("click", onClick);
     });
     popover.addEventListener("change", async (event) => {
-      await chrome.storage.local.set(event.detail);
+      await browser.storage.local.set(event.detail);
 
       const request = {
         method: "translateSelection",

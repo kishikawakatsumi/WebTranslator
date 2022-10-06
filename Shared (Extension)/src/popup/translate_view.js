@@ -106,7 +106,6 @@ export class TranslateView extends EventTarget {
     );
     this.#translateButton.addEventListener("click", (event) => {
       this.#onTranslateButtonClick(event);
-      return false;
     });
 
     this.#showOriginalButton = document.getElementById("show-original-button");
@@ -115,7 +114,6 @@ export class TranslateView extends EventTarget {
     );
     this.#showOriginalButton.addEventListener("click", (event) => {
       this.#onShowOriginalButtonClick(event);
-      return false;
     });
   }
 

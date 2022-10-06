@@ -15,6 +15,12 @@ const template = `<style>
     border-radius: 5px;
     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.16);
     background: #fff;
+    z-index: 2147483550;
+  }
+  @media screen and (max-width: 767px) {
+    .translate-popover {
+      width: 300px;
+    }
   }
   .title-bar {
     height: 1rem;

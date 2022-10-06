@@ -5,10 +5,12 @@ import "./popup.css";
 
 import { TranslateView } from "./translate_view";
 import { LoginView } from "./login_view";
+import { TranslateSelectionButton } from "./translate_selection_button";
 
 class App {
-  #loginView;
   #translateView;
+  #loginView;
+  #translateSelectionButton;
 
   #isMobile = false;
 
@@ -47,11 +49,12 @@ class App {
         this.#isMobile = true;
         document.getElementById("header-title").classList.add("d-hide");
         document.getElementById("translate-view").classList.add("d-hide");
+      } else {
+        document
+          .getElementById("translate-selection-button-container")
+          .classList.add("d-hide");
       }
     });
-
-    this.#loginView = new LoginView();
-    this.#loginView.on("login", this.#onLogin.bind(this));
 
     this.#translateView = new TranslateView();
     this.#translateView.on("change", this.#onTranslateViewChange.bind(this));
@@ -61,6 +64,26 @@ class App {
       this.#translateView.setSelectedTargetLanguage(
         result.selectedTargetLanguage
       );
+    });
+
+    this.#loginView = new LoginView();
+    this.#loginView.on("login", this.#onLogin.bind(this));
+
+    this.#translateSelectionButton = new TranslateSelectionButton();
+    this.#translateSelectionButton.on(
+      "click",
+      this.#onTranslateSelection.bind(this)
+    );
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs
+        .sendMessage(tabs[0].id, {
+          method: "getSelection",
+        })
+        .then((response) => {
+          this.#translateSelectionButton.setEnabled(
+            response && response.result
+          );
+        });
     });
 
     browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -82,6 +105,10 @@ class App {
             request.result.sourceLanguage,
             request.result.targetLanguage
           );
+          sendResponse();
+          break;
+        case "finishTranslateSelection":
+          this.#translateSelectionButton.setLoading(false);
           sendResponse();
           break;
         default:
@@ -256,7 +283,25 @@ class App {
   }
 
   async #onTranslateViewChange(event) {
-    await chrome.storage.local.set(event.detail);
+    await browser.storage.local.set(event.detail);
+  }
+
+  #onTranslateSelection() {
+    browser.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+      const response = await browser.tabs.sendMessage(tabs[0].id, {
+        method: "getSelection",
+      });
+      if (response && response.result) {
+        this.#translateSelectionButton.setLoading(true);
+        const request = {
+          method: "translateSelection",
+          selectionText: response.result,
+        };
+        browser.runtime.sendMessage(request);
+      } else {
+        this.#translateSelectionButton.setEnabled(false);
+      }
+    });
   }
 }
 
