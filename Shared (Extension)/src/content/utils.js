@@ -30,10 +30,6 @@ export function hasInlineElement(element) {
 }
 
 export function scrollDidStop(callback, refresh = 200) {
-  if (!callback || typeof callback !== "function") {
-    return;
-  }
-
   let isScrolling;
   window.addEventListener(
     "scroll",
@@ -41,7 +37,11 @@ export function scrollDidStop(callback, refresh = 200) {
       window.clearTimeout(isScrolling);
       isScrolling = setTimeout(callback, refresh);
     },
-    true
+    {
+      once: false,
+      passive: true,
+      capture: true,
+    }
   );
 }
 
@@ -53,17 +53,6 @@ export function once(fn, context) {
       fn = undefined;
     }
     return result;
-  };
-}
-
-export function debounce(cb, delay = 250) {
-  let timeout;
-
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      cb(...args);
-    }, delay);
   };
 }
 

@@ -8,7 +8,6 @@ import {
   hasTextNode,
   hasInlineElement,
   once,
-  debounce,
   scrollDidStop,
 } from "./utils";
 
