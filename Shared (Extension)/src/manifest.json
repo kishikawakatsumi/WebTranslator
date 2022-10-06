@@ -38,7 +38,7 @@
     }
   },
 
-  "permissions": ["alarms", "menus", "nativeMessaging", "storage"],
+  "permissions": ["menus", "nativeMessaging", "storage"],
 
   "web_accessible_resources": ["assets/content.css"]
 }
