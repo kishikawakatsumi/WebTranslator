@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		147D1B7828DA02F20026A73F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1B7728DA02F20026A73F /* AppDelegate.swift */; };
-		147D1B7A28DA02F20026A73F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1B7928DA02F20026A73F /* SceneDelegate.swift */; };
 		147D1B7D28DA02F20026A73F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B7B28DA02F20026A73F /* LaunchScreen.storyboard */; };
-		147D1B8028DA02F20026A73F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B7E28DA02F20026A73F /* Main.storyboard */; };
 		147D1B8928DA02F20026A73F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1B8828DA02F20026A73F /* AppDelegate.swift */; };
 		147D1B8C28DA02F20026A73F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B8A28DA02F20026A73F /* Main.storyboard */; };
 		147D1B9328DA02F20026A73F /* WebTranslator Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 147D1B9228DA02F20026A73F /* WebTranslator Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -23,7 +20,6 @@
 		147D1BA828DA02F20026A73F /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B6128DA02F10026A73F /* Style.css */; };
 		147D1BA928DA02F20026A73F /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B6228DA02F10026A73F /* Script.js */; };
 		147D1BAA28DA02F20026A73F /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B6228DA02F10026A73F /* Script.js */; };
-		147D1BAB28DA02F20026A73F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1B6328DA02F10026A73F /* ViewController.swift */; };
 		147D1BAC28DA02F20026A73F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1B6328DA02F10026A73F /* ViewController.swift */; };
 		147D1BAD28DA02F20026A73F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B6428DA02F20026A73F /* Assets.xcassets */; };
 		147D1BAE28DA02F20026A73F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B6428DA02F20026A73F /* Assets.xcassets */; };
@@ -61,6 +57,9 @@
 		147D1CFB28DB9FD70026A73F /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF928DB9FD70026A73F /* Translator.swift */; };
 		14984F7328EC294500493D97 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 14984F7228EC294500493D97 /* assets */; };
 		14984F7428EC294500493D97 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 14984F7228EC294500493D97 /* assets */; };
+		14984F7A28EE662000493D97 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14984F7928EE662000493D97 /* ContentView.swift */; };
+		14984F7C28EE69F200493D97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14984F7B28EE69F200493D97 /* Assets.xcassets */; };
+		14984F9828EE6C3A00493D97 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14984F9728EE6C3A00493D97 /* App.swift */; };
 		14D331B028E08F0500EA871F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14D331AE28E08E5A00EA871F /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -123,10 +122,7 @@
 		147D1B6D28DA02F20026A73F /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = popup.html; sourceTree = "<group>"; };
 		147D1B6F28DA02F20026A73F /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = popup.js; sourceTree = "<group>"; };
 		147D1B7428DA02F20026A73F /* WebTranslator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebTranslator.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		147D1B7728DA02F20026A73F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		147D1B7928DA02F20026A73F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		147D1B7C28DA02F20026A73F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		147D1B7F28DA02F20026A73F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		147D1B8128DA02F20026A73F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		147D1B8628DA02F20026A73F /* WebTranslator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebTranslator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		147D1B8828DA02F20026A73F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +144,9 @@
 		147D1CF628DB976B0026A73F /* UserDisplayNameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDisplayNameRequest.swift; sourceTree = "<group>"; };
 		147D1CF928DB9FD70026A73F /* Translator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
 		14984F7228EC294500493D97 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		14984F7928EE662000493D97 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		14984F7B28EE69F200493D97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		14984F9728EE6C3A00493D97 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		14D331AB28E08E4900EA871F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = ja; path = ../ja.lproj/Main.html; sourceTree = "<group>"; };
 		14D331AD28E08E5A00EA871F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		14D331AF28E08E5C00EA871F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -267,13 +266,13 @@
 		147D1B7628DA02F20026A73F /* iOS (App) */ = {
 			isa = PBXGroup;
 			children = (
-				147D1B7728DA02F20026A73F /* AppDelegate.swift */,
-				147D1B7928DA02F20026A73F /* SceneDelegate.swift */,
+				14984F9728EE6C3A00493D97 /* App.swift */,
+				14984F7928EE662000493D97 /* ContentView.swift */,
 				147D1B7B28DA02F20026A73F /* LaunchScreen.storyboard */,
-				147D1B7E28DA02F20026A73F /* Main.storyboard */,
+				14984F7B28EE69F200493D97 /* Assets.xcassets */,
+				147D1CF228DB76140026A73F /* WebTranslator.entitlements */,
 				147D1B8128DA02F20026A73F /* Info.plist */,
 				14D331AE28E08E5A00EA871F /* InfoPlist.strings */,
-				147D1CF228DB76140026A73F /* WebTranslator.entitlements */,
 			);
 			path = "iOS (App)";
 			sourceTree = "<group>";
@@ -283,8 +282,8 @@
 			children = (
 				147D1B8828DA02F20026A73F /* AppDelegate.swift */,
 				147D1B8A28DA02F20026A73F /* Main.storyboard */,
-				142049E028DCEF6700129EBB /* Info.plist */,
 				147D1B8D28DA02F20026A73F /* WebTranslator.entitlements */,
+				142049E028DCEF6700129EBB /* Info.plist */,
 			);
 			path = "macOS (App)";
 			sourceTree = "<group>";
@@ -292,8 +291,8 @@
 		147D1B9628DA02F20026A73F /* iOS (Extension) */ = {
 			isa = PBXGroup;
 			children = (
-				147D1B9728DA02F20026A73F /* Info.plist */,
 				147D1CF128DB75D50026A73F /* WebTranslator.entitlements */,
+				147D1B9728DA02F20026A73F /* Info.plist */,
 			);
 			path = "iOS (Extension)";
 			sourceTree = "<group>";
@@ -301,8 +300,8 @@
 		147D1BA028DA02F20026A73F /* macOS (Extension) */ = {
 			isa = PBXGroup;
 			children = (
-				147D1BA128DA02F20026A73F /* Info.plist */,
 				147D1BA228DA02F20026A73F /* WebTranslator.entitlements */,
+				147D1BA128DA02F20026A73F /* Info.plist */,
 			);
 			path = "macOS (Extension)";
 			sourceTree = "<group>";
@@ -439,7 +438,7 @@
 				147D1BA328DA02F20026A73F /* Main.html in Resources */,
 				147D1BA928DA02F20026A73F /* Script.js in Resources */,
 				147D1BAD28DA02F20026A73F /* Assets.xcassets in Resources */,
-				147D1B8028DA02F20026A73F /* Main.storyboard in Resources */,
+				14984F7C28EE69F200493D97 /* Assets.xcassets in Resources */,
 				147D1BA728DA02F20026A73F /* Style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,9 +493,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				147D1BAB28DA02F20026A73F /* ViewController.swift in Sources */,
-				147D1B7828DA02F20026A73F /* AppDelegate.swift in Sources */,
-				147D1B7A28DA02F20026A73F /* SceneDelegate.swift in Sources */,
+				14984F9828EE6C3A00493D97 /* App.swift in Sources */,
+				14984F7A28EE662000493D97 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,14 +570,6 @@
 				147D1B7C28DA02F20026A73F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		147D1B7E28DA02F20026A73F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				147D1B7F28DA02F20026A73F /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		147D1B8A28DA02F20026A73F /* Main.storyboard */ = {
@@ -792,7 +782,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = WebTranslator;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -829,7 +818,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = WebTranslator;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
