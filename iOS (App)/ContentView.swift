@@ -28,6 +28,7 @@ struct ContentView: View {
           Image("addressbar")
             .resizable()
             .scaledToFit()
+            .frame(maxWidth: 300)
             .border(Color.gray, width: 0.5)
           HStack(alignment: .top) {
             Image(systemName: "puzzlepiece.extension")
@@ -39,6 +40,7 @@ struct ContentView: View {
           Image("manageextensions")
             .resizable()
             .scaledToFit()
+            .frame(maxWidth: 300)
             .border(Color.gray, width: 0.5)
           HStack(alignment: .top) {
             Image(systemName: "switch.2")

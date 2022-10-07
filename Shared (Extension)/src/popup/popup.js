@@ -48,10 +48,13 @@ class App {
       document.body.style.width = "100%";
     }
     browser.runtime.getPlatformInfo().then((info) => {
-      if (info.os === "ios" && window.screen.width < 768) {
-        this.#isMobile = true;
-        document.getElementById("header-title").classList.add("d-hide");
-        document.getElementById("translate-view").classList.add("d-hide");
+      if (info.os === "ios") {
+        if (window.screen.width < 768) {
+          this.#isMobile = true;
+
+          document.getElementById("header-title").classList.add("d-hide");
+          document.getElementById("translate-view").classList.add("d-hide");
+        }
       } else {
         document
           .getElementById("translate-selection-button-container")

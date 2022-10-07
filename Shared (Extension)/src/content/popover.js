@@ -65,7 +65,7 @@ const template = `<style>
     <div class="py-2">
       <div class="loading loading-lg" id="spinner"></div>
       <div class="text-small d-none" id="result"></div>
-      <button class="btn btn-sm mx-1 float-right" style="width: 14px;" id="copy-button"><i class="icon icon-copy"></i></button>
+      <button class="btn btn-sm mx-1 float-right" id="copy-button"><i class="icon icon-copy"></i></button>
     </div>
   </div>
 </div>`;
