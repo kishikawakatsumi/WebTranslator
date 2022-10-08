@@ -101,7 +101,8 @@ class App {
             let x = selectionRect.left + window.scrollX;
             let y = selectionRect.bottom + window.scrollY + 30;
 
-            const popover = this.#createPopover({ x, y });
+            const position = this.#getExistingPopoverPosition();
+            const popover = this.#createPopover(position || { x, y });
             popover.setAttribute("loading", true);
 
             sendResponse();
@@ -189,6 +190,15 @@ class App {
     });
 
     return popover;
+  }
+
+  #getExistingPopoverPosition() {
+    const id = "translate-popover";
+    const popover = document.getElementById(id);
+    if (popover) {
+      return popover.getPosition();
+    }
+    return undefined;
   }
 
   async #translatePage(request) {
