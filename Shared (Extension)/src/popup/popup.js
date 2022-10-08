@@ -1,6 +1,8 @@
 "use strict";
 
-import "spectre.css/dist/spectre.min.css";
+import "@nordhealth/css";
+import "@nordhealth/components";
+
 import "./popup.css";
 
 import tippy from "tippy.js";
@@ -9,6 +11,7 @@ import "tippy.js/dist/tippy.css";
 import { TranslateView } from "./translate_view";
 import { LoginView } from "./login_view";
 import { TranslateSelectionButton } from "./translate_selection_button";
+import { runColorMode, loadColorScheme } from "../shared/utils";
 
 class App {
   #translateView;
@@ -53,6 +56,7 @@ class App {
           this.#isMobile = true;
 
           document.getElementById("header-title").classList.add("d-hide");
+          document.getElementById("login-view-divider").classList.add("d-hide");
           document.getElementById("translate-view").classList.add("d-hide");
         }
       } else {
@@ -60,6 +64,11 @@ class App {
           .getElementById("translate-selection-button-container")
           .classList.add("d-hide");
       }
+    });
+    runColorMode((isDarkMode) => {
+      loadColorScheme(
+        isDarkMode ? "./assets/nord-dark.css" : "./assets/nord.css"
+      );
     });
 
     this.#translateView = new TranslateView();

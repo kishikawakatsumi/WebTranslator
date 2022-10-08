@@ -9,7 +9,11 @@ export class TranslateSelectionButton extends EventTarget {
   }
 
   setLoading(loading) {
-    this.#translateSelectionButton.classList.toggle("loading", loading);
+    if (loading) {
+      this.#translateSelectionButton.setAttribute("loading", loading);
+    } else {
+      this.#translateSelectionButton.removeAttribute("loading");
+    }
   }
 
   setEnabled(enabled) {

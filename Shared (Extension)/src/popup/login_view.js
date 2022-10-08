@@ -25,18 +25,12 @@ export class LoginView extends EventTarget {
   }
 
   setLoading(loading) {
+    this.#emailInput.disabled = loading;
+    this.#passwordInput.disabled = loading;
     if (loading) {
-      this.#emailInput.disabled = true;
-      this.#passwordInput.disabled = true;
-
-      this.#loginButton.disabled = true;
-      this.#loginButton.classList.add("loading");
+      this.#loginButton.setAttribute("loading", loading);
     } else {
-      this.#emailInput.disabled = false;
-      this.#passwordInput.disabled = false;
-
-      this.#loginButton.disabled = false;
-      this.#loginButton.classList.remove("loading");
+      this.#loginButton.removeAttribute("loading");
     }
   }
 
@@ -67,7 +61,6 @@ export class LoginView extends EventTarget {
     this.#loginButton = document.getElementById("login-button");
     this.#loginButton.textContent =
       browser.i18n.getMessage("login_button_label");
-    this.#loginButton.disabled = true;
 
     this.#loginButton.addEventListener("click", (event) => {
       this.#onLoginButtonClick(event);
