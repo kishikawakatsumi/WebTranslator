@@ -13,6 +13,7 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "Resources"),
     publicPath: "/",
+    clean: true,
   },
   module: {
     rules: [

@@ -2,7 +2,7 @@
   "name": "webtranslator",
   "version": "0.1.1",
   "scripts": {
-    "build": "webpack --mode production",
+    "prod": "webpack --mode production",
     "dev": "webpack --mode development"
   },
   "author": "kishikawa katsumi",
