@@ -18,12 +18,12 @@
   },
   "dependencies": {
     "@material/mwc-snackbar": "0.27.0",
-    "@nordhealth/components": "^2.8.0",
-    "@nordhealth/css": "^2.4.0",
-    "@nordhealth/fonts": "^2.0.15",
-    "@nordhealth/icons": "^1.8.0",
-    "@nordhealth/themes": "^7.0.2",
-    "@nordhealth/tokens": "^6.2.0",
+    "@nordhealth/components": "2.8.0",
+    "@nordhealth/css": "2.4.0",
+    "@nordhealth/fonts": "2.0.15",
+    "@nordhealth/icons": "1.8.0",
+    "@nordhealth/themes": "7.0.2",
+    "@nordhealth/tokens": "6.2.0",
     "tippy.js": "6.3.7"
   }
 }
