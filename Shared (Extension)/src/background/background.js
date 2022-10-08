@@ -15,43 +15,43 @@ class App {
   }
 
   #setupListeners() {
-    browser.runtime.onMessage.addListener(
-      async (request, sender, sendResponse) => {
-        if (!request) {
-          return;
+    browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      if (!request) {
+        return;
+      }
+      switch (request.method) {
+        case "translate": {
+          const texts = request.texts;
+          translate(texts, request.sourceLanguage, request.targetLanguage)
+            .then((result) => {
+              sendResponse({ result });
+            })
+            .catch((error) => {
+              sendResponse();
+            });
+          break;
         }
-        switch (request.method) {
-          case "translate": {
-            const texts = request.texts;
-            const result = await translate(
-              texts,
-              request.sourceLanguage,
-              request.targetLanguage
-            );
+        case "translateSelection": {
+          const selectionText = this.#selectionText;
+          if (request.selectionText && request.selectionText.trim()) {
+            // From popup toolbar (Mobile only)
+            this.#translateSelection(request.selectionText);
+          } else if (selectionText && selectionText.trim()) {
+            // Language changed in popover window
+            this.#translateSelection(selectionText);
+          }
 
-            sendResponse({ result });
-            break;
-          }
-          case "translateSelection": {
-            const selectionText = this.#selectionText;
-            if (request.selectionText && request.selectionText.trim()) {
-              // From popup toolbar (Mobile only)
-              this.#translateSelection(request.selectionText);
-            } else if (selectionText && selectionText.trim()) {
-              // Language changed in popover window
-              this.#translateSelection(selectionText);
-            }
-
-            sendResponse();
-            break;
-          }
-          default: {
-            sendResponse();
-            break;
-          }
+          sendResponse();
+          break;
+        }
+        default: {
+          sendResponse();
+          break;
         }
       }
-    );
+
+      return true;
+    });
   }
 
   #setupContextMenu() {
