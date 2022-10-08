@@ -28,6 +28,12 @@ const template = `<style>
     z-index: 9998;
   }
 
+  @media screen and (max-width: 767px) {
+    .translate-popover {
+      width: 300px;
+    }
+  }
+
   @media (prefers-color-scheme: light) {
     .translate-popover {
       background: #fff;
@@ -36,12 +42,6 @@ const template = `<style>
   @media (prefers-color-scheme: dark) {
     .translate-popover {
       background: rgb(24, 27, 32);
-    }
-  }
-
-  @media screen and (max-width: 767px) {
-    .translate-popover {
-      width: 300px;
     }
   }
 
@@ -237,7 +237,7 @@ export class Popover extends HTMLElement {
         this.#result.innerHTML = escapeHTML(newValue).split("\n").join("<br>");
         break;
       case "error":
-        this.#result.innerHTML = `<span class="text-error">${newValue}</span>`;
+        this.#result.innerHTML = `<nord-banner variant="danger">${newValue}</nord-banner>`;
         break;
       case "lang":
         for (const c of this.#result.classList) {
