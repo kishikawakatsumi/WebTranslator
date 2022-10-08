@@ -254,6 +254,10 @@ export class Popover extends HTMLElement {
     }
   }
 
+  getPosition() {
+    return { x: this.#draggable.offsetLeft, y: this.#draggable.offsetTop };
+  }
+
   #setSelectedTargetLanguage(language) {
     if (
       language &&
