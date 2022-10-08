@@ -10,8 +10,8 @@
 		147D1B7D28DA02F20026A73F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B7B28DA02F20026A73F /* LaunchScreen.storyboard */; };
 		147D1B8928DA02F20026A73F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1B8828DA02F20026A73F /* AppDelegate.swift */; };
 		147D1B8C28DA02F20026A73F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B8A28DA02F20026A73F /* Main.storyboard */; };
-		147D1B9328DA02F20026A73F /* WebTranslator Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 147D1B9228DA02F20026A73F /* WebTranslator Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		147D1B9D28DA02F20026A73F /* WebTranslator Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 147D1B9C28DA02F20026A73F /* WebTranslator Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		147D1B9328DA02F20026A73F /* WebTranslator Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 147D1B9228DA02F20026A73F /* WebTranslator Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		147D1B9D28DA02F20026A73F /* WebTranslator Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 147D1B9C28DA02F20026A73F /* WebTranslator Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		147D1BA328DA02F20026A73F /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B5E28DA02F10026A73F /* Main.html */; };
 		147D1BA428DA02F20026A73F /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B5E28DA02F10026A73F /* Main.html */; };
 		147D1BA528DA02F20026A73F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 147D1B6028DA02F10026A73F /* Icon.png */; };
@@ -81,26 +81,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		147D1BC628DA02F20026A73F /* Embed App Extensions */ = {
+		147D1BC628DA02F20026A73F /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				147D1B9328DA02F20026A73F /* WebTranslator Extension.appex in Embed App Extensions */,
+				147D1B9328DA02F20026A73F /* WebTranslator Extension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		147D1BCD28DA02F20026A73F /* Embed App Extensions */ = {
+		147D1BCD28DA02F20026A73F /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				147D1B9D28DA02F20026A73F /* WebTranslator Extension.appex in Embed App Extensions */,
+				147D1B9D28DA02F20026A73F /* WebTranslator Extension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -316,7 +316,7 @@
 				147D1B7028DA02F20026A73F /* Sources */,
 				147D1B7128DA02F20026A73F /* Frameworks */,
 				147D1B7228DA02F20026A73F /* Resources */,
-				147D1BC628DA02F20026A73F /* Embed App Extensions */,
+				147D1BC628DA02F20026A73F /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -335,7 +335,7 @@
 				147D1B8228DA02F20026A73F /* Sources */,
 				147D1B8328DA02F20026A73F /* Frameworks */,
 				147D1B8428DA02F20026A73F /* Resources */,
-				147D1BCD28DA02F20026A73F /* Embed App Extensions */,
+				147D1BCD28DA02F20026A73F /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -389,7 +389,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					147D1B7328DA02F20026A73F = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -627,6 +627,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -688,6 +689,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -846,6 +848,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/WebTranslator.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -876,6 +879,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/WebTranslator.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -909,6 +913,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/WebTranslator.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -944,6 +949,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/WebTranslator.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
