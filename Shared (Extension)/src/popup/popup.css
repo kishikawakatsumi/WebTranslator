@@ -1,7 +1,20 @@
 :root {
   color-scheme: light dark;
 }
+
 body {
-  background-color: transparent;
   width: 375px;
+}
+
+.d-none,
+.d-hide {
+  display: none !important;
+}
+
+.d-visible {
+  visibility: visible;
+}
+
+.d-invisible {
+  visibility: hidden;
 }

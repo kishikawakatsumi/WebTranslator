@@ -12,6 +12,7 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "Resources"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -35,12 +36,17 @@ module.exports = {
         { from: "./src/images/*.*", to: "images/[name][ext]" },
         { from: "./src/manifest.json", to: "[name][ext]" },
         {
-          from: "spectre.css/dist/spectre.min.css",
+          from: "@nordhealth/css/lib/nord.min.css",
           to: "assets/[name][ext]",
           context: "node_modules",
         },
         {
-          from: "spectre.css/dist/spectre-icons.min.css",
+          from: "@nordhealth/themes/lib/nord.css",
+          to: "assets/[name][ext]",
+          context: "node_modules",
+        },
+        {
+          from: "@nordhealth/themes/lib/nord-dark.css",
           to: "assets/[name][ext]",
           context: "node_modules",
         },
