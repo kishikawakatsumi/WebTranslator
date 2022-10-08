@@ -58,7 +58,7 @@ export class TranslateView extends EventTarget {
     document.getElementById("translation-source-lang").textContent =
       browser.i18n.getMessage(
         `supported_languages_${sourceLanguage.toUpperCase()}`
-      );
+      ) || "Unknown";
   }
 
   on(type, listener) {
