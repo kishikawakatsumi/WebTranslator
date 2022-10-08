@@ -1,6 +1,6 @@
 "use strict";
 
-import "@nordhealth/css";
+import "./nord.css";
 import "@nordhealth/components";
 
 import { supportedLanguages } from "../shared/supported_languages";
@@ -9,6 +9,17 @@ import { escapeHTML } from "./utils";
 import { runColorMode, loadColorScheme } from "../shared/utils";
 
 const template = `<style>
+  :not(:defined) {
+    visibility: hidden;
+  }
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   .translate-popover {
     width: 550px;
     position: absolute;
