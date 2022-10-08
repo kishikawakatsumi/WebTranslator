@@ -35,14 +35,13 @@ export class TranslateView extends EventTarget {
   }
 
   setLoading(loading) {
+    this.#languageSelect.disabled = loading;
     if (loading) {
       this.showInitialView();
       this.#translateButton.setAttribute("loading", loading);
     } else {
       this.#translateButton.removeAttribute("loading");
     }
-    this.#languageSelect.disabled = loading;
-    this.#translateButton.disabled = loading;
   }
 
   showInitialView() {
