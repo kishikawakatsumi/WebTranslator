@@ -1,6 +1,6 @@
 "use strict";
 
-import "@nordhealth/css";
+import "./nord.css";
 import "@nordhealth/components";
 
 import "./popup.css";
