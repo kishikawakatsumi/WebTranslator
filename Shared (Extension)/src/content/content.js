@@ -262,12 +262,21 @@ class App {
   }
 
   #cancelTranslation() {
+    this.#isShowingOriginal = false;
+
     browser.runtime.sendMessage({
       method: "cancelTranslation",
+      result: {
+        sourceLanguage: this.#sourceLanguage,
+        targetLanguage: this.#targetLanguage,
+      },
     });
   }
 
   #finishTranslation() {
+    this.#isProcessing = false;
+    this.#toast.close();
+
     browser.runtime.sendMessage({
       method: "finishTranslation",
       result: {
@@ -275,9 +284,6 @@ class App {
         targetLanguage: this.#targetLanguage,
       },
     });
-
-    this.#isProcessing = false;
-    this.#toast.close();
   }
 }
 
