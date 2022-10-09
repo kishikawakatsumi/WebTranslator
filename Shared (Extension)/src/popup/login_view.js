@@ -54,8 +54,11 @@ export class LoginView extends EventTarget {
     this.#loginLabel.textContent = browser.i18n.getMessage("ui_login_body");
 
     this.#emailInput = document.getElementById("email-input");
+    this.#emailInput.label = browser.i18n.getMessage("ui_email_input_label");
     this.#passwordInput = document.getElementById("password-input");
-
+    this.#passwordInput.label = browser.i18n.getMessage(
+      "ui_password_input_label"
+    );
     this.#errorLabel = document.getElementById("login-error-label");
 
     this.#loginButton = document.getElementById("login-button");

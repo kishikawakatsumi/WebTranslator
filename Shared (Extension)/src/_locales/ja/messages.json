@@ -14,6 +14,14 @@
     "description": "Login to DeepL Pro link label",
     "message": "DeepL Proにログインする"
   },
+  "ui_email_input_label": {
+    "description": "",
+    "message": "メールアドレス"
+  },
+  "ui_password_input_label": {
+    "description": "",
+    "message": "パスワード"
+  },
   "login_button_label": {
     "description": "Login to DeepL Pro button label",
     "message": "ログイン"
