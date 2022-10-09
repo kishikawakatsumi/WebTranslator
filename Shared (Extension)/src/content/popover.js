@@ -1,7 +1,13 @@
 "use strict";
 
 import "./nord.css";
-import "@nordhealth/components";
+import "@nordhealth/components/lib/Banner";
+import "@nordhealth/components/lib/Button";
+import "@nordhealth/components/lib/Divider";
+import "@nordhealth/components/lib/Icon";
+import "@nordhealth/components/lib/Select";
+import "@nordhealth/components/lib/Spinner";
+import "@nordhealth/components/lib/Stack";
 
 import { supportedLanguages } from "../shared/supported_languages";
 import { makeDraggable } from "./draggable";
@@ -284,7 +290,7 @@ export class Popover extends HTMLElement {
     }
   }
 
-  #onLanguageSelectChange(event) {
+  #onLanguageSelectChange() {
     this.dispatchEvent(
       new CustomEvent("change", {
         detail: {
