@@ -14,6 +14,14 @@
     "description": "Login to DeepL Pro link label",
     "message": "Log in to DeepL Pro"
   },
+  "ui_email_input_label": {
+    "description": "",
+    "message": "Email"
+  },
+  "ui_password_input_label": {
+    "description": "",
+    "message": "Password"
+  },
   "login_button_label": {
     "description": "Login to DeepL Pro button label",
     "message": "Login"
