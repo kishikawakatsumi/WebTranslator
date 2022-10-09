@@ -246,16 +246,7 @@ export class Popover extends HTMLElement {
         this.#result.innerHTML = `<nord-banner variant="danger">${newValue}</nord-banner>`;
         break;
       case "lang":
-        for (const c of this.#result.classList) {
-          if (c.startsWith("lang-")) {
-            this.#result.classList.remove(c);
-          }
-        }
-        if (newValue === "ZH") {
-          this.#result.classList.add(`lang-zh-hans`);
-        } else if (newValue === "JA") {
-          this.#result.classList.add(`lang-ja`);
-        }
+        this.#setSelectedTargetLanguage(newValue);
         break;
     }
   }
