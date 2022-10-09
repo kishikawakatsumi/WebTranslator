@@ -1,7 +1,11 @@
 "use strict";
 
 import "./nord.css";
-import "@nordhealth/components";
+import "@nordhealth/components/lib/Button";
+import "@nordhealth/components/lib/Divider";
+import "@nordhealth/components/lib/Input";
+import "@nordhealth/components/lib/Select";
+import "@nordhealth/components/lib/Stack";
 
 import "./popup.css";
 
