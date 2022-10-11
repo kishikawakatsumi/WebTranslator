@@ -94,6 +94,10 @@
     "description": "Info for free users that too many requests are triggered",
     "message": "Sorry, we couldn't translate your text. It appears that your network is sending too many requests to our servers."
   },
+  "error_message_needs_reload": {
+    "description": "",
+    "message": "You need to reload this page to translate. Please try again after reloading the page."
+  },
   "supported_languages_BG": {
     "description": "Name of language",
     "message": "Bulgarian"

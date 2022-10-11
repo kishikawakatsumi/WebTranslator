@@ -141,6 +141,10 @@ class App {
             });
             break;
           }
+          case "ping": {
+            sendResponse({ result: "pong" });
+            break;
+          }
           default: {
             sendResponse();
             break;

@@ -1,6 +1,7 @@
 "use strict";
 
 import "./nord.css";
+import "@nordhealth/components/lib/Banner";
 import "@nordhealth/components/lib/Button";
 import "@nordhealth/components/lib/Divider";
 import "@nordhealth/components/lib/Input";
@@ -29,6 +30,8 @@ class App {
   }
 
   async run() {
+    this.#warnIfExtensionUnavailable();
+
     const response = await this.#getContentState();
     if (response && response.result) {
       // Transration is already in progress or finished
@@ -330,6 +333,26 @@ class App {
         animation: "fade",
       });
     }
+  }
+
+  #warnIfExtensionUnavailable() {
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs
+        .sendMessage(tabs[0].id, {
+          method: "ping",
+        })
+        .then((response) => {
+          if (!response) {
+            const message = browser.i18n.getMessage(
+              "error_message_needs_reload"
+            );
+            const banner = document.getElementById("reload-message-banner");
+            banner.textContent = message;
+            banner.classList.remove("d-hide");
+            this.#translateView.setEnabled(false);
+          }
+        });
+    });
   }
 }
 
