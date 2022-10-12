@@ -12,30 +12,30 @@ import {
 } from "./utils";
 
 class App {
-  #uid = 1;
-  #sourceLanguage = undefined;
-  #targetLanguage = undefined;
-  #originalTexts = {};
-  #translatedTexts = {};
+  _uid = 1;
+  _sourceLanguage = undefined;
+  _targetLanguage = undefined;
+  _originalTexts = {};
+  _translatedTexts = {};
 
-  #toast = new Toast();
+  _toast = new Toast();
 
-  #isProcessing = false;
-  #shouldProcessAfterScrolling = false;
-  #isShowingOriginal = false;
+  _isProcessing = false;
+  _shouldProcessAfterScrolling = false;
+  _isShowingOriginal = false;
 
   constructor() {
-    this.#init();
+    this._init();
   }
 
-  #init() {
+  _init() {
     if (!window.customElements.get("translate-popover")) {
       window.customElements.define("translate-popover", Popover);
     }
-    this.#setupListeners();
+    this._setupListeners();
   }
 
-  #setupListeners() {
+  _setupListeners() {
     browser.runtime.onMessage.addListener(
       async (request, sender, sendResponse) => {
         if (!request) {
@@ -43,16 +43,16 @@ class App {
         }
         switch (request.method) {
           case "translate": {
-            this.#shouldProcessAfterScrolling = true;
+            this._shouldProcessAfterScrolling = true;
 
-            await this.#translatePage(request);
+            await this._translatePage(request);
 
             once(
               scrollDidStop(async () => {
-                if (this.#shouldProcessAfterScrolling) {
-                  await this.#translatePage({
-                    sourceLanguage: this.#sourceLanguage,
-                    targetLanguage: this.#targetLanguage,
+                if (this._shouldProcessAfterScrolling) {
+                  await this._translatePage({
+                    sourceLanguage: this._sourceLanguage,
+                    targetLanguage: this._targetLanguage,
                   });
                 }
               }, 500)
@@ -62,14 +62,14 @@ class App {
             break;
           }
           case "getContentState": {
-            if (this.#isProcessing) {
-              sendResponse({ result: { isProcessing: this.#isProcessing } });
-            } else if (Object.keys(this.#originalTexts).length > 0) {
+            if (this._isProcessing) {
+              sendResponse({ result: { isProcessing: this._isProcessing } });
+            } else if (Object.keys(this._originalTexts).length > 0) {
               sendResponse({
                 result: {
-                  sourceLanguage: this.#sourceLanguage,
-                  targetLanguage: this.#targetLanguage,
-                  isShowingOriginal: this.#isShowingOriginal,
+                  sourceLanguage: this._sourceLanguage,
+                  targetLanguage: this._targetLanguage,
+                  isShowingOriginal: this._isShowingOriginal,
                 },
               });
             } else {
@@ -78,15 +78,15 @@ class App {
             break;
           }
           case "showOriginal": {
-            this.#shouldProcessAfterScrolling = false;
-            this.#isShowingOriginal = true;
+            this._shouldProcessAfterScrolling = false;
+            this._isShowingOriginal = true;
 
             const elements = document.querySelectorAll(
               '[data-wtdl-translated="true"]'
             );
             for (const element of elements) {
               const uid = element.dataset.wtdlUid;
-              const originalText = this.#originalTexts[uid];
+              const originalText = this._originalTexts[uid];
               element.innerHTML = originalText;
               element.dataset.wtdlTranslated = "false";
             }
@@ -101,8 +101,8 @@ class App {
             let x = selectionRect.left + window.scrollX;
             let y = selectionRect.bottom + window.scrollY + 30;
 
-            const position = this.#getExistingPopoverPosition();
-            const popover = this.#createPopover(position || { x, y });
+            const position = this._getExistingPopoverPosition();
+            const popover = this._createPopover(position || { x, y });
             popover.setAttribute("loading", true);
 
             sendResponse();
@@ -154,7 +154,7 @@ class App {
     );
   }
 
-  #createPopover(position) {
+  _createPopover(position) {
     const id = "translate-popover";
     (() => {
       let popover = document.getElementById(id);
@@ -196,7 +196,7 @@ class App {
     return popover;
   }
 
-  #getExistingPopoverPosition() {
+  _getExistingPopoverPosition() {
     const id = "translate-popover";
     const popover = document.getElementById(id);
     if (popover) {
@@ -205,15 +205,15 @@ class App {
     return undefined;
   }
 
-  async #translatePage(request) {
+  async _translatePage(request) {
     const translatedElements = document.querySelectorAll(
       '[data-wtdl-translated="false"]'
     );
-    if (this.#targetLanguage === request.targetLanguage) {
+    if (this._targetLanguage === request.targetLanguage) {
       // Restore translated texts
       for (const element of translatedElements) {
         const uid = element.dataset.wtdlUid;
-        const translatedText = this.#translatedTexts[uid];
+        const translatedText = this._translatedTexts[uid];
         element.innerHTML = translatedText;
         element.dataset.wtdlTranslated = "true";
       }
@@ -221,10 +221,10 @@ class App {
 
     const visibleElements = await collectVisibleElements();
     if (visibleElements.length === 0) {
-      this.#cancelTranslation();
+      this._cancelTranslation();
       return;
     }
-    this.#startTranslation();
+    this._startTranslation();
 
     const texts = visibleElements.map((element) => element.text);
     const response = await browser.runtime.sendMessage({
@@ -237,20 +237,20 @@ class App {
     if (response && response.result) {
       const result = response.result.result;
       if (result && result.texts) {
-        this.#sourceLanguage = result.lang;
-        this.#targetLanguage = request.targetLanguage;
+        this._sourceLanguage = result.lang;
+        this._targetLanguage = request.targetLanguage;
 
         const translatedTexts = result.texts;
         if (translatedTexts.length === visibleElements.length) {
           for (let i = 0; i < visibleElements.length; i++) {
             const element = visibleElements[i].element;
             const text = translatedTexts[i].text;
-            const uid = element.dataset.wtdlUid || this.#uid++;
+            const uid = element.dataset.wtdlUid || this._uid++;
 
             if (element.dataset.wtdlOriginal !== "true") {
-              this.#originalTexts[uid] = element.innerHTML;
+              this._originalTexts[uid] = element.innerHTML;
             }
-            this.#translatedTexts[uid] = text;
+            this._translatedTexts[uid] = text;
             element.innerHTML = text;
 
             element.dataset.wtdlUid = `${uid}`;
@@ -261,41 +261,41 @@ class App {
       }
     }
 
-    this.#finishTranslation();
+    this._finishTranslation();
   }
 
-  #startTranslation() {
-    this.#toast.show();
+  _startTranslation() {
+    this._toast.show();
 
-    this.#isProcessing = true;
-    this.#isShowingOriginal = false;
+    this._isProcessing = true;
+    this._isShowingOriginal = false;
 
     browser.runtime.sendMessage({
       method: "startTranslation",
     });
   }
 
-  #cancelTranslation() {
-    this.#isShowingOriginal = false;
+  _cancelTranslation() {
+    this._isShowingOriginal = false;
 
     browser.runtime.sendMessage({
       method: "cancelTranslation",
       result: {
-        sourceLanguage: this.#sourceLanguage,
-        targetLanguage: this.#targetLanguage,
+        sourceLanguage: this._sourceLanguage,
+        targetLanguage: this._targetLanguage,
       },
     });
   }
 
-  #finishTranslation() {
-    this.#isProcessing = false;
-    this.#toast.close();
+  _finishTranslation() {
+    this._isProcessing = false;
+    this._toast.close();
 
     browser.runtime.sendMessage({
       method: "finishTranslation",
       result: {
-        sourceLanguage: this.#sourceLanguage,
-        targetLanguage: this.#targetLanguage,
+        sourceLanguage: this._sourceLanguage,
+        targetLanguage: this._targetLanguage,
       },
     });
   }

@@ -19,48 +19,48 @@ import { TranslateSelectionButton } from "./translate_selection_button";
 import { runColorMode, loadColorScheme } from "../shared/utils";
 
 class App {
-  #translateView;
-  #loginView;
-  #translateSelectionButton;
+  _translateView;
+  _loginView;
+  _translateSelectionButton;
 
-  #isMobile = false;
+  _isMobile = false;
 
   constructor() {
-    this.#init();
+    this._init();
   }
 
   async run() {
-    this.#warnIfExtensionUnavailable();
+    this._warnIfExtensionUnavailable();
 
-    const response = await this.#getContentState();
+    const response = await this._getContentState();
     if (response && response.result) {
       // Transration is already in progress or finished
-      this.#updateViewState(ViewState.TranslateView);
+      this._updateViewState(ViewState.TranslateView);
 
       if (response.result.isProcessing) {
-        this.#translateView.setLoading(true);
+        this._translateView.setLoading(true);
       } else if (response.result.isShowingOriginal) {
-        this.#translateView.showInitialView();
+        this._translateView.showInitialView();
       } else {
-        this.#translateView.showResultView(
+        this._translateView.showResultView(
           response.result.sourceLanguage,
           response.result.targetLanguage
         );
       }
     } else {
       // No translation is in progress
-      this.#getUserDisplayName();
+      this._getUserDisplayName();
     }
   }
 
-  #init() {
+  _init() {
     if (window.screen.width < 768) {
       document.body.style.width = "100%";
     }
     browser.runtime.getPlatformInfo().then((info) => {
       if (info.os === "ios") {
         if (window.screen.width < 768) {
-          this.#isMobile = true;
+          this._isMobile = true;
 
           document.getElementById("header-title").classList.add("d-hide");
           document.getElementById("login-view-divider").classList.add("d-hide");
@@ -78,23 +78,23 @@ class App {
       );
     });
 
-    this.#translateView = new TranslateView();
-    this.#translateView.on("change", this.#onTranslateViewChange.bind(this));
-    this.#translateView.on("translate", this.#onTranslate.bind(this));
-    this.#translateView.on("showOriginal", this.#onShowOriginal.bind(this));
+    this._translateView = new TranslateView();
+    this._translateView.on("change", this._onTranslateViewChange.bind(this));
+    this._translateView.on("translate", this._onTranslate.bind(this));
+    this._translateView.on("showOriginal", this._onShowOriginal.bind(this));
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      this.#translateView.setSelectedTargetLanguage(
+      this._translateView.setSelectedTargetLanguage(
         result.selectedTargetLanguage
       );
     });
 
-    this.#loginView = new LoginView();
-    this.#loginView.on("login", this.#onLogin.bind(this));
+    this._loginView = new LoginView();
+    this._loginView.on("login", this._onLogin.bind(this));
 
-    this.#translateSelectionButton = new TranslateSelectionButton();
-    this.#translateSelectionButton.on(
+    this._translateSelectionButton = new TranslateSelectionButton();
+    this._translateSelectionButton.on(
       "click",
-      this.#onTranslateSelection.bind(this)
+      this._onTranslateSelection.bind(this)
     );
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       browser.tabs
@@ -102,7 +102,7 @@ class App {
           method: "getSelection",
         })
         .then((response) => {
-          this.#setTranslateSelectionButtonEnabled(
+          this._setTranslateSelectionButtonEnabled(
             response && response.result && response.result.trim()
           );
         });
@@ -114,20 +114,20 @@ class App {
       }
       switch (request.method) {
         case "startTranslation":
-          this.#translateView.setLoading(true);
+          this._translateView.setLoading(true);
           sendResponse();
           break;
         case "cancelTranslation":
         case "finishTranslation":
-          this.#translateView.setLoading(false);
-          this.#translateView.showResultView(
+          this._translateView.setLoading(false);
+          this._translateView.showResultView(
             request.result.sourceLanguage,
             request.result.targetLanguage
           );
           sendResponse();
           break;
         case "finishTranslateSelection":
-          this.#translateSelectionButton.setLoading(false);
+          this._translateSelectionButton.setLoading(false);
           sendResponse();
           break;
         default:
@@ -137,7 +137,7 @@ class App {
     });
   }
 
-  async #getContentState() {
+  async _getContentState() {
     return new Promise((resolve, reject) => {
       browser.tabs.query(
         { active: true, currentWindow: true },
@@ -151,7 +151,7 @@ class App {
     });
   }
 
-  #login(email, password) {
+  _login(email, password) {
     browser.runtime.sendNativeMessage(
       "application.id",
       { method: "cf_clearance" },
@@ -165,123 +165,123 @@ class App {
             request,
             (response) => {
               if (!response || !response.result) {
-                this.#handleLoginError(LoginErorr.InvalidCredentials);
+                this._handleLoginError(LoginErorr.InvalidCredentials);
               } else {
-                this.#getUserDisplayName();
+                this._getUserDisplayName();
               }
             }
           );
         } else {
-          this.#handleLoginError(LoginErorr.ConnectionError);
+          this._handleLoginError(LoginErorr.ConnectionError);
         }
       }
     );
   }
 
-  #getUserDisplayName() {
-    this.#loginView.setLoading(true);
+  _getUserDisplayName() {
+    this._loginView.setLoading(true);
 
     browser.runtime.sendNativeMessage(
       "application.id",
       { method: "getUserDisplayName" },
       (response) => {
-        this.#handleLoginSession(response);
-        this.#loginView.setLoading(false);
+        this._handleLoginSession(response);
+        this._loginView.setLoading(false);
       }
     );
   }
 
-  #handleLoginSession(response) {
+  _handleLoginSession(response) {
     // No stored credentials
     if (!response || !response.result) {
-      this.#updateViewState(ViewState.LoginView);
+      this._updateViewState(ViewState.LoginView);
       return;
     }
 
     // Session expired
     if (response.result.isPro === undefined) {
       if (response.result.credentials) {
-        this.#loginView.setCredentials(response.result.credentials);
+        this._loginView.setCredentials(response.result.credentials);
       }
-      this.#handleLoginError(LoginErorr.SessionExpired);
+      this._handleLoginError(LoginErorr.SessionExpired);
       return;
     }
 
     if (response.result.isPro) {
       // Pro user
-      this.#updateViewState(ViewState.TranslateView);
+      this._updateViewState(ViewState.TranslateView);
     } else {
       // Free user
       if (response.result.credentials) {
-        this.#loginView.setCredentials(response.result.credentials);
+        this._loginView.setCredentials(response.result.credentials);
       }
-      this.#handleLoginError(LoginErorr.NotPro);
-      this.#updateViewState(ViewState.LoginView);
+      this._handleLoginError(LoginErorr.NotPro);
+      this._updateViewState(ViewState.LoginView);
     }
   }
 
-  #handleLoginError(error) {
+  _handleLoginError(error) {
     switch (error) {
       case LoginErorr.ConnectionError:
-        this.#loginView.setErrorMessage(
+        this._loginView.setErrorMessage(
           browser.i18n.getMessage("error_message_internet_connection")
         );
         break;
       case LoginErorr.InvalidCredentials:
-        this.#loginView.setErrorMessage(
+        this._loginView.setErrorMessage(
           browser.i18n.getMessage("login_error_invalid_credentials_message")
         );
         break;
       case LoginErorr.SessionExpired:
-        this.#loginView.setErrorMessage(
+        this._loginView.setErrorMessage(
           browser.i18n.getMessage("error_message_session_expired")
         );
         break;
       case LoginErorr.NotPro:
-        this.#loginView.setErrorMessage(
+        this._loginView.setErrorMessage(
           browser.i18n.getMessage("login_error_not_pro_message")
         );
         break;
       default:
-        this.#loginView.setErrorMessage(
+        this._loginView.setErrorMessage(
           browser.i18n.getMessage("login_error_default_message")
         );
         break;
     }
-    this.#loginView.setLoading(false);
+    this._loginView.setLoading(false);
   }
 
-  #updateViewState(viewState) {
+  _updateViewState(viewState) {
     switch (viewState) {
       case ViewState.LoginView:
-        this.#loginView.setHidden(false);
-        this.#translateView.setEnabled(false);
-        if (this.#isMobile) {
-          this.#translateView.setHidden(true);
+        this._loginView.setHidden(false);
+        this._translateView.setEnabled(false);
+        if (this._isMobile) {
+          this._translateView.setHidden(true);
         }
         break;
       case ViewState.TranslateView:
-        this.#loginView.setHidden(true);
-        this.#translateView.setEnabled(true);
-        if (this.#isMobile) {
-          this.#translateView.setHidden(false);
+        this._loginView.setHidden(true);
+        this._translateView.setEnabled(true);
+        if (this._isMobile) {
+          this._translateView.setHidden(false);
         }
         break;
     }
   }
 
-  #onLogin(event) {
-    this.#loginView.setLoading(true);
-    this.#loginView.setErrorMessage(null);
+  _onLogin(event) {
+    this._loginView.setLoading(true);
+    this._loginView.setErrorMessage(null);
 
     const email = event.detail.email;
     const password = event.detail.password;
 
-    this.#login(email, password);
+    this._login(email, password);
   }
 
-  #onTranslate(event) {
-    this.#translateView.setLoading(true);
+  _onTranslate(event) {
+    this._translateView.setLoading(true);
 
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       browser.tabs.sendMessage(tabs[0].id, {
@@ -292,42 +292,42 @@ class App {
     });
   }
 
-  #onShowOriginal() {
+  _onShowOriginal() {
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       browser.tabs.sendMessage(tabs[0].id, {
         method: "showOriginal",
       });
     });
-    this.#translateView.showInitialView();
+    this._translateView.showInitialView();
   }
 
-  async #onTranslateViewChange(event) {
+  async _onTranslateViewChange(event) {
     await browser.storage.local.set(event.detail);
   }
 
-  #onTranslateSelection() {
+  _onTranslateSelection() {
     browser.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
       const response = await browser.tabs.sendMessage(tabs[0].id, {
         method: "getSelection",
       });
       if (response && response.result && response.result.trim()) {
-        this.#translateSelectionButton.setLoading(true);
+        this._translateSelectionButton.setLoading(true);
         const request = {
           method: "translateSelection",
           selectionText: response.result,
         };
         browser.runtime.sendMessage(request);
       } else {
-        this.#setTranslateSelectionButtonEnabled(false);
+        this._setTranslateSelectionButtonEnabled(false);
       }
     });
   }
 
-  #setTranslateSelectionButtonEnabled(enabled) {
+  _setTranslateSelectionButtonEnabled(enabled) {
     if (enabled) {
-      this.#translateSelectionButton.setEnabled(true);
+      this._translateSelectionButton.setEnabled(true);
     } else {
-      this.#translateSelectionButton.setEnabled(false);
+      this._translateSelectionButton.setEnabled(false);
       tippy(".tooltip-container", {
         content: browser.i18n.getMessage("translate_selection_button_tooltip"),
         animation: "fade",
@@ -335,7 +335,7 @@ class App {
     }
   }
 
-  #warnIfExtensionUnavailable() {
+  _warnIfExtensionUnavailable() {
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       browser.tabs
         .sendMessage(tabs[0].id, {
@@ -349,7 +349,7 @@ class App {
             const banner = document.getElementById("reload-message-banner");
             banner.textContent = message;
             banner.classList.remove("d-hide");
-            this.#translateView.setEnabled(false);
+            this._translateView.setEnabled(false);
           }
         });
     });
