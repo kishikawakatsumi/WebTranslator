@@ -30,7 +30,7 @@ module.exports = {
     new BundleAnalyzerPlugin({
       analyzerMode: "static",
       openAnalyzer: false,
-      reportFilename: "./build/report.html",
+      reportFilename: "./../build/report.html",
     }),
     new CopyWebbackPlugin({
       patterns: [
