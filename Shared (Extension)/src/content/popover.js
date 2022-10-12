@@ -48,7 +48,7 @@ const template = `<style>
   }
 
   .title-bar {
-    height: 1rem;
+    height: 16px;
   }
 
   .drag-handle {
@@ -57,10 +57,10 @@ const template = `<style>
     content: "";
     display: block;
     position: absolute;
-    height: 1rem;
-    width: 4.375rem;
+    height: 16px;
+    width: 70px;
     top: .5rem;
-    left: calc(50% - 2.1875rem);
+    left: calc(50% - 35px);
     cursor: move;
   }
 
@@ -113,8 +113,8 @@ const template = `<style>
         <nord-divider></nord-divider>
       </nord-stack>
 
-      <nord-stack align-items="center" style="padding-top: 8px; padding-bottom: 8px;">
-        <nord-spinner size="xl" id="spinner"></nord-spinner>
+      <nord-stack id="spinner" align-items="center" style="padding-top: 8px; padding-bottom: 8px;">
+        <nord-spinner size="xl"></nord-spinner>
       </nord-stack>
       <div id="result" class="d-none" style="font-size: 14px;"></div>
     </nord-stack>
