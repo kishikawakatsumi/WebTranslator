@@ -6,10 +6,10 @@ import "@nordhealth/components/lib/Toast";
 import "@nordhealth/components/lib/ToastGroup";
 
 export class Toast {
-  #snackbarStack = [];
+  _snackbarStack = [];
 
   show() {
-    if (this.#snackbarStack.length === 0) {
+    if (this._snackbarStack.length === 0) {
       const group = createToastGroup();
 
       group.addToast(`${progressMessage()}...`, { autoDismiss: -1 });
@@ -17,14 +17,14 @@ export class Toast {
         retouchToastAppearance();
       }, 10);
     }
-    this.#snackbarStack.push(true);
+    this._snackbarStack.push(true);
   }
 
   close() {
-    if (this.#snackbarStack.length === 1) {
+    if (this._snackbarStack.length === 1) {
       dismissToast();
     }
-    this.#snackbarStack.pop();
+    this._snackbarStack.pop();
   }
 }
 

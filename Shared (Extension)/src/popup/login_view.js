@@ -1,45 +1,45 @@
 "use strict";
 
 export class LoginView extends EventTarget {
-  #loginView;
-  #loginLabel;
+  _loginView;
+  _loginLabel;
 
-  #emailInput;
-  #passwordInput;
+  _emailInput;
+  _passwordInput;
 
-  #errorLabel;
-  #loginButton;
+  _errorLabel;
+  _loginButton;
 
   constructor() {
     super();
-    this.#init();
+    this._init();
   }
 
   setCredentials(credentials) {
-    this.#emailInput.value = credentials.email;
-    this.#passwordInput.value = credentials.password;
+    this._emailInput.value = credentials.email;
+    this._passwordInput.value = credentials.password;
   }
 
   setHidden(hidden) {
-    this.#loginView.classList.toggle("d-hide", hidden);
+    this._loginView.classList.toggle("d-hide", hidden);
   }
 
   setLoading(loading) {
-    this.#emailInput.disabled = loading;
-    this.#passwordInput.disabled = loading;
+    this._emailInput.disabled = loading;
+    this._passwordInput.disabled = loading;
     if (loading) {
-      this.#loginButton.setAttribute("loading", loading);
+      this._loginButton.setAttribute("loading", loading);
     } else {
-      this.#loginButton.removeAttribute("loading");
+      this._loginButton.removeAttribute("loading");
     }
   }
 
   setErrorMessage(message) {
     if (message) {
-      this.#errorLabel.textContent = message;
-      this.#errorLabel.classList.remove("d-invisible");
+      this._errorLabel.textContent = message;
+      this._errorLabel.classList.remove("d-invisible");
     } else {
-      this.#errorLabel.classList.add("d-invisible");
+      this._errorLabel.classList.add("d-invisible");
     }
   }
 
@@ -47,32 +47,32 @@ export class LoginView extends EventTarget {
     this.addEventListener(type, listener);
   }
 
-  #init() {
-    this.#loginView = document.getElementById("login-view");
+  _init() {
+    this._loginView = document.getElementById("login-view");
 
-    this.#loginLabel = document.getElementById("login-label");
-    this.#loginLabel.textContent = browser.i18n.getMessage("ui_login_body");
+    this._loginLabel = document.getElementById("login-label");
+    this._loginLabel.textContent = browser.i18n.getMessage("ui_login_body");
 
-    this.#emailInput = document.getElementById("email-input");
-    this.#emailInput.label = browser.i18n.getMessage("ui_email_input_label");
-    this.#passwordInput = document.getElementById("password-input");
-    this.#passwordInput.label = browser.i18n.getMessage(
+    this._emailInput = document.getElementById("email-input");
+    this._emailInput.label = browser.i18n.getMessage("ui_email_input_label");
+    this._passwordInput = document.getElementById("password-input");
+    this._passwordInput.label = browser.i18n.getMessage(
       "ui_password_input_label"
     );
-    this.#errorLabel = document.getElementById("login-error-label");
+    this._errorLabel = document.getElementById("login-error-label");
 
-    this.#loginButton = document.getElementById("login-button");
-    this.#loginButton.textContent =
+    this._loginButton = document.getElementById("login-button");
+    this._loginButton.textContent =
       browser.i18n.getMessage("login_button_label");
 
-    this.#loginButton.addEventListener("click", (event) => {
-      this.#onLoginButtonClick(event);
+    this._loginButton.addEventListener("click", (event) => {
+      this._onLoginButtonClick(event);
     });
   }
 
-  #onLoginButtonClick() {
-    const email = this.#emailInput.value;
-    const password = this.#passwordInput.value;
+  _onLoginButtonClick() {
+    const email = this._emailInput.value;
+    const password = this._passwordInput.value;
 
     if (!email || !password) {
       const errorMessage = browser.i18n.getMessage(

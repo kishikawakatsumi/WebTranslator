@@ -1,23 +1,23 @@
 "use strict";
 
 export class Translator {
-  #id = 1e4 * Math.round(1e4 * Math.random());
+  _id = 1e4 * Math.round(1e4 * Math.random());
 
-  #sourceLanguage;
-  #targetLanguage;
+  _sourceLanguage;
+  _targetLanguage;
 
   constructor() {}
 
   setSourceLanguage(sourceLanguage) {
-    this.#sourceLanguage = sourceLanguage;
+    this._sourceLanguage = sourceLanguage;
   }
 
   setTargetLanguage(targetLanguage) {
-    this.#targetLanguage = targetLanguage;
+    this._targetLanguage = targetLanguage;
   }
 
   async translate(texts, isHtmlEnabled = true) {
-    this.#id++;
+    this._id++;
 
     let n = 1;
     for (const text of texts) {
@@ -43,17 +43,17 @@ export class Translator {
         html: isHtmlEnabled ? "enabled" : undefined,
         splitting: isHtmlEnabled ? undefined : "newlines",
         lang: {
-          target_lang: this.#targetLanguage,
-          source_lang_user_selected: this.#sourceLanguage || "auto",
+          target_lang: this._targetLanguage,
+          source_lang_user_selected: this._sourceLanguage || "auto",
         },
         timestamp,
       },
-      id: this.#id,
+      id: this._id,
     });
     body = body.replace(
       `"method":"`,
       `${
-        (this.#id + 3) % 13 === 0 || (this.#id + 5) % 29 === 0
+        (this._id + 3) % 13 === 0 || (this._id + 5) % 29 === 0
           ? `"method" : "`
           : `"method": "`
       }`

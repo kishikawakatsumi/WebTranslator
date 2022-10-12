@@ -78,7 +78,7 @@ const template = `<style>
     padding: 0.8rem;
   }
 
-  #result {
+  _result {
     max-height: 300px;
     overflow: auto;
     line-height: 1.6em;
@@ -132,21 +132,21 @@ const template = `<style>
 </nord-stack>`;
 
 export class Popover extends HTMLElement {
-  #draggable;
-  #closeButton;
-  #languageSelect;
-  #result;
-  #spinner;
-  #copyButton;
+  _draggable;
+  _closeButton;
+  _languageSelect;
+  _result;
+  _spinner;
+  _copyButton;
 
-  #rendered = false;
+  _rendered = false;
 
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
   }
 
-  #render() {
+  _render() {
     const popover = document.createElement("div");
     popover.innerHTML = template;
     this.shadow.append(popover);
@@ -159,23 +159,23 @@ export class Popover extends HTMLElement {
       );
     });
 
-    this.#draggable = this.shadowRoot.getElementById("draggable");
+    this._draggable = this.shadowRoot.getElementById("draggable");
     const dragzone = this.shadowRoot.getElementById("dragzone");
-    makeDraggable(this.#draggable, dragzone);
+    makeDraggable(this._draggable, dragzone);
 
-    this.#closeButton = this.shadowRoot.querySelector("#close-button");
-    this.#closeButton.addEventListener("click", () => {
+    this._closeButton = this.shadowRoot.querySelector("#close-button");
+    this._closeButton.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("close"));
     });
 
-    this.#result = this.shadowRoot.getElementById("result");
-    this.#spinner = this.shadowRoot.getElementById("spinner");
+    this._result = this.shadowRoot.getElementById("result");
+    this._spinner = this.shadowRoot.getElementById("spinner");
 
-    this.#copyButton = this.shadowRoot.getElementById("copy-button");
-    this.#copyButton.disabled = navigator.clipboard === undefined;
-    this.#copyButton.addEventListener("click", () => {
+    this._copyButton = this.shadowRoot.getElementById("copy-button");
+    this._copyButton.disabled = navigator.clipboard === undefined;
+    this._copyButton.addEventListener("click", () => {
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(this.#result.textContent);
+        navigator.clipboard.writeText(this._result.textContent);
       }
     });
 
@@ -185,7 +185,7 @@ export class Popover extends HTMLElement {
     languageSelectLabel.textContent = browser.i18n.getMessage(
       "layout_header_label_language_switch"
     );
-    this.#languageSelect = this.shadowRoot.getElementById("language-select");
+    this._languageSelect = this.shadowRoot.getElementById("language-select");
     const locale = browser.i18n
       .getUILanguage()
       .split("-")
@@ -200,19 +200,19 @@ export class Popover extends HTMLElement {
         false,
         supportedLanguage.code === locale
       );
-      this.#languageSelect.appendChild(option);
+      this._languageSelect.appendChild(option);
     }
-    this.#languageSelect.addEventListener(
+    this._languageSelect.addEventListener(
       "change",
-      this.#onLanguageSelectChange.bind(this)
+      this._onLanguageSelectChange.bind(this)
     );
 
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      this.#setSelectedTargetLanguage(result.selectedTargetLanguage);
+      this._setSelectedTargetLanguage(result.selectedTargetLanguage);
     });
     browser.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === "local" && "selectedTargetLanguage" in changes) {
-        this.#setSelectedTargetLanguage(
+        this._setSelectedTargetLanguage(
           changes.selectedTargetLanguage.newValue
         );
       }
@@ -220,9 +220,9 @@ export class Popover extends HTMLElement {
   }
 
   connectedCallback() {
-    if (!this.#rendered) {
-      this.#render();
-      this.#rendered = true;
+    if (!this._rendered) {
+      this._render();
+      this._rendered = true;
     }
   }
 
@@ -233,60 +233,60 @@ export class Popover extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "loading":
-        this.#setLoading(newValue === "true");
+        this._setLoading(newValue === "true");
         break;
       case "position":
         const { x, y } = JSON.parse(newValue);
-        this.#setPosition(x, y);
+        this._setPosition(x, y);
         break;
       case "result":
-        this.#result.innerHTML = escapeHTML(newValue).split("\n").join("<br>");
+        this._result.innerHTML = escapeHTML(newValue).split("\n").join("<br>");
         break;
       case "error":
-        this.#result.innerHTML = `<nord-banner variant="danger">${newValue}</nord-banner>`;
+        this._result.innerHTML = `<nord-banner variant="danger">${newValue}</nord-banner>`;
         break;
       case "lang":
-        this.#setSelectedTargetLanguage(newValue);
+        this._setSelectedTargetLanguage(newValue);
         break;
     }
   }
 
   getPosition() {
-    return { x: this.#draggable.offsetLeft, y: this.#draggable.offsetTop };
+    return { x: this._draggable.offsetLeft, y: this._draggable.offsetTop };
   }
 
-  #setSelectedTargetLanguage(language) {
+  _setSelectedTargetLanguage(language) {
     if (
       language &&
       supportedLanguages.some(
         (supportedLanguage) => supportedLanguage.code === language.toUpperCase()
       )
     ) {
-      this.#languageSelect.value = language;
+      this._languageSelect.value = language;
     }
   }
 
-  #setPosition(x, y) {
-    this.#draggable.style.top = `${y}px`;
-    this.#draggable.style.left = `${x}px`;
+  _setPosition(x, y) {
+    this._draggable.style.top = `${y}px`;
+    this._draggable.style.left = `${x}px`;
   }
 
-  #setLoading(loading) {
+  _setLoading(loading) {
     if (loading) {
-      this.#spinner.classList.remove("d-none");
-      this.#result.classList.add("d-none");
+      this._spinner.classList.remove("d-none");
+      this._result.classList.add("d-none");
     } else {
-      this.#spinner.classList.add("d-none");
-      this.#result.classList.remove("d-none");
+      this._spinner.classList.add("d-none");
+      this._result.classList.remove("d-none");
     }
   }
 
-  #onLanguageSelectChange() {
+  _onLanguageSelectChange() {
     this.dispatchEvent(
       new CustomEvent("change", {
         detail: {
           selectedSourceLanguage: undefined,
-          selectedTargetLanguage: this.#languageSelect.value,
+          selectedTargetLanguage: this._languageSelect.value,
         },
       })
     );
