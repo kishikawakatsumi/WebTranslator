@@ -15,9 +15,6 @@ import { escapeHTML } from "./utils";
 import { runColorMode, loadColorScheme } from "../shared/utils";
 
 const template = `<style>
-  :not(:defined) {
-    visibility: hidden;
-  }
   * {
     -webkit-tap-highlight-color: transparent;
   }
@@ -25,7 +22,6 @@ const template = `<style>
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
-
   .translate-popover {
     width: 550px;
     position: absolute;
@@ -93,7 +89,7 @@ const template = `<style>
   }
 </style>
 
-<nord-stack class="translate-popover n-reset" gap="s" id="draggable">
+<nord-stack class="translate-popover" gap="s" id="draggable">
   <nord-button variant="plain" class="close-button" id="close-button">
     <nord-icon>
       <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
@@ -107,20 +103,20 @@ const template = `<style>
   </div>
 
   <nord-stack gap="s" class="translate-content" style="padding-top: 0.2rem;">
-    <nord-stack gap="s">
+    <nord-stack gap="s" style="gap: 4px;">
       <nord-stack gap="s" style="padding-left: 0.8rem; padding-right: 0.8rem;">
         <nord-stack direction="horizontal" gap="s" align-items="center">
-          <div id="language-select-label" style="font-size: 0.8rem;">Translate to:</div>
+          <div id="language-select-label" style="font-size: 12px;">Translate to:</div>
           <nord-select id="language-select" size="s" hide-label></nord-select>
         </nord-stack>
 
         <nord-divider></nord-divider>
       </nord-stack>
 
-      <nord-stack align-items="center">
+      <nord-stack align-items="center" style="padding-top: 8px; padding-bottom: 8px;">
         <nord-spinner size="xl" id="spinner"></nord-spinner>
       </nord-stack>
-      <div class="d-none" id="result"></div>
+      <div id="result" class="d-none" style="font-size: 14px;"></div>
     </nord-stack>
 
     <nord-stack align-items="end" style="padding-top: 0.2rem; padding-left: 0.8rem; padding-right: 0.8rem;">
@@ -279,13 +275,8 @@ export class Popover extends HTMLElement {
   }
 
   _setLoading(loading) {
-    if (loading) {
-      this._spinner.classList.remove("d-none");
-      this._result.classList.add("d-none");
-    } else {
-      this._spinner.classList.add("d-none");
-      this._result.classList.remove("d-none");
-    }
+    this._spinner.classList.toggle("d-none", !loading);
+    this._result.classList.toggle("d-none", loading);
   }
 
   _onLanguageSelectChange() {
