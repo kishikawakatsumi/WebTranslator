@@ -75,13 +75,16 @@ const template = `<style>
   }
 
   .translate-content {
-    padding: 0.8rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
   }
 
-  _result {
+  #result {
     max-height: 300px;
     overflow: auto;
     line-height: 1.6em;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
   }
 
   .d-none,
@@ -103,20 +106,24 @@ const template = `<style>
     <div class="drag-handle"></div>
   </div>
 
-  <nord-stack gap="s" class="translate-content">
-    <nord-stack direction="horizontal" gap="s" align-items="center">
-      <div id="language-select-label">Translate to:</div>
-      <nord-select id="language-select" size="s" hide-label></nord-select>
+  <nord-stack gap="s" class="translate-content" style="padding-top: 0.2rem;">
+    <nord-stack gap="s">
+      <nord-stack gap="s" style="padding-left: 0.8rem; padding-right: 0.8rem;">
+        <nord-stack direction="horizontal" gap="s" align-items="center">
+          <div id="language-select-label" style="font-size: 0.8rem;">Translate to:</div>
+          <nord-select id="language-select" size="s" hide-label></nord-select>
+        </nord-stack>
+
+        <nord-divider></nord-divider>
+      </nord-stack>
+
+      <nord-stack align-items="center">
+        <nord-spinner size="xl" id="spinner"></nord-spinner>
+      </nord-stack>
+      <div class="d-none" id="result"></div>
     </nord-stack>
 
-    <nord-divider></nord-divider>
-
-    <nord-stack align-items="center">
-      <nord-spinner size="xl" id="spinner"></nord-spinner>
-    </nord-stack>
-    <div class="d-none" id="result"></div>
-
-    <nord-stack align-items="end">
+    <nord-stack align-items="end" style="padding-top: 0.2rem; padding-left: 0.8rem; padding-right: 0.8rem;">
       <nord-button size="s" id="copy-button">
         <nord-icon>
           <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
