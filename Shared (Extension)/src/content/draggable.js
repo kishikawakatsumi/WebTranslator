@@ -12,11 +12,8 @@ export function makeDraggable(element, dragzone) {
     pos3 = event.clientX || event.touches[0].clientX;
     pos4 = event.clientY || event.touches[0].clientY;
 
-    document.onmousemove = dragMouseMove;
-    document.onmouseup = dragMouseUp;
-
-    document.ontouchmove = dragMouseMove;
-    document.ontouchend = dragMouseUp;
+    document.addEventListener("pointermove", dragMouseMove);
+    document.addEventListener("pointerup", dragMouseUp);
   };
 
   const dragMouseMove = (event) => {
@@ -32,11 +29,8 @@ export function makeDraggable(element, dragzone) {
   };
 
   const dragMouseUp = () => {
-    document.onmousemove = null;
-    document.onmouseup = null;
-
-    document.ontouchmove = null;
-    document.ontouchend = null;
+    document.removeEventListener("pointermove", dragMouseMove);
+    document.removeEventListener("pointerup", dragMouseUp);
   };
 
   dragzone.onmousedown = dragMouseDown;

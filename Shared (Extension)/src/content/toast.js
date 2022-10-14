@@ -29,16 +29,18 @@ export class Toast {
 function createToastGroup() {
   const id = "nord-toast-group";
 
-  let group = document.getElementById(id);
-  if (group) {
-    group.remove();
+  {
+    const group = document.getElementById(id);
+    if (group) {
+      group.remove();
+    }
   }
 
   document.body.insertAdjacentHTML(
     "beforeend",
     `<nord-toast-group id="${id}"></nord-toast-group>`
   );
-  group = document.getElementById(id);
+  const group = document.getElementById(id);
   group.addEventListener("dismiss", (e) => e.target.remove());
 
   return document.getElementById(id);
