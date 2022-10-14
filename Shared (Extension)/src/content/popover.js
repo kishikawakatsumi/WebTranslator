@@ -32,7 +32,7 @@ const template = `<style>
 
   @media screen and (max-width: 767px) {
     .translate-popover {
-      width: 300px;
+      width: 84vw;
     }
   }
 
