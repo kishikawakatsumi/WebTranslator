@@ -1,6 +1,7 @@
 "use strict";
 
 import { Popover } from "./popover";
+import { Tooltip } from "./tooltip";
 import { Toast } from "./toast";
 
 import {
@@ -9,6 +10,7 @@ import {
   hasInlineElement,
   once,
   scrollDidStop,
+  isTouchDevice,
 } from "./utils";
 
 class App {
@@ -32,7 +34,13 @@ class App {
     if (!window.customElements.get("translate-popover")) {
       window.customElements.define("translate-popover", Popover);
     }
+    if (!window.customElements.get("translate-button")) {
+      window.customElements.define("translate-button", Tooltip);
+    }
     this._setupListeners();
+    if (isTouchDevice()) {
+      this._ovserveTextSelection();
+    }
   }
 
   _setupListeners() {
@@ -98,8 +106,8 @@ class App {
             const textRange = selection.getRangeAt(0);
             const selectionRect = textRange.getBoundingClientRect();
 
-            let x = selectionRect.left + window.scrollX;
-            let y = selectionRect.bottom + window.scrollY + 30;
+            const x = selectionRect.left + window.scrollX;
+            const y = selectionRect.bottom + window.scrollY + 30;
 
             const position = this._getExistingPopoverPosition();
             const popover = this._createPopover(position || { x, y });
@@ -154,14 +162,84 @@ class App {
     );
   }
 
+  _ovserveTextSelection() {
+    document.addEventListener("touchend", async (event) => {
+      const selection = window.getSelection();
+      const selectionText = selection ? selection.toString().trim() : "";
+      if (!selectionText && !selection.rangeCount) {
+        return;
+      }
+
+      setTimeout(() => {
+        const textRange = selection.getRangeAt(0).cloneRange();
+        textRange.collapse(false);
+        const selectionRect = textRange.getBoundingClientRect();
+
+        const x = selectionRect.right + window.scrollX - 20;
+        const y = selectionRect.bottom + window.scrollY + 40;
+
+        const tooltip = this._createTooltip({ x, y });
+        tooltip.addEventListener("tooltipClick", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (selectionText) {
+            const request = {
+              method: "translateSelection",
+              selectionText,
+            };
+            browser.runtime.sendMessage(request);
+          }
+          tooltip.remove();
+
+          return false;
+        });
+      }, 100);
+    });
+  }
+
+  _createTooltip(position) {
+    const id = "translate-button";
+    {
+      const tooltip = document.getElementById(id);
+      if (tooltip) {
+        tooltip.remove();
+      }
+    }
+
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<translate-button id="${id}"></translate-button>`
+    );
+    const tooltip = document.getElementById(id);
+    tooltip.setAttribute("position", JSON.stringify(position));
+
+    document.addEventListener(
+      "touchstart",
+      (event) => {
+        if (event.target.closest(id)) {
+          return;
+        }
+        tooltip.remove();
+      },
+      { once: true }
+    );
+
+    return tooltip;
+  }
+
+  _getTooltip() {
+    return document.getElementById("translate-button");
+  }
+
   _createPopover(position) {
     const id = "translate-popover";
-    (() => {
-      let popover = document.getElementById(id);
+    {
+      const popover = document.getElementById(id);
       if (popover) {
         popover.remove();
       }
-    })();
+    }
 
     document.body.insertAdjacentHTML(
       "beforeend",

@@ -1,6 +1,5 @@
 {
   "name": "webtranslator",
-  "version": "0.1.4",
   "scripts": {
     "prod": "webpack --mode production",
     "dev": "webpack --mode development"
