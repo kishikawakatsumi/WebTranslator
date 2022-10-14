@@ -172,7 +172,7 @@ class App {
 
       setTimeout(() => {
         const textRange = selection.getRangeAt(0).cloneRange();
-        textRange.collapse(false);
+        textRange.collapse(selection.anchorOffset > selection.focusOffset);
         const selectionRect = textRange.getBoundingClientRect();
 
         const x = selectionRect.right + window.scrollX - 20;
