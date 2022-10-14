@@ -49,6 +49,7 @@ const template = `<style>
 
   .title-bar {
     height: 16px;
+    cursor: move;
   }
 
   .drag-handle {
@@ -61,7 +62,6 @@ const template = `<style>
     width: 70px;
     top: .5rem;
     left: calc(50% - 35px);
-    cursor: move;
   }
 
   .close-button {
@@ -94,7 +94,8 @@ const template = `<style>
     <nord-icon>
       <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
         <path d="M133 7 7 133M7 7l126 126" stroke-width="14" fill="none" stroke="currentColor" stroke-linecap="round"
-          stroke-linejoin="round" /></svg>
+          stroke-linejoin="round" />
+      </svg>
     </nord-icon>
   </nord-button>
 
