@@ -403,8 +403,13 @@ async function collectVisibleElements() {
 function splitElements(elements, storage) {
   for (const element of elements) {
     if (
-      (hasTextNode(element) || hasInlineElement(element)) &&
-      element.clientHeight < window.innerHeight
+      element.nodeName !== "STYLE" ||
+      element.nodeName !== "META" ||
+      element.nodeName !== "LINK" ||
+      element.nodeName !== "SCRIPT" ||
+      element.nodeName !== "svg" ||
+      ((hasTextNode(element) || hasInlineElement(element)) &&
+        element.clientHeight < window.innerHeight)
     ) {
       storage.push(element);
     } else {
