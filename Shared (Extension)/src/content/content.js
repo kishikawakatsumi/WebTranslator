@@ -178,6 +178,13 @@ class App {
         const x = selectionRect.right + window.scrollX - 20;
         const y = selectionRect.bottom + window.scrollY + 40;
 
+        {
+          const selection = window.getSelection();
+          if (!selection || !selection.toString().trim()) {
+            return;
+          }
+        }
+
         const tooltip = this._createTooltip({ x, y });
         tooltip.addEventListener("tooltipClick", (event) => {
           event.preventDefault();
@@ -226,10 +233,6 @@ class App {
     );
 
     return tooltip;
-  }
-
-  _getTooltip() {
-    return document.getElementById("translate-button");
   }
 
   _createPopover(position) {
