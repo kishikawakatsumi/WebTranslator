@@ -3,18 +3,18 @@
 import { Translator } from "./translator";
 
 class App {
-  _selectionText = undefined;
+  #selectionText = undefined;
 
   constructor() {
-    this._init();
+    this.#init();
   }
 
-  _init() {
-    this._setupListeners();
-    this._setupContextMenu();
+  #init() {
+    this.#setupListeners();
+    this.#setupContextMenu();
   }
 
-  _setupListeners() {
+  #setupListeners() {
     browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if (!request) {
         return;
@@ -32,13 +32,13 @@ class App {
           break;
         }
         case "translateSelection": {
-          const selectionText = this._selectionText;
+          const selectionText = this.#selectionText;
           if (request.selectionText && request.selectionText.trim()) {
             // From popup toolbar (Mobile only)
-            this._translateSelection(request.selectionText);
+            this.#translateSelection(request.selectionText);
           } else if (selectionText && selectionText.trim()) {
             // Language changed in popover window
-            this._translateSelection(selectionText);
+            this.#translateSelection(selectionText);
           }
 
           sendResponse();
@@ -54,7 +54,7 @@ class App {
     });
   }
 
-  _setupContextMenu() {
+  #setupContextMenu() {
     if (browser.menus.create) {
       browser.menus.create({
         id: "translateSelection",
@@ -67,15 +67,15 @@ class App {
           case "translateSelection":
             const selectionText = info.selectionText;
             if (selectionText && selectionText.trim()) {
-              this._translateSelection(selectionText);
+              this.#translateSelection(selectionText);
             }
         }
       });
     }
   }
 
-  async _translateSelection(selectionText) {
-    this._selectionText = selectionText;
+  async #translateSelection(selectionText) {
+    this.#selectionText = selectionText;
     const targetLanguage = await getTargetLanguage();
 
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {

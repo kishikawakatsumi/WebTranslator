@@ -72,29 +72,29 @@ const template = `<style>
 </div>`;
 
 export class Tooltip extends HTMLElement {
-  _container;
-  _rendered = false;
+  #container;
+  #rendered = false;
 
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
   }
 
-  _render() {
+  #render() {
     const tooltip = document.createElement("div");
     tooltip.innerHTML = template;
     this.shadow.append(tooltip);
 
-    this._container = this.shadowRoot.querySelector(".container");
-    this._container.addEventListener("touchend", this._onClick.bind(this));
+    this.#container = this.shadowRoot.querySelector(".container");
+    this.#container.addEventListener("touchend", this.#onClick.bind(this));
 
-    this._fadeIn(this._container);
+    this.#fadeIn(this.#container);
   }
 
   connectedCallback() {
-    if (!this._rendered) {
-      this._render();
-      this._rendered = true;
+    if (!this.#rendered) {
+      this.#render();
+      this.#rendered = true;
     }
   }
 
@@ -106,24 +106,24 @@ export class Tooltip extends HTMLElement {
     switch (name) {
       case "position":
         const { x, y } = JSON.parse(newValue);
-        this._setPosition(x, y);
+        this.#setPosition(x, y);
         break;
     }
   }
 
-  _setPosition(x, y) {
-    this._container.style.top = `${y}px`;
-    this._container.style.left = `${x}px`;
+  #setPosition(x, y) {
+    this.#container.style.top = `${y}px`;
+    this.#container.style.left = `${x}px`;
   }
 
-  _onClick(event) {
+  #onClick(event) {
     event.preventDefault();
     event.stopPropagation();
     this.dispatchEvent(new CustomEvent("tooltipClick"));
     return false;
   }
 
-  _fadeIn(element) {
+  #fadeIn(element) {
     element.animate(
       [
         { opacity: 0, transform: "scale(0.8)" },
