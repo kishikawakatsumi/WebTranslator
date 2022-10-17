@@ -1,37 +1,37 @@
 "use strict";
 
 export class TranslateSelectionButton extends EventTarget {
-  _translateSelectionButton;
+  #translateSelectionButton;
 
   constructor() {
     super();
-    this._init();
+    this.#init();
   }
 
   setLoading(loading) {
     if (loading) {
-      this._translateSelectionButton.setAttribute("loading", loading);
+      this.#translateSelectionButton.setAttribute("loading", loading);
     } else {
-      this._translateSelectionButton.removeAttribute("loading");
+      this.#translateSelectionButton.removeAttribute("loading");
     }
   }
 
   setEnabled(enabled) {
-    this._translateSelectionButton.disabled = !enabled;
+    this.#translateSelectionButton.disabled = !enabled;
   }
 
   on(type, listener) {
     this.addEventListener(type, listener);
   }
 
-  _init() {
-    this._translateSelectionButton = document.getElementById(
+  #init() {
+    this.#translateSelectionButton = document.getElementById(
       "translate-selection-button"
     );
-    this._translateSelectionButton.textContent = browser.i18n.getMessage(
+    this.#translateSelectionButton.textContent = browser.i18n.getMessage(
       "context_menus_translate_section"
     );
-    this._translateSelectionButton.addEventListener("click", () => {
+    this.#translateSelectionButton.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("click"));
     });
   }

@@ -14,36 +14,36 @@ import {
 } from "./utils";
 
 class App {
-  _uid = 1;
-  _sourceLanguage = undefined;
-  _targetLanguage = undefined;
-  _originalTexts = {};
-  _translatedTexts = {};
+  #uid = 1;
+  #sourceLanguage = undefined;
+  #targetLanguage = undefined;
+  #originalTexts = {};
+  #translatedTexts = {};
 
-  _toast = new Toast();
+  #toast = new Toast();
 
-  _isProcessing = false;
-  _shouldProcessAfterScrolling = false;
-  _isShowingOriginal = false;
+  #isProcessing = false;
+  #shouldProcessAfterScrolling = false;
+  #isShowingOriginal = false;
 
   constructor() {
-    this._init();
+    this.#init();
   }
 
-  _init() {
+  #init() {
     if (!window.customElements.get("translate-popover")) {
       window.customElements.define("translate-popover", Popover);
     }
     if (!window.customElements.get("translate-button")) {
       window.customElements.define("translate-button", Tooltip);
     }
-    this._setupListeners();
+    this.#setupListeners();
     if (isTouchDevice()) {
-      this._ovserveTextSelection();
+      this.#ovserveTextSelection();
     }
   }
 
-  _setupListeners() {
+  #setupListeners() {
     browser.runtime.onMessage.addListener(
       async (request, sender, sendResponse) => {
         if (!request) {
@@ -51,16 +51,16 @@ class App {
         }
         switch (request.method) {
           case "translate": {
-            this._shouldProcessAfterScrolling = true;
+            this.#shouldProcessAfterScrolling = true;
 
-            await this._translatePage(request);
+            await this.#translatePage(request);
 
             once(
               scrollDidStop(async () => {
-                if (this._shouldProcessAfterScrolling) {
-                  await this._translatePage({
-                    sourceLanguage: this._sourceLanguage,
-                    targetLanguage: this._targetLanguage,
+                if (this.#shouldProcessAfterScrolling) {
+                  await this.#translatePage({
+                    sourceLanguage: this.#sourceLanguage,
+                    targetLanguage: this.#targetLanguage,
                   });
                 }
               }, 500)
@@ -70,14 +70,14 @@ class App {
             break;
           }
           case "getContentState": {
-            if (this._isProcessing) {
-              sendResponse({ result: { isProcessing: this._isProcessing } });
-            } else if (Object.keys(this._originalTexts).length > 0) {
+            if (this.#isProcessing) {
+              sendResponse({ result: { isProcessing: this.#isProcessing } });
+            } else if (Object.keys(this.#originalTexts).length > 0) {
               sendResponse({
                 result: {
-                  sourceLanguage: this._sourceLanguage,
-                  targetLanguage: this._targetLanguage,
-                  isShowingOriginal: this._isShowingOriginal,
+                  sourceLanguage: this.#sourceLanguage,
+                  targetLanguage: this.#targetLanguage,
+                  isShowingOriginal: this.#isShowingOriginal,
                 },
               });
             } else {
@@ -86,15 +86,15 @@ class App {
             break;
           }
           case "showOriginal": {
-            this._shouldProcessAfterScrolling = false;
-            this._isShowingOriginal = true;
+            this.#shouldProcessAfterScrolling = false;
+            this.#isShowingOriginal = true;
 
             const elements = document.querySelectorAll(
               '[data-wtdl-translated="true"]'
             );
             for (const element of elements) {
               const uid = element.dataset.wtdlUid;
-              const originalText = this._originalTexts[uid];
+              const originalText = this.#originalTexts[uid];
               element.innerHTML = originalText;
               element.dataset.wtdlTranslated = "false";
             }
@@ -109,8 +109,8 @@ class App {
             const x = selectionRect.left + window.scrollX;
             const y = selectionRect.bottom + window.scrollY + 30;
 
-            const position = this._getExistingPopoverPosition();
-            const popover = this._createPopover(position || { x, y });
+            const position = this.#getExistingPopoverPosition();
+            const popover = this.#createPopover(position || { x, y });
             popover.setAttribute("loading", true);
 
             sendResponse();
@@ -162,7 +162,7 @@ class App {
     );
   }
 
-  _ovserveTextSelection() {
+  #ovserveTextSelection() {
     document.addEventListener("touchend", async (event) => {
       const selection = window.getSelection();
       const selectionText = selection ? selection.toString().trim() : "";
@@ -185,7 +185,7 @@ class App {
           }
         }
 
-        const tooltip = this._createTooltip({ x, y });
+        const tooltip = this.#createTooltip({ x, y });
         tooltip.addEventListener("tooltipClick", (event) => {
           event.preventDefault();
           event.stopPropagation();
@@ -205,7 +205,7 @@ class App {
     });
   }
 
-  _createTooltip(position) {
+  #createTooltip(position) {
     const id = "translate-button";
     {
       const tooltip = document.getElementById(id);
@@ -235,7 +235,7 @@ class App {
     return tooltip;
   }
 
-  _createPopover(position) {
+  #createPopover(position) {
     const id = "translate-popover";
     {
       const popover = document.getElementById(id);
@@ -277,7 +277,7 @@ class App {
     return popover;
   }
 
-  _getExistingPopoverPosition() {
+  #getExistingPopoverPosition() {
     const id = "translate-popover";
     const popover = document.getElementById(id);
     if (popover) {
@@ -286,15 +286,15 @@ class App {
     return undefined;
   }
 
-  async _translatePage(request) {
+  async #translatePage(request) {
     const translatedElements = document.querySelectorAll(
       '[data-wtdl-translated="false"]'
     );
-    if (this._targetLanguage === request.targetLanguage) {
+    if (this.#targetLanguage === request.targetLanguage) {
       // Restore translated texts
       for (const element of translatedElements) {
         const uid = element.dataset.wtdlUid;
-        const translatedText = this._translatedTexts[uid];
+        const translatedText = this.#translatedTexts[uid];
         element.innerHTML = translatedText;
         element.dataset.wtdlTranslated = "true";
       }
@@ -302,10 +302,10 @@ class App {
 
     const visibleElements = await collectVisibleElements();
     if (visibleElements.length === 0) {
-      this._cancelTranslation();
+      this.#cancelTranslation();
       return;
     }
-    this._startTranslation();
+    this.#startTranslation();
 
     const texts = visibleElements.map((element) => element.text);
     const response = await browser.runtime.sendMessage({
@@ -318,20 +318,20 @@ class App {
     if (response && response.result) {
       const result = response.result.result;
       if (result && result.texts) {
-        this._sourceLanguage = result.lang;
-        this._targetLanguage = request.targetLanguage;
+        this.#sourceLanguage = result.lang;
+        this.#targetLanguage = request.targetLanguage;
 
         const translatedTexts = result.texts;
         if (translatedTexts.length === visibleElements.length) {
           for (let i = 0; i < visibleElements.length; i++) {
             const element = visibleElements[i].element;
             const text = translatedTexts[i].text;
-            const uid = element.dataset.wtdlUid || this._uid++;
+            const uid = element.dataset.wtdlUid || this.#uid++;
 
             if (element.dataset.wtdlOriginal !== "true") {
-              this._originalTexts[uid] = element.innerHTML;
+              this.#originalTexts[uid] = element.innerHTML;
             }
-            this._translatedTexts[uid] = text;
+            this.#translatedTexts[uid] = text;
             element.innerHTML = text;
 
             element.dataset.wtdlUid = `${uid}`;
@@ -342,41 +342,41 @@ class App {
       }
     }
 
-    this._finishTranslation();
+    this.#finishTranslation();
   }
 
-  _startTranslation() {
-    this._toast.show();
+  #startTranslation() {
+    this.#toast.show();
 
-    this._isProcessing = true;
-    this._isShowingOriginal = false;
+    this.#isProcessing = true;
+    this.#isShowingOriginal = false;
 
     browser.runtime.sendMessage({
       method: "startTranslation",
     });
   }
 
-  _cancelTranslation() {
-    this._isShowingOriginal = false;
+  #cancelTranslation() {
+    this.#isShowingOriginal = false;
 
     browser.runtime.sendMessage({
       method: "cancelTranslation",
       result: {
-        sourceLanguage: this._sourceLanguage,
-        targetLanguage: this._targetLanguage,
+        sourceLanguage: this.#sourceLanguage,
+        targetLanguage: this.#targetLanguage,
       },
     });
   }
 
-  _finishTranslation() {
-    this._isProcessing = false;
-    this._toast.close();
+  #finishTranslation() {
+    this.#isProcessing = false;
+    this.#toast.close();
 
     browser.runtime.sendMessage({
       method: "finishTranslation",
       result: {
-        sourceLanguage: this._sourceLanguage,
-        targetLanguage: this._targetLanguage,
+        sourceLanguage: this.#sourceLanguage,
+        targetLanguage: this.#targetLanguage,
       },
     });
   }

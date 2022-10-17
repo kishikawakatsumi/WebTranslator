@@ -136,21 +136,21 @@ const template = `<style>
 </nord-stack>`;
 
 export class Popover extends HTMLElement {
-  _draggable;
-  _closeButton;
-  _languageSelect;
-  _result;
-  _spinner;
-  _copyButton;
+  #draggable;
+  #closeButton;
+  #languageSelect;
+  #result;
+  #spinner;
+  #copyButton;
 
-  _rendered = false;
+  #rendered = false;
 
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
   }
 
-  _render() {
+  #render() {
     const popover = document.createElement("div");
     popover.innerHTML = template;
     this.shadow.append(popover);
@@ -163,23 +163,23 @@ export class Popover extends HTMLElement {
       );
     });
 
-    this._draggable = this.shadowRoot.getElementById("draggable");
+    this.#draggable = this.shadowRoot.getElementById("draggable");
     const dragzone = this.shadowRoot.getElementById("dragzone");
-    makeDraggable(this._draggable, dragzone);
+    makeDraggable(this.#draggable, dragzone);
 
-    this._closeButton = this.shadowRoot.querySelector("#close-button");
-    this._closeButton.addEventListener("click", () => {
+    this.#closeButton = this.shadowRoot.querySelector("#close-button");
+    this.#closeButton.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("close"));
     });
 
-    this._result = this.shadowRoot.getElementById("result");
-    this._spinner = this.shadowRoot.getElementById("spinner");
+    this.#result = this.shadowRoot.getElementById("result");
+    this.#spinner = this.shadowRoot.getElementById("spinner");
 
-    this._copyButton = this.shadowRoot.getElementById("copy-button");
-    this._copyButton.disabled = navigator.clipboard === undefined;
-    this._copyButton.addEventListener("click", () => {
+    this.#copyButton = this.shadowRoot.getElementById("copy-button");
+    this.#copyButton.disabled = navigator.clipboard === undefined;
+    this.#copyButton.addEventListener("click", () => {
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(this._result.textContent);
+        navigator.clipboard.writeText(this.#result.textContent);
       }
     });
 
@@ -189,7 +189,7 @@ export class Popover extends HTMLElement {
     languageSelectLabel.textContent = browser.i18n.getMessage(
       "layout_header_label_language_switch"
     );
-    this._languageSelect = this.shadowRoot.getElementById("language-select");
+    this.#languageSelect = this.shadowRoot.getElementById("language-select");
     const locale = browser.i18n
       .getUILanguage()
       .split("-")
@@ -204,19 +204,19 @@ export class Popover extends HTMLElement {
         false,
         supportedLanguage.code === locale
       );
-      this._languageSelect.appendChild(option);
+      this.#languageSelect.appendChild(option);
     }
-    this._languageSelect.addEventListener(
+    this.#languageSelect.addEventListener(
       "change",
-      this._onLanguageSelectChange.bind(this)
+      this.#onLanguageSelectChange.bind(this)
     );
 
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      this._setSelectedTargetLanguage(result.selectedTargetLanguage);
+      this.#setSelectedTargetLanguage(result.selectedTargetLanguage);
     });
     browser.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === "local" && "selectedTargetLanguage" in changes) {
-        this._setSelectedTargetLanguage(
+        this.#setSelectedTargetLanguage(
           changes.selectedTargetLanguage.newValue
         );
       }
@@ -224,9 +224,9 @@ export class Popover extends HTMLElement {
   }
 
   connectedCallback() {
-    if (!this._rendered) {
-      this._render();
-      this._rendered = true;
+    if (!this.#rendered) {
+      this.#render();
+      this.#rendered = true;
     }
   }
 
@@ -237,55 +237,55 @@ export class Popover extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "loading":
-        this._setLoading(newValue === "true");
+        this.#setLoading(newValue === "true");
         break;
       case "position":
         const { x, y } = JSON.parse(newValue);
-        this._setPosition(x, y);
+        this.#setPosition(x, y);
         break;
       case "result":
-        this._result.innerHTML = escapeHTML(newValue).split("\n").join("<br>");
+        this.#result.innerHTML = escapeHTML(newValue).split("\n").join("<br>");
         break;
       case "error":
-        this._result.innerHTML = `<nord-banner variant="danger">${newValue}</nord-banner>`;
+        this.#result.innerHTML = `<nord-banner variant="danger">${newValue}</nord-banner>`;
         break;
       case "lang":
-        this._setSelectedTargetLanguage(newValue);
+        this.#setSelectedTargetLanguage(newValue);
         break;
     }
   }
 
   getPosition() {
-    return { x: this._draggable.offsetLeft, y: this._draggable.offsetTop };
+    return { x: this.#draggable.offsetLeft, y: this.#draggable.offsetTop };
   }
 
-  _setSelectedTargetLanguage(language) {
+  #setSelectedTargetLanguage(language) {
     if (
       language &&
       supportedLanguages.some(
         (supportedLanguage) => supportedLanguage.code === language.toUpperCase()
       )
     ) {
-      this._languageSelect.value = language;
+      this.#languageSelect.value = language;
     }
   }
 
-  _setPosition(x, y) {
-    this._draggable.style.top = `${y}px`;
-    this._draggable.style.left = `${x}px`;
+  #setPosition(x, y) {
+    this.#draggable.style.top = `${y}px`;
+    this.#draggable.style.left = `${x}px`;
   }
 
-  _setLoading(loading) {
-    this._spinner.classList.toggle("d-none", !loading);
-    this._result.classList.toggle("d-none", loading);
+  #setLoading(loading) {
+    this.#spinner.classList.toggle("d-none", !loading);
+    this.#result.classList.toggle("d-none", loading);
   }
 
-  _onLanguageSelectChange() {
+  #onLanguageSelectChange() {
     this.dispatchEvent(
       new CustomEvent("change", {
         detail: {
           selectedSourceLanguage: undefined,
-          selectedTargetLanguage: this._languageSelect.value,
+          selectedTargetLanguage: this.#languageSelect.value,
         },
       })
     );

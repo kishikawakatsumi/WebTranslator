@@ -3,14 +3,14 @@
 import { supportedLanguages } from "../shared/supported_languages";
 
 export class TranslateView extends EventTarget {
-  _languageSelect;
-  _translateButton;
+  #languageSelect;
+  #translateButton;
 
-  _showOriginalButton;
+  #showOriginalButton;
 
   constructor() {
     super();
-    this._init();
+    this.#init();
   }
 
   setSelectedTargetLanguage(language) {
@@ -20,7 +20,7 @@ export class TranslateView extends EventTarget {
         (supportedLanguage) => supportedLanguage.code === language.toUpperCase()
       )
     ) {
-      this._languageSelect.value = language;
+      this.#languageSelect.value = language;
     }
   }
 
@@ -31,16 +31,16 @@ export class TranslateView extends EventTarget {
   }
 
   setEnabled(enabled) {
-    this._translateButton.disabled = !enabled;
+    this.#translateButton.disabled = !enabled;
   }
 
   setLoading(loading) {
-    this._languageSelect.disabled = loading;
+    this.#languageSelect.disabled = loading;
     if (loading) {
       this.showInitialView();
-      this._translateButton.setAttribute("loading", loading);
+      this.#translateButton.setAttribute("loading", loading);
     } else {
-      this._translateButton.removeAttribute("loading");
+      this.#translateButton.removeAttribute("loading");
     }
   }
 
@@ -65,9 +65,9 @@ export class TranslateView extends EventTarget {
     this.addEventListener(type, listener);
   }
 
-  _init() {
-    this._languageSelect = document.getElementById("language-select");
-    this._languageSelect.label = browser.i18n.getMessage(
+  #init() {
+    this.#languageSelect = document.getElementById("language-select");
+    this.#languageSelect.label = browser.i18n.getMessage(
       "ui_target_language_select"
     );
     const locale = browser.i18n
@@ -84,53 +84,53 @@ export class TranslateView extends EventTarget {
         false,
         supportedLanguage.code === locale
       );
-      this._languageSelect.appendChild(option);
+      this.#languageSelect.appendChild(option);
     }
-    this._languageSelect.addEventListener(
+    this.#languageSelect.addEventListener(
       "change",
-      this._onLanguageSelectChange.bind(this)
+      this.#onLanguageSelectChange.bind(this)
     );
 
-    this._translateButton = document.getElementById("translate-button");
-    this._translateButton.textContent = browser.i18n.getMessage(
+    this.#translateButton = document.getElementById("translate-button");
+    this.#translateButton.textContent = browser.i18n.getMessage(
       "full_page_translation_menu_translate_button"
     );
-    this._translateButton.addEventListener("click", (event) => {
-      this._onTranslateButtonClick(event);
+    this.#translateButton.addEventListener("click", (event) => {
+      this.#onTranslateButtonClick(event);
     });
 
-    this._showOriginalButton = document.getElementById("show-original-button");
-    this._showOriginalButton.textContent = browser.i18n.getMessage(
+    this.#showOriginalButton = document.getElementById("show-original-button");
+    this.#showOriginalButton.textContent = browser.i18n.getMessage(
       "full_page_translation_show_original"
     );
-    this._showOriginalButton.addEventListener("click", (event) => {
-      this._onShowOriginalButtonClick(event);
+    this.#showOriginalButton.addEventListener("click", (event) => {
+      this.#onShowOriginalButtonClick(event);
     });
   }
 
-  _onLanguageSelectChange() {
+  #onLanguageSelectChange() {
     this.dispatchEvent(
       new CustomEvent("change", {
         detail: {
           selectedSourceLanguage: undefined,
-          selectedTargetLanguage: this._languageSelect.value,
+          selectedTargetLanguage: this.#languageSelect.value,
         },
       })
     );
   }
 
-  _onTranslateButtonClick() {
+  #onTranslateButtonClick() {
     this.dispatchEvent(
       new CustomEvent("translate", {
         detail: {
           sourceLanguage: undefined,
-          targetLanguage: this._languageSelect.value,
+          targetLanguage: this.#languageSelect.value,
         },
       })
     );
   }
 
-  _onShowOriginalButtonClick() {
+  #onShowOriginalButtonClick() {
     this.dispatchEvent(new CustomEvent("showOriginal"));
   }
 }
