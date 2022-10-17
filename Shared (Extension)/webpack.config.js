@@ -80,4 +80,5 @@ module.exports = {
     ],
   },
   devtool: "source-map",
+  target: ["web", "es5"],
 };
