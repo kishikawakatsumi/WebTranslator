@@ -390,7 +390,7 @@ async function collectVisibleElements() {
 
   const visibleElements = [];
   for (const element of blockElements) {
-    const visible = await isVisible(element);
+    const visible = isVisible(element);
     if (
       visible &&
       (element.dataset.wtdlUid === undefined ||
@@ -412,7 +412,7 @@ function splitElements(elements, storage) {
       element.nodeName !== "SCRIPT" &&
       element.nodeName !== "svg" &&
       (hasTextNode(element) || hasInlineElement(element)) &&
-      element.clientHeight < window.innerHeight
+      element.clientTop < window.innerHeight
     ) {
       storage.push(element);
     } else {
