@@ -163,7 +163,9 @@ class App {
   }
 
   #ovserveTextSelection() {
-    document.addEventListener("touchend", async (event) => {
+    document.addEventListener("pointerup", async (event) => {
+      event.preventDefault();
+
       const selection = window.getSelection();
       const selectionText = selection ? selection.toString().trim() : "";
       if (!selectionText && !selection.rangeCount) {
