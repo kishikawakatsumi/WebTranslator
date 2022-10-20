@@ -26,6 +26,7 @@ class App {
   #isMobile = false;
 
   constructor() {
+    browser.tabs.executeScript({ file: "/content.js" });
     this.#init();
   }
 

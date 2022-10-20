@@ -56,13 +56,6 @@ struct ContentView: View {
             Text(#"Tap WebTranslator for DeepL"#)
           }
           HStack(alignment: .top) {
-            Image(systemName: "checkmark.shield")
-              .resizable()
-              .scaledToFit()
-              .frame(width: 20, height: 20)
-            Text(#"Tap "Always Allow" then "Always Allow on Every Website""#)
-          }
-          HStack(alignment: .top) {
             Image(systemName: "arrow.clockwise")
               .resizable()
               .scaledToFit()
