@@ -13,6 +13,8 @@ import "./popup.css";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 
+import verge from "verge";
+
 import { TranslateView } from "./translate_view";
 import { LoginView } from "./login_view";
 import { TranslateSelectionButton } from "./translate_selection_button";
@@ -59,7 +61,7 @@ class App {
     }
     browser.runtime.getPlatformInfo().then((info) => {
       if (info.os === "ios") {
-        if (window.screen.width < 768) {
+        if (verge.viewportW() < 768) {
           this.#isMobile = true;
 
           document.getElementById("header-title").classList.add("d-hide");
