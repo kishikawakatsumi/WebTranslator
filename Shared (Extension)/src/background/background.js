@@ -99,7 +99,7 @@ class App {
   }
 
   async #translateSelection(selectionText) {
-    this.#injectContentScript();
+    await this.#injectContentScript();
 
     this.#selectionText = selectionText;
     const targetLanguage = await getTargetLanguage();
