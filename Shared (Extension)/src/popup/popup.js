@@ -13,8 +13,6 @@ import "./popup.css";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 
-import verge from "verge";
-
 import { TranslateView } from "./translate_view";
 import { LoginView } from "./login_view";
 import { TranslateSelectionButton } from "./translate_selection_button";
@@ -61,13 +59,44 @@ class App {
     }
     browser.runtime.getPlatformInfo().then((info) => {
       if (info.os === "ios") {
-        if (verge.viewportW() < 768) {
+        if (window.screen.width < 768) {
           this.#isMobile = true;
 
           document.getElementById("header-title").classList.add("d-hide");
           document.getElementById("login-view-divider").classList.add("d-hide");
           document.getElementById("translate-view").classList.add("d-hide");
         }
+
+        const applyAddaptiveAppearance = () => {
+          if (
+            window.screen.width < 768 ||
+            (document.documentElement.clientWidth > 375 &&
+              document.documentElement.clientWidth <= 507)
+          ) {
+            document.body.style.width = "100%";
+            document.getElementById("header-title").classList.add("d-hide");
+          } else {
+            document.body.style.width = "375px";
+
+            requestAnimationFrame(() => {
+              if (
+                document.documentElement.getBoundingClientRect().height !==
+                window.innerHeight
+              ) {
+                document.getElementById("header-title").classList.add("d-hide");
+              } else {
+                document
+                  .getElementById("header-title")
+                  .classList.remove("d-hide");
+              }
+            });
+          }
+        };
+        const resizeObserver = new ResizeObserver(() => {
+          applyAddaptiveAppearance();
+        });
+        resizeObserver.observe(document.documentElement);
+        applyAddaptiveAppearance();
       } else {
         document
           .getElementById("translate-selection-button-container")
