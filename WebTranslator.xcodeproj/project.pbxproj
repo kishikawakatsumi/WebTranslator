@@ -61,6 +61,10 @@
 		14984F7C28EE69F200493D97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14984F7B28EE69F200493D97 /* Assets.xcassets */; };
 		14984F9828EE6C3A00493D97 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14984F9728EE6C3A00493D97 /* App.swift */; };
 		14D331B028E08F0500EA871F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14D331AE28E08E5A00EA871F /* InfoPlist.strings */; };
+		14DA5F652904054B0067852A /* translate_selection.js in Resources */ = {isa = PBXBuildFile; fileRef = 14DA5F642904054B0067852A /* translate_selection.js */; };
+		14DA5F662904054B0067852A /* translate_selection.js in Resources */ = {isa = PBXBuildFile; fileRef = 14DA5F642904054B0067852A /* translate_selection.js */; };
+		14DA5F682904212B0067852A /* translate_selection_popover.js in Resources */ = {isa = PBXBuildFile; fileRef = 14DA5F672904212B0067852A /* translate_selection_popover.js */; };
+		14DA5F692904212B0067852A /* translate_selection_popover.js in Resources */ = {isa = PBXBuildFile; fileRef = 14DA5F672904212B0067852A /* translate_selection_popover.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +154,8 @@
 		14D331AB28E08E4900EA871F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = ja; path = ../ja.lproj/Main.html; sourceTree = "<group>"; };
 		14D331AD28E08E5A00EA871F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		14D331AF28E08E5C00EA871F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		14DA5F642904054B0067852A /* translate_selection.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = translate_selection.js; sourceTree = "<group>"; };
+		14DA5F672904212B0067852A /* translate_selection_popover.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = translate_selection_popover.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +252,8 @@
 				147D1B6A28DA02F20026A73F /* manifest.json */,
 				147D1B6B28DA02F20026A73F /* background.js */,
 				147D1B6C28DA02F20026A73F /* content.js */,
+				14DA5F642904054B0067852A /* translate_selection.js */,
+				14DA5F672904212B0067852A /* translate_selection_popover.js */,
 				147D1B6D28DA02F20026A73F /* popup.html */,
 				147D1B6F28DA02F20026A73F /* popup.js */,
 			);
@@ -460,6 +468,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14DA5F652904054B0067852A /* translate_selection.js in Resources */,
 				147D1BB728DA02F20026A73F /* background.js in Resources */,
 				147D1BBB28DA02F20026A73F /* popup.html in Resources */,
 				147D1BB328DA02F20026A73F /* images in Resources */,
@@ -467,6 +476,7 @@
 				14984F7328EC294500493D97 /* assets in Resources */,
 				147D1BB128DA02F20026A73F /* _locales in Resources */,
 				147D1BB928DA02F20026A73F /* content.js in Resources */,
+				14DA5F682904212B0067852A /* translate_selection_popover.js in Resources */,
 				147D1BBF28DA02F20026A73F /* popup.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14DA5F662904054B0067852A /* translate_selection.js in Resources */,
 				147D1BB828DA02F20026A73F /* background.js in Resources */,
 				147D1BBC28DA02F20026A73F /* popup.html in Resources */,
 				147D1BB428DA02F20026A73F /* images in Resources */,
@@ -482,6 +493,7 @@
 				14984F7428EC294500493D97 /* assets in Resources */,
 				147D1BB228DA02F20026A73F /* _locales in Resources */,
 				147D1BBA28DA02F20026A73F /* content.js in Resources */,
+				14DA5F692904212B0067852A /* translate_selection_popover.js in Resources */,
 				147D1BC028DA02F20026A73F /* popup.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

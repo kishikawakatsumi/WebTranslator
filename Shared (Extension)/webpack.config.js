@@ -10,6 +10,8 @@ module.exports = {
   entry: {
     background: "./src/background/background.js",
     content: "./src/content/content.js",
+    translate_selection: "./src/content/translate_selection.js",
+    translate_selection_popover: "./src/content/translate_selection_popover.js",
     popup: "./src/popup/popup.js",
   },
   output: {

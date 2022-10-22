@@ -3,6 +3,7 @@
 import { Translator } from "./translator";
 
 class App {
+  #shouldSetupContentListeners = true;
   #selectionText = undefined;
 
   constructor() {
@@ -74,7 +75,32 @@ class App {
     }
   }
 
+  async #injectContentScript() {
+    const results = await browser.tabs.executeScript({
+      code: `if (!window.customElements.get("translate-popover")) { true; }`,
+    });
+    if (results && results[0]) {
+      await browser.tabs.executeScript({
+        file: "/translate_selection_popover.js",
+      });
+
+      await browser.tabs.executeScript({
+        file: "/translate_selection.js",
+      });
+      this.#shouldSetupContentListeners = false;
+    }
+
+    if (this.#shouldSetupContentListeners) {
+      await browser.tabs.executeScript({
+        file: "/translate_selection.js",
+      });
+      this.#shouldSetupContentListeners = false;
+    }
+  }
+
   async #translateSelection(selectionText) {
+    this.#injectContentScript();
+
     this.#selectionText = selectionText;
     const targetLanguage = await getTargetLanguage();
 
