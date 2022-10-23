@@ -3,7 +3,6 @@
 import { Popover } from "./popover";
 import { Tooltip } from "./tooltip";
 import { Toast } from "./toast";
-import { debounce } from "./utils";
 
 import {
   isVisible,
@@ -170,6 +169,7 @@ class App {
       const selection = window.getSelection();
       const selectionText = selection ? selection.toString().trim() : "";
       if (!selectionText && !selection.rangeCount) {
+        this.#removeTooltip();
         return;
       }
 
@@ -184,17 +184,10 @@ class App {
         {
           const selection = window.getSelection();
           if (!selection || !selection.toString().trim()) {
+            this.#removeTooltip();
             return;
           }
         }
-
-        const sendRequest = debounce(async (selectionText) => {
-          const request = {
-            method: "translateSelection",
-            selectionText,
-          };
-          browser.runtime.sendMessage(request);
-        }, 50);
 
         const tooltip = this.#createTooltip({ x, y });
         tooltip.addEventListener("tooltipClick", (event) => {
@@ -202,7 +195,11 @@ class App {
           event.stopPropagation();
 
           if (selectionText) {
-            sendRequest(selectionText);
+            const request = {
+              method: "translateSelection",
+              selectionText,
+            };
+            browser.runtime.sendMessage(request);
           }
           tooltip.remove();
 
@@ -240,6 +237,14 @@ class App {
     );
 
     return tooltip;
+  }
+
+  #removeTooltip() {
+    const id = "translate-button";
+    const tooltip = document.getElementById(id);
+    if (tooltip) {
+      tooltip.remove();
+    }
   }
 
   #createPopover(position) {

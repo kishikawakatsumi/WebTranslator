@@ -56,17 +56,6 @@ export function once(fn, context) {
   };
 }
 
-export function debounce(cb, delay = 250) {
-  let timeout;
-
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      cb(...args);
-    }, delay);
-  };
-}
-
 export function escapeHTML(text) {
   const div = document.createElement("div");
   div.textContent = text;
