@@ -1,7 +1,7 @@
 {
   "extension_name": {
     "description": "The display name for the extension.",
-    "message": "WebTranslator for DeepL"
+    "message": "Web Translator for DeepL"
   },
   "extension_description": {
     "description": "Description of what the extension does.",

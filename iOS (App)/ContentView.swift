@@ -4,11 +4,11 @@ struct ContentView: View {
   var body: some View {
     ScrollView {
       VStack {
-        Text("Enable WebTranslator Safri Web Extension")
+        Text("Enable Web Translator Safri Web Extension")
           .font(.title2)
           .bold()
           .padding()
-        Text("You need to enable Safari extensions in order to start using WebTranslator for DeepL")
+        Text("You need to enable Safari extensions in order to start using Web Translator for DeepL")
           .padding(.vertical, 2)
 
         VStack(alignment: .leading, spacing: 16) {
@@ -46,14 +46,14 @@ struct ContentView: View {
             Image(systemName: "switch.2")
               .resizable()
               .frame(width: 20, height: 20)
-            Text(#"Enable WebTranslator and then tap "Done"#)
+            Text(#"Enable Web Translator and then tap "Done"#)
           }
           HStack(alignment: .top) {
             Image(systemName: "hand.tap")
               .resizable()
               .scaledToFit()
               .frame(width: 20, height: 20)
-            Text(#"Tap WebTranslator for DeepL"#)
+            Text(#"Tap Web Translator for DeepL"#)
           }
           HStack(alignment: .top) {
             Image(systemName: "checkmark.shield")
