@@ -3,6 +3,7 @@
 import { Popover } from "./popover";
 import { Tooltip } from "./tooltip";
 import { Toast } from "./toast";
+import { debounce } from "./utils";
 
 import {
   isVisible,
@@ -187,17 +188,21 @@ class App {
           }
         }
 
+        const sendRequest = debounce(async (selectionText) => {
+          const request = {
+            method: "translateSelection",
+            selectionText,
+          };
+          browser.runtime.sendMessage(request);
+        }, 50);
+
         const tooltip = this.#createTooltip({ x, y });
         tooltip.addEventListener("tooltipClick", (event) => {
           event.preventDefault();
           event.stopPropagation();
 
           if (selectionText) {
-            const request = {
-              method: "translateSelection",
-              selectionText,
-            };
-            browser.runtime.sendMessage(request);
+            sendRequest(selectionText);
           }
           tooltip.remove();
 
