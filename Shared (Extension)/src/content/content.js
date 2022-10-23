@@ -277,11 +277,14 @@ class App {
       document.removeEventListener("click", onClick);
     });
     popover.addEventListener("change", async (event) => {
-      await browser.storage.local.set(event.detail);
+      await browser.storage.local.set({
+        selectedSourceLanguage: undefined,
+        selectedTargetLanguage: event.detail.selectedTargetLanguage,
+      });
 
       const request = {
         method: "translateSelection",
-        selectionText: event.detail.selectionText,
+        selectionText: undefined,
       };
       browser.runtime.sendMessage(request);
     });
