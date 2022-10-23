@@ -39,7 +39,7 @@ class App {
     }
     this.#setupListeners();
     if (isTouchDevice()) {
-      this.#ovserveTextSelection();
+      this.#observeTextSelection();
     }
   }
 
@@ -162,7 +162,7 @@ class App {
     );
   }
 
-  #ovserveTextSelection() {
+  #observeTextSelection() {
     document.addEventListener("pointerup", async (event) => {
       event.preventDefault();
 

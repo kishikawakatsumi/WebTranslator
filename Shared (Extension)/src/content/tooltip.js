@@ -86,6 +86,7 @@ export class Tooltip extends HTMLElement {
     this.shadow.append(tooltip);
 
     this.#container = this.shadowRoot.querySelector(".container");
+    this.#container.addEventListener("touchend", this.#onClick.bind(this));
     this.#container.addEventListener("pointerup", this.#onClick.bind(this));
 
     this.#fadeIn(this.#container);
