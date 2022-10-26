@@ -21,6 +21,8 @@ import { runColorMode, loadColorScheme } from "../shared/utils";
 class App {
   #translateView;
   #loginView;
+  #spinner;
+  #divider;
   #translateSelectionButton;
 
   #isMobile = false;
@@ -49,6 +51,8 @@ class App {
       }
     } else {
       // No translation is in progress
+      this.#spinner.classList.remove("d-hide");
+      this.#divider.classList.add("d-hide");
       this.#loginView.setHidden(true);
       this.#getUserDisplayName();
     }
@@ -122,6 +126,11 @@ class App {
 
     this.#loginView = new LoginView();
     this.#loginView.on("login", this.#onLogin.bind(this));
+
+    this.#spinner = document.getElementById("spinner");
+    this.#divider = document.getElementById(
+      "translate-selection-button-divider"
+    );
 
     this.#translateSelectionButton = new TranslateSelectionButton();
     this.#translateSelectionButton.on(
@@ -217,9 +226,12 @@ class App {
       "application.id",
       { method: "getUserDisplayName" },
       (response) => {
+        this.#spinner.classList.add("d-hide");
+        this.#divider.classList.remove("d-hide");
+        this.#loginView.setHidden(false);
+
         this.#handleLoginSession(response);
         this.#loginView.setLoading(false);
-        document.getElementById("spinner").classList.add("d-hide");
       }
     );
   }
