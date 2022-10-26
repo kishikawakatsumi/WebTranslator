@@ -49,6 +49,7 @@ class App {
       }
     } else {
       // No translation is in progress
+      this.#loginView.setHidden(true);
       this.#getUserDisplayName();
     }
   }
@@ -218,6 +219,7 @@ class App {
       (response) => {
         this.#handleLoginSession(response);
         this.#loginView.setLoading(false);
+        document.getElementById("spinner").classList.add("d-hide");
       }
     );
   }
