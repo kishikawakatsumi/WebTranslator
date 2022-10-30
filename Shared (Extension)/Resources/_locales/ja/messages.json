@@ -94,10 +94,6 @@
     "description": "Info for free users that too many requests are triggered",
     "message": "テキストを翻訳できませんでした。ご利用のネットワークから大量のリクエストが送信されているようです。"
   },
-  "error_message_needs_reload": {
-    "description": "",
-    "message": "翻訳するにはこのページを再度読み込む必要があります。ページの再読み込み後に、もう一度お試しください。"
-  },
   "supported_languages_BG": {
     "description": "Name of language",
     "message": "ブルガリア語"

@@ -10,6 +10,7 @@ module.exports = {
   entry: {
     background: "./src/background/background.js",
     content: "./src/content/content.js",
+    content_ui: "./src/content/content_ui.js",
     popup: "./src/popup/popup.js",
   },
   output: {

@@ -1,9 +1,5 @@
 "use strict";
 
-import { Popover } from "./popover";
-import { Tooltip } from "./tooltip";
-import { Toast } from "./toast";
-
 import {
   isVisible,
   hasTextNode,
@@ -20,7 +16,8 @@ class App {
   #originalTexts = {};
   #translatedTexts = {};
 
-  #toast = new Toast();
+  #toastProgress = undefined;
+  #toastError = undefined;
 
   #isProcessing = false;
   #shouldProcessAfterScrolling = false;
@@ -31,15 +28,47 @@ class App {
   }
 
   #init() {
-    if (!window.customElements.get("translate-popover")) {
-      window.customElements.define("translate-popover", Popover);
+    this.#restoreState();
+
+    const popover = document.getElementById("translate-popover");
+    if (popover) {
+      popover.remove();
     }
-    if (!window.customElements.get("translate-button")) {
-      window.customElements.define("translate-button", Tooltip);
+    const tooltip = document.getElementById("translate-button");
+    if (tooltip) {
+      tooltip.remove();
     }
+
+    this.#toastProgress = this.#createToastProgress();
+    this.#toastError = this.#createToastError();
+
     this.#setupListeners();
     if (isTouchDevice()) {
       this.#observeTextSelection();
+    }
+  }
+
+  #restoreState() {
+    const id = "__wtdl-global-data";
+    const global = document.getElementById(id);
+    if (global) {
+      if (global.dataset.wtdlOriginalTexts) {
+        try {
+          this.#originalTexts = JSON.parse(global.dataset.wtdlOriginalTexts);
+        } catch (error) {}
+      }
+      return;
+    }
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<div id="${id}" style="display: none;"></div>`
+    );
+  }
+
+  #saveState() {
+    const global = document.getElementById("__wtdl-global-data");
+    if (global) {
+      global.dataset.wtdlOriginalTexts = JSON.stringify(this.#originalTexts);
     }
   }
 
@@ -95,6 +124,9 @@ class App {
             for (const element of elements) {
               const uid = element.dataset.wtdlUid;
               const originalText = this.#originalTexts[uid];
+              if (originalText === undefined) {
+                continue;
+              }
               element.innerHTML = originalText;
               element.dataset.wtdlTranslated = "false";
             }
@@ -147,10 +179,6 @@ class App {
             sendResponse({
               result: selection ? selection.toString() : undefined,
             });
-            break;
-          }
-          case "ping": {
-            sendResponse({ result: "pong" });
             break;
           }
           default: {
@@ -247,6 +275,34 @@ class App {
     }
   }
 
+  #createToastProgress() {
+    const id = "toast-progress";
+    const toast = document.getElementById(id);
+    if (toast) {
+      toast.remove();
+    }
+
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<toast-progress id="${id}"></toast-progress>`
+    );
+    return document.getElementById(id);
+  }
+
+  #createToastError() {
+    const id = "toast-error";
+    const toast = document.getElementById(id);
+    if (toast) {
+      toast.remove();
+    }
+
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<toast-error id="${id}"></toast-error>`
+    );
+    return document.getElementById(id);
+  }
+
   #createPopover(position) {
     const id = "translate-popover";
     {
@@ -277,6 +333,9 @@ class App {
       document.removeEventListener("click", onClick);
     });
     popover.addEventListener("change", async (event) => {
+      if (!event || !event.detail) {
+        return;
+      }
       await browser.storage.local.set({
         selectedSourceLanguage: undefined,
         selectedTargetLanguage: event.detail.selectedTargetLanguage,
@@ -353,7 +412,24 @@ class App {
             element.dataset.wtdlOriginal = "true";
             element.dataset.wtdlTranslated = "true";
           }
+
+          this.#saveState();
         }
+      } else if (response.result.error) {
+        const message = (() => {
+          if (response.result.error.code === 1045601) {
+            return browser.i18n.getMessage(
+              "error_message_quota_has_been_reached"
+            );
+          } else {
+            return (
+              response.result.error.message ||
+              browser.i18n.getMessage("error_message_generic_error")
+            );
+          }
+        })();
+        this.#abortTranslation(message);
+        return;
       }
     }
 
@@ -361,7 +437,7 @@ class App {
   }
 
   #startTranslation() {
-    this.#toast.show();
+    this.#toastProgress.setAttribute("show", true);
 
     this.#isProcessing = true;
     this.#isShowingOriginal = false;
@@ -383,9 +459,22 @@ class App {
     });
   }
 
+  #abortTranslation(errorMessage) {
+    this.#isProcessing = false;
+    this.#isShowingOriginal = false;
+
+    this.#toastProgress.setAttribute("show", false);
+    this.#toastError.setAttribute("show", errorMessage);
+
+    browser.runtime.sendMessage({
+      method: "abortTranslation",
+      message: errorMessage,
+    });
+  }
+
   #finishTranslation() {
     this.#isProcessing = false;
-    this.#toast.close();
+    this.#toastProgress.setAttribute("show", false);
 
     browser.runtime.sendMessage({
       method: "finishTranslation",

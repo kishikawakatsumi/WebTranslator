@@ -32,8 +32,6 @@ class App {
   }
 
   async run() {
-    this.#warnIfExtensionUnavailable();
-
     const response = await this.#getContentState();
     if (response && response.result) {
       // Transration is already in progress or finished
@@ -154,10 +152,28 @@ class App {
         return;
       }
       switch (request.method) {
-        case "startTranslation":
+        case "startTranslation": {
           this.#translateView.setLoading(true);
+
+          const banner = document.getElementById("translation-error-banner");
+          banner.classList.add("d-hide");
+
           sendResponse();
           break;
+        }
+        case "abortTranslation": {
+          this.#translateView.setLoading(false);
+
+          const message =
+            request.message ||
+            browser.i18n.getMessage("error_message_generic_error");
+          const banner = document.getElementById("translation-error-banner");
+          banner.textContent = message;
+          banner.classList.remove("d-hide");
+
+          sendResponse();
+          break;
+        }
         case "cancelTranslation":
         case "finishTranslation":
           this.#translateView.setLoading(false);
@@ -378,26 +394,6 @@ class App {
         animation: "fade",
       });
     }
-  }
-
-  #warnIfExtensionUnavailable() {
-    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      browser.tabs
-        .sendMessage(tabs[0].id, {
-          method: "ping",
-        })
-        .then((response) => {
-          if (!response) {
-            const message = browser.i18n.getMessage(
-              "error_message_needs_reload"
-            );
-            const banner = document.getElementById("reload-message-banner");
-            banner.textContent = message;
-            banner.classList.remove("d-hide");
-            this.#translateView.setEnabled(false);
-          }
-        });
-    });
   }
 }
 
