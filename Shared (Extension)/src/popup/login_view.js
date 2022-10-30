@@ -55,10 +55,12 @@ export class LoginView extends EventTarget {
 
     this.#emailInput = document.getElementById("email-input");
     this.#emailInput.label = browser.i18n.getMessage("ui_email_input_label");
+
     this.#passwordInput = document.getElementById("password-input");
     this.#passwordInput.label = browser.i18n.getMessage(
       "ui_password_input_label"
     );
+
     this.#errorLabel = document.getElementById("login-error-label");
 
     this.#loginButton = document.getElementById("login-button");
@@ -67,6 +69,19 @@ export class LoginView extends EventTarget {
 
     this.#loginButton.addEventListener("click", (event) => {
       this.#onLoginButtonClick(event);
+    });
+
+    this.#emailInput.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        this.#passwordInput.focus();
+      }
+    });
+    this.#passwordInput.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        this.#loginButton.click();
+      }
     });
   }
 
