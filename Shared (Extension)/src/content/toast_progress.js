@@ -5,20 +5,41 @@ import "@nordhealth/components/lib/Stack";
 import "@nordhealth/components/lib/Toast";
 import "@nordhealth/components/lib/ToastGroup";
 
-export class Toast {
+export class ToastProgress extends HTMLElement {
   #toastStack = [];
 
-  show() {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: "open" });
+  }
+
+  static get observedAttributes() {
+    return ["show"];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case "show":
+        if (newValue === "true") {
+          this.#show();
+        } else {
+          this.#dismiss();
+        }
+        break;
+    }
+  }
+
+  #show() {
     if (this.#toastStack.length === 0) {
       const group = createToastGroup();
-
       group.addToast(`${progressMessage()}...`, { autoDismiss: -1 });
+
       retouchToastAppearance();
     }
     this.#toastStack.push(true);
   }
 
-  close() {
+  #dismiss() {
     if (this.#toastStack.length === 1) {
       dismissToast();
     }
@@ -27,8 +48,7 @@ export class Toast {
 }
 
 function createToastGroup() {
-  const id = "nord-toast-group";
-
+  const id = "nord-toast-group-progress";
   {
     const group = document.getElementById(id);
     if (group) {
@@ -47,7 +67,7 @@ function createToastGroup() {
 }
 
 function getToastGroup() {
-  return document.getElementById("nord-toast-group");
+  return document.getElementById("nord-toast-group-progress");
 }
 
 function progressMessage() {
@@ -55,7 +75,7 @@ function progressMessage() {
 }
 
 function retouchToastAppearance() {
-  const group = document.querySelector("nord-toast-group");
+  const group = getToastGroup();
   if (group) {
     const toast = group.querySelector("nord-toast");
     if (toast) {
@@ -78,7 +98,7 @@ function retouchToastAppearance() {
 
 function dismissToast() {
   let success = false;
-  const group = document.querySelector("nord-toast-group");
+  const group = getToastGroup();
   if (group) {
     const toast = group.querySelector("nord-toast");
     if (toast) {
