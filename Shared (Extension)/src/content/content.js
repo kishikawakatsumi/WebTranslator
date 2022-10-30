@@ -2,8 +2,9 @@
 
 import {
   isVisible,
+  isHidden,
   hasTextNode,
-  hasInlineElement,
+  hasNoBlockElement,
   once,
   scrollDidStop,
   isTouchDevice,
@@ -509,23 +510,26 @@ async function collectVisibleElements() {
 
 function splitElements(elements, storage) {
   for (const element of elements) {
-    if (
-      element.nodeName !== "STYLE" &&
-      element.nodeName !== "META" &&
-      element.nodeName !== "LINK" &&
-      element.nodeName !== "SCRIPT" &&
-      element.nodeName !== "svg" &&
-      (hasTextNode(element) || hasInlineElement(element)) &&
-      element.clientTop < window.innerHeight
-    ) {
-      storage.push(element);
-    } else {
-      const children = element.children;
-      if (!children || children.length === 0) {
-        continue;
-      }
-      splitElements(element.children, storage);
+    if (isHidden(element)) {
+      continue;
     }
+    if (element.nodeName === "svg") {
+      continue;
+    }
+    if (hasTextNode(element)) {
+      storage.push(element);
+      continue;
+    }
+    if (hasNoBlockElement(element)) {
+      storage.push(element);
+      continue;
+    }
+
+    const children = element.children;
+    if (!children || children.length === 0) {
+      continue;
+    }
+    splitElements(element.children, storage);
   }
 }
 

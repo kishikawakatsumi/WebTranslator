@@ -5,28 +5,56 @@ export function isVisible(element) {
   return rect.top <= window.innerHeight && rect.left <= window.innerWidth;
 }
 
+export function isHidden(element) {
+  return (
+    getComputedStyle(element).display === "none" ||
+    !element.textContent ||
+    element.textContent.trim() === ""
+  );
+}
+
 export function hasTextNode(element) {
   const childNodes = element.childNodes;
   if (childNodes.length === 0) {
     return false;
   }
-  return (
-    childNodes[0].nodeType === Node.TEXT_NODE &&
-    childNodes[0].nodeValue.trim() !== ""
-  );
+  for (const child of childNodes) {
+    if (child.nodeType === Node.TEXT_NODE && child.nodeValue.trim() !== "") {
+      return true;
+    }
+  }
+  return false;
 }
 
-export function hasInlineElement(element) {
+export function hasNoBlockElement(element) {
   const children = element.children;
   if (!children || children.length === 0) {
     return false;
   }
-  for (const child of children) {
+  return Array.from(children).every((child) => {
     const display = getComputedStyle(child).display;
-    if (display === "inline" || display === "inline-block") {
-      return true;
-    }
-  }
+    return (
+      child.textContent &&
+      child.textContent.trim() !== "" &&
+      child.tagName !== "BASE" &&
+      child.tagName !== "LINK" &&
+      child.tagName !== "NOSCRIPT" &&
+      child.tagName !== "SCRIPT" &&
+      child.tagName !== "STYLE" &&
+      child.tagName !== "TEMPLATE" &&
+      child.tagName !== "TITLE" &&
+      child.tagName !== "AUDIO" &&
+      child.tagName !== "CANVAS" &&
+      child.tagName !== "IMG" &&
+      child.tagName !== "MATH" &&
+      child.tagName !== "OBJECT" &&
+      child.tagName !== "PICTURE" &&
+      child.tagName !== "SVG" &&
+      child.tagName !== "VIDEO" &&
+      display !== "block" &&
+      display !== "none"
+    );
+  });
 }
 
 export function scrollDidStop(callback, refresh = 200) {
