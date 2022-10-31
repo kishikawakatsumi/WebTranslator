@@ -3,85 +3,91 @@ import SwiftUI
 struct ContentView: View {
   var body: some View {
     ScrollView {
-      VStack {
+      VStack(alignment: .center, spacing: 0) {
         Text("Enable Web Translator Safri Web Extension")
           .font(.title2)
           .bold()
-          .padding()
-        Text("You need to enable Safari extensions in order to start using Web Translator for DeepL")
-          .padding(.vertical, 2)
+          .padding(.horizontal, 8)
+        Color.clear
+          .frame(height: 8)
 
-        VStack(alignment: .leading, spacing: 16) {
-          HStack(alignment: .top) {
-            Image(systemName: "safari")
-              .resizable()
-              .frame(width: 20, height: 20)
-            Text(#"Open "Safari" and visit any website"#)
-          }
-          HStack(alignment: .top) {
-            Image(systemName: "textformat.size")
-              .resizable()
-              .scaledToFit()
-              .frame(width: 20, height: 20)
-            Text(#"Tap the aA button in the address bar"#)
-          }
-          Image("addressbar")
-            .resizable()
-            .scaledToFit()
-            .frame(maxWidth: 300)
-            .border(Color.gray, width: 0.5)
-          HStack(alignment: .top) {
-            Image(systemName: "puzzlepiece.extension")
-              .resizable()
-              .scaledToFit()
-              .frame(width: 20, height: 20)
-            Text(#"Tap the "Manage Extensions" section"#)
-          }
-          Image("manageextensions")
-            .resizable()
-            .scaledToFit()
-            .frame(maxWidth: 300)
-            .border(Color.gray, width: 0.5)
-          HStack(alignment: .top) {
-            Image(systemName: "switch.2")
-              .resizable()
-              .frame(width: 20, height: 20)
-            Text(#"Enable Web Translator and then tap "Done"#)
-          }
-          HStack(alignment: .top) {
-            Image(systemName: "hand.tap")
-              .resizable()
-              .scaledToFit()
-              .frame(width: 20, height: 20)
-            Text(#"Tap Web Translator for DeepL"#)
-          }
-          HStack(alignment: .top) {
-            Image(systemName: "checkmark.shield")
-              .resizable()
-              .scaledToFit()
-              .frame(width: 20, height: 20)
-            Text(#"Tap "Always Allow" then "Always Allow on Every Website""#)
-          }
-          HStack(alignment: .top) {
-            Image(systemName: "arrow.clockwise")
-              .resizable()
-              .scaledToFit()
-              .frame(width: 20, height: 20)
-            Text(#"Lastly, renew the page"#)
-          }
+        Text("You need to enable Safari extensions in order to start using Web Translator for DeepL")
+        Color.clear
+          .frame(height: 16)
+
+        VStack(alignment: .leading, spacing: 8) {
+          ItemView(
+            bulletImage: "safari",
+            text: #"Open "Safari" and visit any website"#,
+            additionalImage: nil
+          )
+          ItemView(
+            bulletImage: "textformat.size",
+            text: #"Tap the aA button in the address bar"#,
+            additionalImage: "addressbar"
+          )
+          ItemView(
+            bulletImage: "puzzlepiece.extension",
+            text: #"Tap the "Manage Extensions" section"#,
+            additionalImage: "manageextensions"
+          )
+          ItemView(
+            bulletImage: "switch.2",
+            text: #"Enable Web Translator and then tap "Done"#,
+            additionalImage: nil
+          )
+          ItemView(
+            bulletImage: "hand.tap",
+            text: #"Tap Web Translator for DeepL"#,
+            additionalImage: nil
+          )
+          ItemView(
+            bulletImage: "checkmark.shield",
+            text: #"Tap "Always Allow" then "Always Allow on Every Website""#,
+            additionalImage: nil
+          )
+          ItemView(
+            bulletImage: "arrow.clockwise",
+            text: #"Lastly, renew the page"#,
+            additionalImage: nil
+          )
         }
         .font(.body)
         .frame(
-          minWidth: 0,
-          maxWidth: .infinity,
-          minHeight: 0,
-          maxHeight: .infinity,
-          alignment: .topLeading
+          maxWidth: 300
         )
         .padding()
       }
+      .frame(
+        maxWidth: 560
+      )
       .padding()
     }
+  }
+}
+
+struct ItemView: View {
+  let bulletImage: String
+  let text: String
+  let additionalImage: String?
+
+  var body: some View {
+    HStack(alignment: .top) {
+      Image(systemName: bulletImage)
+        .resizable()
+        .scaledToFit()
+        .frame(width: 20, height: 20)
+      Text(text)
+    }
+    if let additionalImage {
+      Image(additionalImage)
+        .resizable()
+        .scaledToFit()
+        .frame(maxWidth: 300)
+        .border(Color.gray, width: 0.5)
+    }
+    Color.clear
+      .frame(height: 12)
   }
 }
 
