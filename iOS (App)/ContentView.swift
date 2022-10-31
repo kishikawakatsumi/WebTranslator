@@ -9,7 +9,7 @@ struct ContentView: View {
           .bold()
           .padding(.horizontal, 8)
         Color.clear
-          .frame(height: 8)
+          .frame(height: 16)
 
         Text("You need to enable Safari extensions in order to start using Web Translator for DeepL")
         Color.clear

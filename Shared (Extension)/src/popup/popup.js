@@ -21,8 +21,8 @@ import { runColorMode, loadColorScheme } from "../shared/utils";
 class App {
   #translateView;
   #loginView;
-  #spinner;
-  #divider;
+  #loginSpinner;
+  #translateSelectionDivider;
   #translateSelectionButton;
 
   #isMobile = false;
@@ -49,20 +49,20 @@ class App {
       }
     } else {
       // No translation is in progress
-      this.#spinner.classList.remove("d-hide");
-      this.#divider.classList.add("d-hide");
+      this.#loginSpinner.classList.remove("d-hide");
+      this.#translateSelectionDivider.classList.add("d-hide");
       this.#loginView.setHidden(true);
       this.#getUserDisplayName();
     }
   }
 
   #init() {
-    if (window.screen.width < 768) {
+    if (window.screen.width < 744) {
       document.body.style.width = "100%";
     }
     browser.runtime.getPlatformInfo().then((info) => {
       if (info.os === "ios") {
-        if (window.screen.width < 768) {
+        if (window.screen.width < 744) {
           this.#isMobile = true;
 
           document.getElementById("header-title").classList.add("d-hide");
@@ -72,7 +72,7 @@ class App {
 
         const applyAddaptiveAppearance = () => {
           if (
-            window.screen.width < 768 ||
+            window.screen.width < 744 ||
             (document.documentElement.clientWidth > 375 &&
               document.documentElement.clientWidth <= 507)
           ) {
@@ -82,10 +82,9 @@ class App {
             document.body.style.width = "375px";
 
             requestAnimationFrame(() => {
-              if (
-                document.documentElement.getBoundingClientRect().height !==
-                window.innerHeight
-              ) {
+              const documentHeight =
+                document.documentElement.getBoundingClientRect().height;
+              if (Math.ceil(documentHeight) !== window.innerHeight) {
                 document.getElementById("header-title").classList.add("d-hide");
               } else {
                 document
@@ -99,7 +98,6 @@ class App {
           applyAddaptiveAppearance();
         });
         resizeObserver.observe(document.documentElement);
-        applyAddaptiveAppearance();
       } else {
         document
           .getElementById("translate-selection-button-container")
@@ -125,8 +123,8 @@ class App {
     this.#loginView = new LoginView();
     this.#loginView.on("login", this.#onLogin.bind(this));
 
-    this.#spinner = document.getElementById("spinner");
-    this.#divider = document.getElementById(
+    this.#loginSpinner = document.getElementById("login-spinner");
+    this.#translateSelectionDivider = document.getElementById(
       "translate-selection-button-divider"
     );
 
@@ -242,8 +240,8 @@ class App {
       "application.id",
       { method: "getUserDisplayName" },
       (response) => {
-        this.#spinner.classList.add("d-hide");
-        this.#divider.classList.remove("d-hide");
+        this.#loginSpinner.classList.add("d-hide");
+        this.#translateSelectionDivider.classList.remove("d-hide");
         this.#loginView.setHidden(false);
 
         this.#handleLoginSession(response);
