@@ -1,5 +1,12 @@
-# Web Translator for DeepL
+<p align="center">
+	<img src="https://user-images.githubusercontent.com/40610/199053843-948cfd30-3fa7-4a29-9ed4-b5f7b53a8cc0.png" alt="icon" width="200px">
+</p>
+<p align="center">
+	<img src="https://img.shields.io/badge/platform-macOS | iOS-lightgrey.svg" alt="platform">
+  <img src="https://img.shields.io/badge/requirements-macOS Mojave+ | iOS 15+-ff69b4.svg" alt="systemrequirements">
+</p>
 
+# Web Translator for DeepL
 
 **Unofficial** Safari web extension for DeepL translate.
 
