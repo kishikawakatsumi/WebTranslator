@@ -1,6 +1,7 @@
 # Web Translator for DeepL
 
-Safari web extension for DeepL translate.
+
+**Unofficial** Safari web extension for DeepL translate.
 
 <a href="https://apps.apple.com/us/app/web-translator-for-deepl/id6443492610"><img src="https://user-images.githubusercontent.com/40610/198906114-99432110-0bf6-4fc9-994a-4f64064e9374.svg"></a>
 
