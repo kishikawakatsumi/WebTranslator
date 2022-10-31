@@ -80,6 +80,7 @@ export class LoginView extends EventTarget {
     this.#passwordInput.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
+        document.activeElement.blur();
         this.#loginButton.click();
       }
     });
