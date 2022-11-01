@@ -4,6 +4,10 @@ import "./nord.css";
 import "@nordhealth/components/lib/Banner";
 import "@nordhealth/components/lib/Button";
 import "@nordhealth/components/lib/Divider";
+import "@nordhealth/components/lib/Dropdown";
+import "@nordhealth/components/lib/DropdownGroup";
+import "@nordhealth/components/lib/DropdownItem";
+import "@nordhealth/components/lib/Icon";
 import "@nordhealth/components/lib/Input";
 import "@nordhealth/components/lib/Select";
 import "@nordhealth/components/lib/Stack";
@@ -19,6 +23,11 @@ import { TranslateSelectionButton } from "./translate_selection_button";
 import { runColorMode, loadColorScheme } from "../shared/utils";
 
 class App {
+  #settingsMenu;
+  #userDisplayName;
+  #dropdownFeedback;
+  #dropdownLogout;
+
   #translateView;
   #loginView;
   #loginSpinner;
@@ -32,33 +41,70 @@ class App {
   }
 
   async run() {
-    const response = await this.#getContentState();
+    const response = await this.#getLoginSession();
     if (response && response.result) {
-      // Transration is already in progress or finished
-      this.#updateViewState(ViewState.TranslateView);
+      const response = await this.#getContentState();
+      if (response && response.result) {
+        this.#dropdownLogout.classList.remove("disabled");
 
-      if (response.result.isProcessing) {
-        this.#translateView.setLoading(true);
-      } else if (response.result.isShowingOriginal) {
-        this.#translateView.showInitialView();
+        // Transration is already in progress or finished
+        this.#updateViewState(ViewState.TranslateView);
+
+        if (response.result.isProcessing) {
+          this.#translateView.setLoading(true);
+        } else if (response.result.isShowingOriginal) {
+          this.#translateView.showInitialView();
+        } else {
+          this.#translateView.showResultView(
+            response.result.sourceLanguage,
+            response.result.targetLanguage
+          );
+        }
       } else {
-        this.#translateView.showResultView(
-          response.result.sourceLanguage,
-          response.result.targetLanguage
-        );
+        // No translation is in progress
+        this.#loginSpinner.classList.remove("d-hide");
+        this.#translateSelectionDivider.classList.add("d-hide");
+        this.#loginView.setHidden(true);
+        this.#getUserDisplayName();
       }
     } else {
-      // No translation is in progress
-      this.#loginSpinner.classList.remove("d-hide");
-      this.#translateSelectionDivider.classList.add("d-hide");
-      this.#loginView.setHidden(true);
-      this.#getUserDisplayName();
+      this.#handleLoginSession(undefined);
     }
   }
 
   #init() {
+    const settingsButton = document.getElementById("settings-button");
+    settingsButton.addEventListener("click", () => {
+      requestAnimationFrame(() => {
+        document.activeElement.blur();
+      });
+    });
+
+    const placeSettingsButtonTop = () => {
+      settingsButton.style.position = "absolute";
+      settingsButton.style.top = "4px";
+      settingsButton.style.right = "4px";
+      settingsButton.setAttribute("variant", "plain");
+    };
+    const placeSettingsButtonBottom = () => {
+      settingsButton.style.position = "static";
+      settingsButton.style.top = "";
+      settingsButton.style.right = "";
+      settingsButton.setAttribute("variant", "default");
+
+      const dropdownContent = document
+        .getElementById("settings-menu")
+        .shadowRoot.querySelector(".n-dropdown-content");
+      if (dropdownContent) {
+        dropdownContent.style.padding =
+          "var(--n-space-s) 0 calc(var(--n-space-s) + 21px)";
+      }
+    };
+    placeSettingsButtonTop();
+
     if (window.screen.width < 744) {
       document.body.style.width = "100%";
+      placeSettingsButtonBottom();
     }
     browser.runtime.getPlatformInfo().then((info) => {
       if (info.os === "ios") {
@@ -66,6 +112,7 @@ class App {
           this.#isMobile = true;
 
           document.getElementById("header-title").classList.add("d-hide");
+          placeSettingsButtonBottom();
           document.getElementById("login-view-divider").classList.add("d-hide");
           document.getElementById("translate-view").classList.add("d-hide");
         }
@@ -74,10 +121,11 @@ class App {
           if (
             window.screen.width < 744 ||
             (document.documentElement.clientWidth > 375 &&
-              document.documentElement.clientWidth <= 507)
+              document.documentElement.clientWidth <= 639)
           ) {
             document.body.style.width = "100%";
             document.getElementById("header-title").classList.add("d-hide");
+            placeSettingsButtonBottom();
           } else {
             document.body.style.width = "375px";
 
@@ -86,10 +134,12 @@ class App {
                 document.documentElement.getBoundingClientRect().height;
               if (Math.ceil(documentHeight) !== window.innerHeight) {
                 document.getElementById("header-title").classList.add("d-hide");
+                placeSettingsButtonBottom();
               } else {
                 document
                   .getElementById("header-title")
                   .classList.remove("d-hide");
+                placeSettingsButtonTop();
               }
             });
           }
@@ -101,7 +151,7 @@ class App {
       } else {
         document
           .getElementById("translate-selection-button-container")
-          .classList.add("d-hide");
+          .classList.add("d-collapse");
       }
     });
     runColorMode((isDarkMode) => {
@@ -109,6 +159,27 @@ class App {
         isDarkMode ? "./assets/nord-dark.css" : "./assets/nord.css"
       );
     });
+
+    this.#settingsMenu = document.getElementById("settings-menu");
+    this.#userDisplayName = document.getElementById("user-display-name");
+    this.#dropdownFeedback = document.getElementById("dropdown-feedback");
+    this.#dropdownFeedback.addEventListener("click", (event) => {
+      event.preventDefault();
+      browser.tabs.create({
+        url: "https://forms.gle/rGdfU5Kr9QtzPWtv5",
+      });
+    });
+    document.getElementById("dropdown-feedback-text").textContent =
+      browser.i18n.getMessage("menu_feedback_label");
+    this.#dropdownLogout = document.getElementById("dropdown-logout");
+    this.#dropdownLogout.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      await this.#logout();
+      this.#settingsMenu.hide(false);
+    });
+    document.getElementById("dropdown-logout-text").textContent =
+      browser.i18n.getMessage("menu_logout_label");
 
     this.#translateView = new TranslateView();
     this.#translateView.on("change", this.#onTranslateViewChange.bind(this));
@@ -192,6 +263,12 @@ class App {
     });
   }
 
+  async #getLoginSession() {
+    return await browser.runtime.sendNativeMessage("application.id", {
+      method: "getLoginSession",
+    });
+  }
+
   async #getContentState() {
     return new Promise((resolve, reject) => {
       browser.tabs.query(
@@ -233,6 +310,17 @@ class App {
     );
   }
 
+  async #logout() {
+    await browser.runtime.sendNativeMessage("application.id", {
+      method: "logout",
+    });
+
+    this.#translateView.showInitialView();
+
+    this.#handleLoginSession(undefined);
+    this.#loginView.setCredentials(undefined);
+  }
+
   #getUserDisplayName() {
     this.#loginView.setLoading(true);
 
@@ -251,6 +339,9 @@ class App {
   }
 
   #handleLoginSession(response) {
+    this.#userDisplayName.setAttribute("heading", "");
+    this.#dropdownLogout.classList.add("disabled");
+
     // No stored credentials
     if (!response || !response.result) {
       this.#updateViewState(ViewState.LoginView);
@@ -268,6 +359,10 @@ class App {
 
     if (response.result.isPro) {
       // Pro user
+      if (response.result.email) {
+        this.#userDisplayName.setAttribute("heading", response.result.email);
+        this.#dropdownLogout.classList.remove("disabled");
+      }
       this.#updateViewState(ViewState.TranslateView);
     } else {
       // Free user

@@ -26,6 +26,14 @@
     "description": "Login to DeepL Pro button label",
     "message": "ログイン"
   },
+  "menu_logout_label": {
+    "description": "Logout Label in the Menu",
+    "message": "ログアウト"
+  },
+  "menu_feedback_label": {
+    "description": "Logout Label in the Menu",
+    "message": "フィードバック"
+  },
   "login_error_validation_error_message": {
     "message": "メールアドレスとパスワードを入力してください。"
   },

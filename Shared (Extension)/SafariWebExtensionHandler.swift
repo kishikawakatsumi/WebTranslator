@@ -69,6 +69,26 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         }
       }
       self.authenticator = authenticator
+    case "logout":
+      Credentials().clear()
+      sendResponse(
+        data: ["result": "success"],
+        context: context
+      )
+    case "getLoginSession":
+      let credentials = Credentials()
+      guard let credential = credentials.fetch() else {
+        sendErrorResponse(context: context)
+        return
+      }
+      guard let _ = credential["session"] else {
+        sendErrorResponse(context: context)
+        return
+      }
+      sendResponse(
+        data: ["result": "[REDACTED]"],
+        context: context
+      )
     case "getUserDisplayName":
       let credentials = Credentials()
       guard let credential = credentials.fetch() else {

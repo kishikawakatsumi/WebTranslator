@@ -16,8 +16,13 @@ export class LoginView extends EventTarget {
   }
 
   setCredentials(credentials) {
-    this.#emailInput.value = credentials.email;
-    this.#passwordInput.value = credentials.password;
+    if (credentials) {
+      this.#emailInput.value = credentials.email;
+      this.#passwordInput.value = credentials.password;
+    } else {
+      this.#emailInput.value = "";
+      this.#passwordInput.value = "";
+    }
   }
 
   setHidden(hidden) {

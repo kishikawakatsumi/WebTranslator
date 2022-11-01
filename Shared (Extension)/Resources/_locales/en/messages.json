@@ -26,6 +26,14 @@
     "description": "Login to DeepL Pro button label",
     "message": "Login"
   },
+  "menu_logout_label": {
+    "description": "Logout Label in the Menu",
+    "message": "Log out"
+  },
+  "menu_feedback_label": {
+    "description": "Logout Label in the Menu",
+    "message": "Share feedback"
+  },
   "login_error_validation_error_message": {
     "message": "Email and password are required."
   },
