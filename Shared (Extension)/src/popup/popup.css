@@ -12,10 +12,24 @@ body {
   display: none !important;
 }
 
+.d-collapse {
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
 .d-visible {
   visibility: visible;
 }
 
 .d-invisible {
   visibility: hidden;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+#settings-button {
+  --n-button-background-color: transparent;
 }

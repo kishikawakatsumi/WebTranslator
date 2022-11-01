@@ -7,11 +7,11 @@
 </head>
 
 <body class="n-reset">
-  <nord-stack align-items="center" style="padding-top: 6px;">
-    <div class="n-font-size-m n-color-text-weak" id="header-title">Web Translator for DeepL</div>
+  <nord-stack id="header-title" align-items="center" style="padding-top: 6px;">
+    <div class="n-font-size-m n-color-text-weak">Web Translator for DeepL</div>
   </nord-stack>
 
-  <nord-stack class="n-reset n-padding-m n-padding-bs-s">
+  <nord-stack class="n-reset n-padding-m n-padding-bs-s" style="padding-bottom: 0;">
     <nord-stack id="translate-view">
       <nord-stack id="initial-view">
         <nord-select id="language-select" label="" expand></nord-select>
@@ -44,6 +44,7 @@
       </div>
       <nord-button id="login-button" variant="primary" expand>Login</nord-button>
     </nord-stack>
+
     <nord-stack id="login-spinner" class="d-hide" align-items="center">
       <nord-spinner size="xl"></nord-spinner>
     </nord-stack>
@@ -53,6 +54,24 @@
       <div class="tooltip-container">
         <nord-button id="translate-selection-button" variant="primary" expand>Translate Selection</nord-button>
       </div>
+
+      <nord-stack align-items="end">
+        <nord-dropdown id="settings-menu" size="s" style="height: 0;">
+          <nord-button id="settings-button" variant="plain" size="s" slot="toggle">
+            <nord-icon name="navigation-settings" size="s"></nord-icon>
+          </nord-button>
+          <nord-dropdown-group id="user-display-name" heading="">
+            <nord-dropdown-item id="dropdown-feedback">
+              <nord-icon slot="start" name="interface-chat" size="s"></nord-icon>
+              <span id="dropdown-feedback-text">Share feedback</span>
+            </nord-dropdown-item>
+            <nord-dropdown-item id="dropdown-logout" class="disabled">
+              <nord-icon slot="start" name="interface-logout" size="s"></nord-icon>
+              <span id="dropdown-logout-text">Log out</span>
+            </nord-dropdown-item>
+          </nord-dropdown-group>
+        </nord-dropdown>
+      </nord-stack>
     </nord-stack>
   </nord-stack>
 </body>
