@@ -1,8 +1,5 @@
 "use strict";
 
-import "./nord.css";
-import "@nordhealth/components/lib/Icon";
-
 const template = `<style>
   * {
     -webkit-tap-highlight-color: transparent;

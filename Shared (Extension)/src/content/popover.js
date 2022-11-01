@@ -1,14 +1,5 @@
 "use strict";
 
-import "./nord.css";
-import "@nordhealth/components/lib/Banner";
-import "@nordhealth/components/lib/Button";
-import "@nordhealth/components/lib/Divider";
-import "@nordhealth/components/lib/Icon";
-import "@nordhealth/components/lib/Select";
-import "@nordhealth/components/lib/Spinner";
-import "@nordhealth/components/lib/Stack";
-
 import { supportedLanguages } from "../shared/supported_languages";
 import { makeDraggable } from "./draggable";
 import { escapeHTML } from "./utils";
@@ -212,7 +203,9 @@ export class Popover extends HTMLElement {
     );
 
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      this.#setSelectedTargetLanguage(result.selectedTargetLanguage);
+      if (result) {
+        this.#setSelectedTargetLanguage(result.selectedTargetLanguage);
+      }
     });
     browser.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === "local" && "selectedTargetLanguage" in changes) {
@@ -266,7 +259,7 @@ export class Popover extends HTMLElement {
         (supportedLanguage) => supportedLanguage.code === language.toUpperCase()
       )
     ) {
-      this.#languageSelect.value = language;
+      this.#languageSelect.value = language.toUpperCase();
     }
   }
 
@@ -282,7 +275,7 @@ export class Popover extends HTMLElement {
 
   #onLanguageSelectChange() {
     this.dispatchEvent(
-      new CustomEvent("change", {
+      new CustomEvent("languageChange", {
         detail: {
           selectedSourceLanguage: undefined,
           selectedTargetLanguage: this.#languageSelect.value,

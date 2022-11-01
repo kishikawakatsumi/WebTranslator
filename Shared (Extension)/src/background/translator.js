@@ -1,5 +1,7 @@
 "use strict";
 
+import { sendNativeMessage } from "../shared/utils";
+
 export class Translator {
   #id = 1e4 * Math.round(1e4 * Math.random());
 
@@ -74,18 +76,11 @@ export class Translator {
       },
     };
 
-    return new Promise((resolve) => {
-      browser.runtime.sendNativeMessage(
-        "application.id",
-        request,
-        (response) => {
-          if (response && response.result) {
-            resolve(response.result);
-          } else {
-            resolve(undefined);
-          }
-        }
-      );
-    });
+    const response = await sendNativeMessage(request);
+    if (response && response.result) {
+      return response.result;
+    } else {
+      return undefined;
+    }
   }
 }

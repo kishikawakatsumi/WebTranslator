@@ -79,7 +79,7 @@ class App {
     this.#selectionText = selectionText;
     const targetLanguage = await getTargetLanguage();
 
-    await sendTabMessage({
+    sendTabMessage({
       method: "startTranslateSelection",
       selectionText,
     });
@@ -117,20 +117,18 @@ async function translate(
 }
 
 async function getTargetLanguage() {
-  return new Promise((resolve, reject) => {
-    browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      if (result && result.selectedTargetLanguage) {
-        resolve(result.selectedTargetLanguage);
-      } else {
-        const locale = browser.i18n
-          .getUILanguage()
-          .split("-")
-          .shift()
-          .toUpperCase();
-        resolve(locale);
-      }
-    });
-  });
+  const result = await browser.storage.local.get(["selectedTargetLanguage"]);
+
+  if (result && result.selectedTargetLanguage) {
+    return result.selectedTargetLanguage;
+  } else {
+    const locale = browser.i18n
+      .getUILanguage()
+      .split("-")
+      .shift()
+      .toUpperCase();
+    return locale;
+  }
 }
 
 new App();

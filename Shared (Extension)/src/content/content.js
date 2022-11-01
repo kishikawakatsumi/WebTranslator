@@ -333,10 +333,7 @@ class App {
       popover.remove();
       document.removeEventListener("click", onClick);
     });
-    popover.addEventListener("change", async (event) => {
-      if (!event || !event.detail) {
-        return;
-      }
+    popover.addEventListener("languageChange", async (event) => {
       await browser.storage.local.set({
         selectedSourceLanguage: undefined,
         selectedTargetLanguage: event.detail.selectedTargetLanguage,
@@ -390,6 +387,10 @@ class App {
       targetLanguage: request.targetLanguage,
     });
 
+    const handleUnknownError = () => {
+      const message = browser.i18n.getMessage("error_message_generic_error");
+      this.#abortTranslation(message);
+    };
     if (response && response.result) {
       const result = response.result.result;
       if (result && result.texts) {
@@ -431,7 +432,13 @@ class App {
         })();
         this.#abortTranslation(message);
         return;
+      } else {
+        handleUnknownError();
+        return;
       }
+    } else {
+      handleUnknownError();
+      return;
     }
 
     this.#finishTranslation();

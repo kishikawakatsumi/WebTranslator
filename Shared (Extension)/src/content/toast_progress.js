@@ -1,10 +1,5 @@
 "use strict";
 
-import "./nord.css";
-import "@nordhealth/components/lib/Stack";
-import "@nordhealth/components/lib/Toast";
-import "@nordhealth/components/lib/ToastGroup";
-
 export class ToastProgress extends HTMLElement {
   #toastStack = [];
 
