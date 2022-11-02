@@ -136,14 +136,18 @@ class App {
           }
           case "startTranslateSelection": {
             const selection = window.getSelection();
-            const textRange = selection.getRangeAt(0);
-            const selectionRect = textRange.getBoundingClientRect();
 
-            const x = selectionRect.left + window.scrollX;
-            const y = selectionRect.bottom + window.scrollY + 30;
+            let position = this.#getExistingPopoverPosition();
+            if (!position && selection.rangeCount) {
+              const textRange = selection.getRangeAt(0);
+              const selectionRect = textRange.getBoundingClientRect();
 
-            const position = this.#getExistingPopoverPosition();
-            const popover = this.#createPopover(position || { x, y });
+              const x = selectionRect.left + window.scrollX;
+              const y = selectionRect.bottom + window.scrollY + 30;
+              position = { x, y };
+            }
+
+            const popover = this.#createPopover(position);
             popover.setAttribute("loading", true);
 
             sendResponse();
@@ -209,6 +213,11 @@ class App {
       event.preventDefault();
 
       const selection = window.getSelection();
+      if (!selection.rangeCount) {
+        return;
+      }
+      let textRange = selection.getRangeAt(0).cloneRange();
+
       const selectionText = selection ? selection.toString().trim() : "";
       if (!selectionText && !selection.rangeCount) {
         this.#removeTooltip();
@@ -216,7 +225,9 @@ class App {
       }
 
       setTimeout(() => {
-        const textRange = selection.getRangeAt(0).cloneRange();
+        textRange = selection.rangeCount
+          ? selection.getRangeAt(0).cloneRange()
+          : textRange;
         textRange.collapse(selection.anchorOffset > selection.focusOffset);
         const selectionRect = textRange.getBoundingClientRect();
 
