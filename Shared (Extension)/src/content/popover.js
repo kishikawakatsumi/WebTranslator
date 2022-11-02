@@ -212,7 +212,9 @@ export class Popover extends HTMLElement {
     );
 
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      this.#setSelectedTargetLanguage(result.selectedTargetLanguage);
+      if (result && result.selectedTargetLanguage) {
+        this.#setSelectedTargetLanguage(result.selectedTargetLanguage);
+      }
     });
     browser.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === "local" && "selectedTargetLanguage" in changes) {
@@ -255,10 +257,6 @@ export class Popover extends HTMLElement {
     }
   }
 
-  getPosition() {
-    return { x: this.#draggable.offsetLeft, y: this.#draggable.offsetTop };
-  }
-
   #setSelectedTargetLanguage(language) {
     if (
       language &&
@@ -280,7 +278,8 @@ export class Popover extends HTMLElement {
     this.#result.classList.toggle("d-none", loading);
   }
 
-  #onLanguageSelectChange() {
+  #onLanguageSelectChange(event) {
+    event.stopPropagation();
     this.dispatchEvent(
       new CustomEvent("change", {
         detail: {
