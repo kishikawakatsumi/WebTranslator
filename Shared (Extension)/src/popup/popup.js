@@ -70,6 +70,8 @@ class App {
     } else {
       this.#handleLoginSession(undefined);
     }
+
+    workaroundForSafari14();
   }
 
   #init() {
@@ -490,6 +492,23 @@ class App {
         content: browser.i18n.getMessage("translate_selection_button_tooltip"),
         animation: "fade",
       });
+    }
+  }
+}
+
+function workaroundForSafari14() {
+  // Workaround: fix popout glitch in Safari 14.x
+  const settingsMenu = document.querySelector("#settings-menu");
+  if (settingsMenu) {
+    const dropdown = settingsMenu.shadowRoot.querySelector(".n-dropdown");
+    if (dropdown) {
+      const dropdownContent = dropdown.querySelector(".n-dropdown-content");
+      if (dropdownContent) {
+        const style = dropdownContent.style;
+        if (style) {
+          style.maxBlockSize = "initial";
+        }
+      }
     }
   }
 }
