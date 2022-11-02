@@ -156,7 +156,9 @@ class App {
     });
     runColorMode((isDarkMode) => {
       loadColorScheme(
-        isDarkMode ? "./assets/nord-dark.css" : "./assets/nord.css"
+        isDarkMode
+          ? browser.runtime.getURL("assets/nord-dark.css")
+          : browser.runtime.getURL("assets/nord.css")
       );
     });
 

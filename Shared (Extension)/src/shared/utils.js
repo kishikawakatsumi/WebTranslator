@@ -16,5 +16,7 @@ export function loadColorScheme(file) {
   link.rel = "stylesheet";
   link.type = "text/css";
   link.href = file;
-  head.appendChild(link);
+  if (file.startsWith("safari-web-extension://")) {
+    head.appendChild(link);
+  }
 }
