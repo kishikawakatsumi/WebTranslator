@@ -366,7 +366,6 @@ class App {
   }
 
   #getExistingPopoverPosition() {
-    const id = "translate-popover";
     const popover = this.#getPopover();
     if (popover) {
       const draggable = popover.shadowRoot.querySelector("#draggable");
