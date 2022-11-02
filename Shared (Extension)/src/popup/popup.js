@@ -65,7 +65,7 @@ class App {
         this.#loginSpinner.classList.remove("d-hide");
         this.#translateSelectionDivider.classList.add("d-hide");
         this.#loginView.setHidden(true);
-        await this.#getUserDisplayName();
+        this.#getUserDisplayName();
       }
     } else {
       this.#handleLoginSession(undefined);
@@ -264,34 +264,50 @@ class App {
   }
 
   async #getLoginSession() {
-    return await sendNativeMessage({
+    return await browser.runtime.sendNativeMessage("application.id", {
       method: "getLoginSession",
     });
   }
 
   async #getContentState() {
-    return await sendMessage({
-      method: "getContentState",
+    return new Promise((resolve, reject) => {
+      browser.tabs.query(
+        { active: true, currentWindow: true },
+        async (tabs) => {
+          const response = await browser.tabs.sendMessage(tabs[0].id, {
+            method: "getContentState",
+          });
+          resolve(response);
+        }
+      );
     });
   }
 
-  async #login(email, password) {
-    const response = await sendNativeMessage({ method: "cf_clearance" });
+  #login(email, password) {
+    browser.runtime.sendNativeMessage(
+      "application.id",
+      { method: "cf_clearance" },
+      (response) => {
+        if (response && response.result) {
+          const cookies = response.result;
 
-    if (response && response.result) {
-      const cookies = response.result;
-
-      const request = { method: "login", email, password, cookies };
-      const response = await sendNativeMessage(request);
-
-      if (!response || !response.result) {
-        this.#handleLoginError(LoginErorr.InvalidCredentials);
-      } else {
-        await this.#getUserDisplayName();
+          const request = { method: "login", email, password, cookies };
+          browser.runtime.sendNativeMessage(
+            "application.id",
+            request,
+            (response) => {
+              if (!response || !response.result) {
+                this.#handleLoginError(LoginErorr.InvalidCredentials);
+              } else {
+                this.#getUserDisplayName();
+              }
+            }
+          );
+        } else {
+          this.#handleLoginError(LoginErorr.ConnectionError);
+        }
       }
-    } else {
-      this.#handleLoginError(LoginErorr.ConnectionError);
-    }
+    );
   }
 
   async #logout() {
@@ -305,19 +321,21 @@ class App {
     this.#loginView.setCredentials(undefined);
   }
 
-  async #getUserDisplayName() {
+  #getUserDisplayName() {
     this.#loginView.setLoading(true);
 
-    const response = sendNativeMessage({ method: "getUserDisplayName" });
+    browser.runtime.sendNativeMessage(
+      "application.id",
+      { method: "getUserDisplayName" },
+      (response) => {
+        this.#loginSpinner.classList.add("d-hide");
+        this.#translateSelectionDivider.classList.remove("d-hide");
+        this.#loginView.setHidden(false);
 
-    this.#loginSpinner.classList.add("d-hide");
-    this.#loginView.setHidden(false);
-
-    this.#translateSelectionDivider.classList.remove("d-hide");
-
-    this.#handleLoginSession(response);
-
-    this.#loginView.setLoading(false);
+        this.#handleLoginSession(response);
+        this.#loginView.setLoading(false);
+      }
+    );
   }
 
   #handleLoginSession(response) {
@@ -406,28 +424,33 @@ class App {
     }
   }
 
-  async #onLogin(event) {
+  #onLogin(event) {
     this.#loginView.setLoading(true);
     this.#loginView.setErrorMessage(null);
 
     const email = event.detail.email;
     const password = event.detail.password;
 
-    await this.#login(email, password);
+    this.#login(email, password);
   }
 
-  async #onTranslate(event) {
+  #onTranslate(event) {
     this.#translateView.setLoading(true);
-    await sendMessage({
-      method: "translate",
-      sourceLanguage: event.detail.sourceLanguage,
-      targetLanguage: event.detail.targetLanguage,
+
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {
+        method: "translate",
+        sourceLanguage: event.detail.sourceLanguage,
+        targetLanguage: event.detail.targetLanguage,
+      });
     });
   }
 
-  async #onShowOriginal() {
-    await sendMessage({
-      method: "showOriginal",
+  #onShowOriginal() {
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {
+        method: "showOriginal",
+      });
     });
     this.#translateView.showInitialView();
   }
@@ -436,20 +459,22 @@ class App {
     await browser.storage.local.set(event.detail);
   }
 
-  async #onTranslateSelection() {
-    const response = await sendMessage({
-      method: "getSelection",
+  #onTranslateSelection() {
+    browser.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+      const response = await browser.tabs.sendMessage(tabs[0].id, {
+        method: "getSelection",
+      });
+      if (response && response.result && response.result.trim()) {
+        this.#translateSelectionButton.setLoading(true);
+        const request = {
+          method: "translateSelection",
+          selectionText: response.result,
+        };
+        browser.runtime.sendMessage(request);
+      } else {
+        this.#setTranslateSelectionButtonEnabled(false);
+      }
     });
-    if (response && response.result && response.result.trim()) {
-      this.#translateSelectionButton.setLoading(true);
-      const request = {
-        method: "translateSelection",
-        selectionText: response.result,
-      };
-      await browser.runtime.sendMessage(request);
-    } else {
-      this.#setTranslateSelectionButtonEnabled(false);
-    }
   }
 
   #setTranslateSelectionButtonEnabled(enabled) {
@@ -463,18 +488,6 @@ class App {
       });
     }
   }
-}
-
-async function sendMessage(request) {
-  const tabs = await browser.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
-  return await browser.tabs.sendMessage(tabs[0].id, request);
-}
-
-async function sendNativeMessage(request) {
-  return await browser.runtime.sendNativeMessage("application.id", request);
 }
 
 const ViewState = {
