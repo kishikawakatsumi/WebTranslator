@@ -31,7 +31,7 @@ class App {
   #init() {
     this.#restoreState();
 
-    const popover = document.getElementById("translate-popover");
+    const popover = this.#getPopover();
     if (popover) {
       popover.remove();
     }
@@ -151,7 +151,7 @@ class App {
           }
           case "finishTranslateSelection": {
             const result = request.result;
-            const popover = document.getElementById("translate-popover");
+            const popover = this.#getPopover();
             if (popover) {
               if (result.result && result.result.texts) {
                 const text = result.result.texts.map((t) => t.text).join("\n");
@@ -189,6 +189,19 @@ class App {
         }
       }
     );
+
+    browser.storage.onChanged.addListener((changes, areaName) => {
+      if (areaName === "local" && "selectedTargetLanguage" in changes) {
+        const popover = this.#getPopover();
+        if (popover) {
+          popover.setAttribute("lang", changes.selectedTargetLanguage.newValue);
+          browser.runtime.sendMessage({
+            method: "translateSelection",
+            selectionText: undefined,
+          });
+        }
+      }
+    });
   }
 
   #observeTextSelection() {
@@ -224,11 +237,10 @@ class App {
           event.stopPropagation();
 
           if (selectionText) {
-            const request = {
+            browser.runtime.sendMessage({
               method: "translateSelection",
               selectionText,
-            };
-            browser.runtime.sendMessage(request);
+            });
           }
           tooltip.remove();
 
@@ -319,6 +331,11 @@ class App {
     );
     const popover = document.getElementById(id);
     popover.setAttribute("position", JSON.stringify(position));
+    browser.storage.local.get(["selectedTargetLanguage"], (result) => {
+      if (result && result.selectedTargetLanguage) {
+        popover.setAttribute("lang", result.selectedTargetLanguage);
+      }
+    });
 
     const onClick = (event) => {
       if (event.target.closest(id)) {
@@ -334,29 +351,31 @@ class App {
       document.removeEventListener("click", onClick);
     });
     popover.addEventListener("change", async (event) => {
-      if (!event || !event.detail) {
-        return;
-      }
       await browser.storage.local.set({
         selectedSourceLanguage: undefined,
         selectedTargetLanguage: event.detail.selectedTargetLanguage,
       });
-
-      const request = {
-        method: "translateSelection",
-        selectionText: undefined,
-      };
-      browser.runtime.sendMessage(request);
     });
 
     return popover;
   }
 
+  #getPopover() {
+    const id = "translate-popover";
+    return document.getElementById(id);
+  }
+
   #getExistingPopoverPosition() {
     const id = "translate-popover";
-    const popover = document.getElementById(id);
+    const popover = this.#getPopover();
     if (popover) {
-      return popover.getPosition();
+      const draggable = popover.shadowRoot.querySelector("#draggable");
+      if (draggable) {
+        return {
+          x: draggable.offsetLeft,
+          y: draggable.offsetTop,
+        };
+      }
     }
     return undefined;
   }

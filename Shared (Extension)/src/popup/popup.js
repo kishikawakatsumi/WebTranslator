@@ -186,9 +186,11 @@ class App {
     this.#translateView.on("translate", this.#onTranslate.bind(this));
     this.#translateView.on("showOriginal", this.#onShowOriginal.bind(this));
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      this.#translateView.setSelectedTargetLanguage(
-        result.selectedTargetLanguage
-      );
+      if (result && result.selectedTargetLanguage) {
+        this.#translateView.setSelectedTargetLanguage(
+          result.selectedTargetLanguage
+        );
+      }
     });
 
     this.#loginView = new LoginView();
