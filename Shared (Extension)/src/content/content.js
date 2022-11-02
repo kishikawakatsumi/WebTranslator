@@ -352,7 +352,7 @@ class App {
   #getExistingPopoverPosition() {
     const id = "translate-popover";
     const popover = document.getElementById(id);
-    if (popover && popover.getPosition) {
+    if (popover) {
       return popover.getPosition();
     }
     return undefined;
