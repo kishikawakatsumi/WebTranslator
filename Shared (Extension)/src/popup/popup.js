@@ -46,9 +46,9 @@ class App {
   }
 
   async run() {
-    let response = await this.#getLoginSession();
+    const response = await this.#getLoginSession();
     if (response && response.result) {
-      response = await this.#getContentState();
+      const response = await this.#getContentState();
       if (response && response.result) {
         this.#dropdownLogout.classList.remove("disabled");
 
@@ -191,11 +191,9 @@ class App {
     this.#translateView.on("translate", this.#onTranslate.bind(this));
     this.#translateView.on("showOriginal", this.#onShowOriginal.bind(this));
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
-      if (result) {
-        this.#translateView.setSelectedTargetLanguage(
-          result.selectedTargetLanguage
-        );
-      }
+      this.#translateView.setSelectedTargetLanguage(
+        result.selectedTargetLanguage
+      );
     });
 
     this.#loginView = new LoginView();
@@ -283,13 +281,13 @@ class App {
   }
 
   async #login(email, password) {
-    let response = await sendNativeMessage({ method: "cf_clearance" });
+    const response = await sendNativeMessage({ method: "cf_clearance" });
 
     if (response && response.result) {
       const cookies = response.result;
 
       const request = { method: "login", email, password, cookies };
-      response = await sendNativeMessage(request);
+      const response = await sendNativeMessage(request);
 
       if (!response || !response.result) {
         this.#handleLoginError(LoginErorr.InvalidCredentials);

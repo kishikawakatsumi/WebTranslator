@@ -20,7 +20,7 @@ export class TranslateView extends EventTarget {
         (supportedLanguage) => supportedLanguage.code === language.toUpperCase()
       )
     ) {
-      this.#languageSelect.value = language.toUpperCase();
+      this.#languageSelect.value = language;
     }
   }
 

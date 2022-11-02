@@ -13,7 +13,7 @@ class Translator {
     }
     let credentials = Credentials()
     guard let credential = credentials.fetch() else {
-      completionHandler(.failure(URLError(.userAuthenticationRequired)))
+      completionHandler(.failure(URLError(.unknown)))
       return
     }
     if let token = credential["token"] {
