@@ -20,12 +20,7 @@ import "tippy.js/dist/tippy.css";
 import { TranslateView } from "./translate_view";
 import { LoginView } from "./login_view";
 import { TranslateSelectionButton } from "./translate_selection_button";
-import {
-  runColorMode,
-  loadColorScheme,
-  sendTabMessage,
-  sendNativeMessage,
-} from "../shared/utils";
+import { runColorMode, loadColorScheme } from "../shared/utils";
 
 class App {
   #settingsMenu;
@@ -275,7 +270,7 @@ class App {
   }
 
   async #getContentState() {
-    return await sendTabMessage({
+    return await sendMessage({
       method: "getContentState",
     });
   }
@@ -313,7 +308,7 @@ class App {
   async #getUserDisplayName() {
     this.#loginView.setLoading(true);
 
-    const response = await sendNativeMessage({ method: "getUserDisplayName" });
+    const response = sendNativeMessage({ method: "getUserDisplayName" });
 
     this.#loginSpinner.classList.add("d-hide");
     this.#loginView.setHidden(false);
@@ -423,7 +418,7 @@ class App {
 
   async #onTranslate(event) {
     this.#translateView.setLoading(true);
-    await sendTabMessage({
+    await sendMessage({
       method: "translate",
       sourceLanguage: event.detail.sourceLanguage,
       targetLanguage: event.detail.targetLanguage,
@@ -431,7 +426,7 @@ class App {
   }
 
   async #onShowOriginal() {
-    await sendTabMessage({
+    await sendMessage({
       method: "showOriginal",
     });
     this.#translateView.showInitialView();
@@ -442,7 +437,7 @@ class App {
   }
 
   async #onTranslateSelection() {
-    const response = await sendTabMessage({
+    const response = await sendMessage({
       method: "getSelection",
     });
     if (response && response.result && response.result.trim()) {
@@ -468,6 +463,18 @@ class App {
       });
     }
   }
+}
+
+async function sendMessage(request) {
+  const tabs = await browser.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  return await browser.tabs.sendMessage(tabs[0].id, request);
+}
+
+async function sendNativeMessage(request) {
+  return await browser.runtime.sendNativeMessage("application.id", request);
 }
 
 const ViewState = {

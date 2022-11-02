@@ -1,7 +1,6 @@
 "use strict";
 
 import { Translator } from "./translator";
-import { sendTabMessage } from "../shared/utils";
 
 class App {
   #selectionText = undefined;
@@ -79,9 +78,11 @@ class App {
     this.#selectionText = selectionText;
     const targetLanguage = await getTargetLanguage();
 
-    await sendTabMessage({
-      method: "startTranslateSelection",
-      selectionText,
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {
+        method: "startTranslateSelection",
+        selectionText,
+      });
     });
 
     const result = await translate(
@@ -91,10 +92,12 @@ class App {
       false
     );
 
-    await sendTabMessage({
-      method: "finishTranslateSelection",
-      result,
-      targetLanguage,
+    browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, {
+        method: "finishTranslateSelection",
+        result,
+        targetLanguage,
+      });
     });
     browser.runtime.sendMessage({
       method: "finishTranslateSelection",
