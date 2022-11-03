@@ -545,23 +545,42 @@ function splitElements(elements, storage) {
     if (isHidden(element)) {
       continue;
     }
-    if (element.nodeName === "svg") {
-      continue;
-    }
-    if (hasTextNode(element)) {
-      storage.push(element);
-      continue;
-    }
-    if (hasNoBlockElement(element)) {
-      storage.push(element);
+    if (element.nodeName === "NOSCRIPT" || element.nodeName === "svg") {
       continue;
     }
 
     const children = element.children;
-    if (!children || children.length === 0) {
+    const childNodes = Array.from(element.childNodes).filter((node) => {
+      if (node.nodeType === Node.COMMENT_NODE) {
+        return false;
+      }
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.nodeValue && node.nodeValue.trim();
+      }
+      return true;
+    });
+
+    if (hasTextNode(element)) {
+      if (childNodes.length === 1 && children.length > 0) {
+        splitElements(children, storage);
+      } else {
+        storage.push(element);
+      }
       continue;
     }
-    splitElements(element.children, storage);
+    if (hasNoBlockElement(element)) {
+      if (childNodes.length === 1 && children.length > 0) {
+        splitElements(children, storage);
+      } else {
+        storage.push(element);
+      }
+      continue;
+    }
+
+    if (children.length === 0) {
+      continue;
+    }
+    splitElements(children, storage);
   }
 }
 
