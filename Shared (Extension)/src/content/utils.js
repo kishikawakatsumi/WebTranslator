@@ -19,7 +19,11 @@ export function hasTextNode(element) {
     return false;
   }
   for (const child of childNodes) {
-    if (child.nodeType === Node.TEXT_NODE && child.nodeValue.trim() !== "") {
+    if (
+      child.nodeType === Node.TEXT_NODE &&
+      child.nodeValue &&
+      child.nodeValue.trim() !== ""
+    ) {
       return true;
     }
   }
@@ -52,6 +56,9 @@ export function hasNoBlockElement(element) {
       child.tagName !== "SVG" &&
       child.tagName !== "VIDEO" &&
       display !== "block" &&
+      display !== "flex" &&
+      display !== "table-row" &&
+      display !== "table-cell" &&
       display !== "none"
     );
   });
