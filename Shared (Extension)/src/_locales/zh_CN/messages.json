@@ -7,207 +7,195 @@
     "description": "Description of what the extension does.",
     "message": "Translate webpages with DeepL Translate, the world’s most accurate translator."
   },
-  "ui_login_body": {
-    "message": "ページ全体を翻訳するにはDeepL Proにログインしてください。"
-  },
   "login_link_label": {
     "description": "Login to DeepL Pro link label",
-    "message": "DeepL Proにログインする"
+    "message": "登录DeepL Pro账户"
   },
   "ui_email_input_label": {
     "description": "",
-    "message": "メールアドレス"
+    "message": "邮箱"
   },
   "ui_password_input_label": {
     "description": "",
-    "message": "パスワード"
+    "message": "密码"
   },
   "login_button_label": {
     "description": "Login to DeepL Pro button label",
-    "message": "ログイン"
+    "message": "登录"
   },
   "menu_logout_label": {
     "description": "Logout Label in the Menu",
-    "message": "ログアウト"
+    "message": "退出登录"
   },
   "menu_feedback_label": {
     "description": "The link to our feedback survey.",
-    "message": "フィードバック"
-  },
-  "login_error_validation_error_message": {
-    "message": "メールアドレスとパスワードを入力してください。"
-  },
-  "login_error_invalid_credentials_message": {
-    "message": "メールアドレスまたはパスワードが正しくありません。"
+    "message": "分享反馈"
   },
   "error_message_internet_connection": {
-    "message": "インターネット接続に問題があります。もう一度お試しください。"
+    "message": "抱歉，网络连接似乎有问题。请再试一次。"
   },
   "error_message_please_login": {
-    "message": "テキストを翻訳するには再度ログインしてください。"
+    "message": "请再次登录并翻译该文本。"
   },
   "login_error_default_message": {
-    "message": "ログインに失敗しました。"
+    "message": "登录失败。"
   },
   "error_message_session_expired": {
-    "message": "セッションの有効期間が切れました。もう一度ログインしてください。"
-  },
-  "login_error_not_pro_message": {
-    "message": "DeepL Proアカウントではありません。"
+    "message": "抱歉，该会话已过期。请重新登录。"
   },
   "ui_target_language_select": {
-    "message": "どの言語に翻訳しますか？"
+    "message": "请选择你想译入的语言："
   },
   "full_page_translation_menu_translate_button": {
-    "message": "翻訳"
+    "message": "翻译"
   },
   "full_page_translation_auto_translate_message": {
-    "message": "次の原文言語を自動で翻訳済み："
+    "message": "已自动从该源语言翻译："
   },
   "full_page_translation_show_original": {
-    "message": "元の言語で表示する"
+    "message": "显示原页面"
   },
   "full_page_translation_ongoing_translation": {
-    "message": "翻訳しています"
+    "message": "翻译中"
   },
   "context_menus_translate_section": {
     "description": "The right click context menu action to trigger an inline translation",
-    "message": "選択したテキストを翻訳"
+    "message": "翻译该文本"
   },
   "layout_header_label_language_switch": {
     "description": "Label for the \"Translate to\" inline select to translate popup.",
-    "message": "訳文："
-  },
-  "translate_selection_button_tooltip": {
-    "message": "先にブラウザでテキストを選択してください。"
+    "message": "译为："
   },
   "ui_inline_translation_copied": {
-    "message": "訳文をコピーしました"
+    "message": "翻译已复制"
   },
   "ui_inline_translation_copy": {
-    "message": "クリップボードにコピー"
+    "message": "复制到剪贴板"
   },
   "error_message_generic_error": {
     "description": "Genric error to tell the user that there is a technical problem",
-    "message": "テキストを翻訳できませんでした。時間をおいてもう一度お試しください。"
+    "message": "抱歉，我们无法翻译你的文本。请稍后再试。"
   },
   "error_message_quota_has_been_reached": {
     "description": "There is an API error when the user reaches his quota and therefore is not longer able to use the pro endpoint and if does not get logged out he can not longer use the extension. We need to show him a message so the user knows why he logged out",
-    "message": "アカウントの利用上限に達しました。"
+    "message": "你已达到账户用量限额。"
   },
   "error_message_technical_issue": {
-    "message": "技術的な問題により、テキストを翻訳できませんでした。問題は既知であり、近いうちに解決策を講じられるよう準備を進めています。"
+    "message": "抱歉，由于特定技术原因，我们无法翻译你的文本。我们会在不久的将来解决该问题。"
   },
   "error_message_too_many_requests": {
     "description": "Info for free users that too many requests are triggered",
-    "message": "テキストを翻訳できませんでした。ご利用のネットワークから大量のリクエストが送信されているようです。"
+    "message": "抱歉，我们无法翻译你的文本。你的网络似乎向我们的服务器发送了过多请求。"
   },
   "supported_languages_BG": {
     "description": "Name of language",
-    "message": "ブルガリア語"
+    "message": "保加利亚语"
   },
   "supported_languages_CS": {
     "description": "Name of language",
-    "message": "チェコ語"
+    "message": "捷克语"
   },
   "supported_languages_DA": {
     "description": "Name of language",
-    "message": "デンマーク語"
+    "message": "丹麦语"
   },
   "supported_languages_DE": {
     "description": "Name of language",
-    "message": "ドイツ語"
+    "message": "德语"
   },
   "supported_languages_EL": {
     "description": "Name of language",
-    "message": "ギリシャ語"
+    "message": "希腊语"
   },
   "supported_languages_EN": {
     "description": "Name of language",
-    "message": "英語"
+    "message": "英语"
   },
   "supported_languages_ES": {
     "description": "Name of language",
-    "message": "スペイン語"
+    "message": "西班牙语"
   },
   "supported_languages_ET": {
     "description": "Name of language",
-    "message": "エストニア語"
+    "message": "爱沙尼亚语"
   },
   "supported_languages_FI": {
     "description": "Name of language",
-    "message": "フィンランド語"
+    "message": "芬兰语"
   },
   "supported_languages_FR": {
     "description": "Name of language",
-    "message": "フランス語"
+    "message": "法语"
   },
   "supported_languages_HU": {
     "description": "Name of language",
-    "message": "ハンガリー語"
+    "message": "匈牙利语"
   },
   "supported_languages_ID": {
     "description": "Name of language",
-    "message": "インドネシア語"
+    "message": "印尼语"
   },
   "supported_languages_IT": {
     "description": "Name of language",
-    "message": "イタリア語"
+    "message": "意大利语"
   },
   "supported_languages_JA": {
     "description": "Name of language",
-    "message": "日本語"
+    "message": "日语"
   },
   "supported_languages_LT": {
     "description": "Name of language",
-    "message": "リトアニア語"
+    "message": "立陶宛语"
   },
   "supported_languages_LV": {
     "description": "Name of language",
-    "message": "ラトビア語"
+    "message": "拉脱维亚语"
   },
   "supported_languages_NL": {
     "description": "Name of language",
-    "message": "オランダ語"
+    "message": "荷兰语"
   },
   "supported_languages_PL": {
     "description": "Name of language",
-    "message": "ポーランド語"
+    "message": "波兰语"
   },
   "supported_languages_PT": {
     "description": "Name of language",
-    "message": "ポルトガル語"
+    "message": "葡萄牙语"
   },
   "supported_languages_RO": {
     "description": "Name of language",
-    "message": "ルーマニア語"
+    "message": "罗马尼亚语"
   },
   "supported_languages_RU": {
     "description": "Name of language",
-    "message": "ロシア語"
+    "message": "俄语"
   },
   "supported_languages_SK": {
     "description": "Name of language",
-    "message": "スロバキア語"
+    "message": "斯洛伐克语"
   },
   "supported_languages_SL": {
     "description": "Name of language",
-    "message": "スロベニア語"
+    "message": "斯洛文尼亚语"
   },
   "supported_languages_SV": {
     "description": "Name of language",
-    "message": "スウェーデン語"
+    "message": "瑞典语"
   },
   "supported_languages_TR": {
     "description": "Name of language",
-    "message": "トルコ語"
+    "message": "土耳其语"
+  },
+  "supported_languages_UK": {
+    "message": "乌克兰语"
   },
   "supported_languages_ZH": {
     "description": "Name of language",
-    "message": "中国語（簡体字）"
+    "message": "中文（简体）"
   },
   "supported_languages_undefined": {
     "description": "The user has not yet selected a target language.",
-    "message": "お選びください"
+    "message": "请选择"
   }
 }

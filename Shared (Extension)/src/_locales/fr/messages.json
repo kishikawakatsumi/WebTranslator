@@ -8,206 +8,209 @@
     "message": "Translate webpages with DeepL Translate, the world’s most accurate translator."
   },
   "ui_login_body": {
-    "message": "ページ全体を翻訳するにはDeepL Proにログインしてください。"
+    "message": "Log in to DeepL Pro to translate full pages"
   },
   "login_link_label": {
     "description": "Login to DeepL Pro link label",
-    "message": "DeepL Proにログインする"
+    "message": "Log in to DeepL Pro"
   },
   "ui_email_input_label": {
     "description": "",
-    "message": "メールアドレス"
+    "message": "Email"
   },
   "ui_password_input_label": {
     "description": "",
-    "message": "パスワード"
+    "message": "Password"
   },
   "login_button_label": {
     "description": "Login to DeepL Pro button label",
-    "message": "ログイン"
+    "message": "Login"
   },
   "menu_logout_label": {
     "description": "Logout Label in the Menu",
-    "message": "ログアウト"
+    "message": "Déconnexion"
   },
   "menu_feedback_label": {
     "description": "The link to our feedback survey.",
-    "message": "フィードバック"
+    "message": "Noter l’extension"
   },
   "login_error_validation_error_message": {
-    "message": "メールアドレスとパスワードを入力してください。"
+    "message": "Email and password are required."
   },
   "login_error_invalid_credentials_message": {
-    "message": "メールアドレスまたはパスワードが正しくありません。"
+    "message": "Your email or password is incorrect."
   },
   "error_message_internet_connection": {
-    "message": "インターネット接続に問題があります。もう一度お試しください。"
+    "message": "La connexion internet est défectueuse. Veuillez réessayer."
   },
   "error_message_please_login": {
-    "message": "テキストを翻訳するには再度ログインしてください。"
+    "message": "Veuillez vous reconnecter afin de traduire ce texte."
   },
   "login_error_default_message": {
-    "message": "ログインに失敗しました。"
+    "message": "La connexion a échoué."
   },
   "error_message_session_expired": {
-    "message": "セッションの有効期間が切れました。もう一度ログインしてください。"
+    "message": "Votre session est expirée. Veuillez vous reconnecter."
   },
   "login_error_not_pro_message": {
-    "message": "DeepL Proアカウントではありません。"
+    "message": "You are not a DeepL Pro user."
   },
   "ui_target_language_select": {
-    "message": "どの言語に翻訳しますか？"
+    "message": "Traduire dans la langue suivante :"
   },
   "full_page_translation_menu_translate_button": {
-    "message": "翻訳"
+    "message": "Traduire"
   },
   "full_page_translation_auto_translate_message": {
-    "message": "次の原文言語を自動で翻訳済み："
+    "message": "Traduit automatiquement depuis cette langue :"
   },
   "full_page_translation_show_original": {
-    "message": "元の言語で表示する"
+    "message": "Afficher la version originale"
   },
   "full_page_translation_ongoing_translation": {
-    "message": "翻訳しています"
+    "message": "Traduction en cours"
   },
   "context_menus_translate_section": {
     "description": "The right click context menu action to trigger an inline translation",
-    "message": "選択したテキストを翻訳"
+    "message": "Traduire cette sélection"
   },
   "layout_header_label_language_switch": {
     "description": "Label for the \"Translate to\" inline select to translate popup.",
-    "message": "訳文："
+    "message": "Traduire en :"
   },
   "translate_selection_button_tooltip": {
-    "message": "先にブラウザでテキストを選択してください。"
+    "message": "Select text in the browser."
   },
   "ui_inline_translation_copied": {
-    "message": "訳文をコピーしました"
+    "message": "Traduction copiée"
   },
   "ui_inline_translation_copy": {
-    "message": "クリップボードにコピー"
+    "message": "Copier dans le presse-papiers"
   },
   "error_message_generic_error": {
     "description": "Genric error to tell the user that there is a technical problem",
-    "message": "テキストを翻訳できませんでした。時間をおいてもう一度お試しください。"
+    "message": "Le texte n'a pas pu être traduit, veuillez réessayer ultérieurement."
   },
   "error_message_quota_has_been_reached": {
     "description": "There is an API error when the user reaches his quota and therefore is not longer able to use the pro endpoint and if does not get logged out he can not longer use the extension. We need to show him a message so the user knows why he logged out",
-    "message": "アカウントの利用上限に達しました。"
+    "message": "Limite de consommation atteinte."
   },
   "error_message_technical_issue": {
-    "message": "技術的な問題により、テキストを翻訳できませんでした。問題は既知であり、近いうちに解決策を講じられるよう準備を進めています。"
+    "message": "Votre texte n'a pas pu être traduit en raison d'un problème technique connu de la part de nos équipes, qui font tout leur possible afin de le résoudre très prochainement."
   },
   "error_message_too_many_requests": {
     "description": "Info for free users that too many requests are triggered",
-    "message": "テキストを翻訳できませんでした。ご利用のネットワークから大量のリクエストが送信されているようです。"
+    "message": "Le texte n'a pas pu être traduit. Il semble que nos serveurs reçoivent trop de requêtes de la part de votre réseau."
   },
   "supported_languages_BG": {
     "description": "Name of language",
-    "message": "ブルガリア語"
+    "message": "bulgare"
   },
   "supported_languages_CS": {
     "description": "Name of language",
-    "message": "チェコ語"
+    "message": "tchèque"
   },
   "supported_languages_DA": {
     "description": "Name of language",
-    "message": "デンマーク語"
+    "message": "danois"
   },
   "supported_languages_DE": {
     "description": "Name of language",
-    "message": "ドイツ語"
+    "message": "allemand"
   },
   "supported_languages_EL": {
     "description": "Name of language",
-    "message": "ギリシャ語"
+    "message": "grec"
   },
   "supported_languages_EN": {
     "description": "Name of language",
-    "message": "英語"
+    "message": "anglais"
   },
   "supported_languages_ES": {
     "description": "Name of language",
-    "message": "スペイン語"
+    "message": "espagnol"
   },
   "supported_languages_ET": {
     "description": "Name of language",
-    "message": "エストニア語"
+    "message": "estonien"
   },
   "supported_languages_FI": {
     "description": "Name of language",
-    "message": "フィンランド語"
+    "message": "finnois"
   },
   "supported_languages_FR": {
     "description": "Name of language",
-    "message": "フランス語"
+    "message": "français"
   },
   "supported_languages_HU": {
     "description": "Name of language",
-    "message": "ハンガリー語"
+    "message": "hongrois"
   },
   "supported_languages_ID": {
     "description": "Name of language",
-    "message": "インドネシア語"
+    "message": "indonésien"
   },
   "supported_languages_IT": {
     "description": "Name of language",
-    "message": "イタリア語"
+    "message": "italien"
   },
   "supported_languages_JA": {
     "description": "Name of language",
-    "message": "日本語"
+    "message": "japonais"
   },
   "supported_languages_LT": {
     "description": "Name of language",
-    "message": "リトアニア語"
+    "message": "lituanien"
   },
   "supported_languages_LV": {
     "description": "Name of language",
-    "message": "ラトビア語"
+    "message": "letton"
   },
   "supported_languages_NL": {
     "description": "Name of language",
-    "message": "オランダ語"
+    "message": "néerlandais"
   },
   "supported_languages_PL": {
     "description": "Name of language",
-    "message": "ポーランド語"
+    "message": "polonais"
   },
   "supported_languages_PT": {
     "description": "Name of language",
-    "message": "ポルトガル語"
+    "message": "portugais"
   },
   "supported_languages_RO": {
     "description": "Name of language",
-    "message": "ルーマニア語"
+    "message": "roumain"
   },
   "supported_languages_RU": {
     "description": "Name of language",
-    "message": "ロシア語"
+    "message": "russe"
   },
   "supported_languages_SK": {
     "description": "Name of language",
-    "message": "スロバキア語"
+    "message": "slovaque"
   },
   "supported_languages_SL": {
     "description": "Name of language",
-    "message": "スロベニア語"
+    "message": "slovène"
   },
   "supported_languages_SV": {
     "description": "Name of language",
-    "message": "スウェーデン語"
+    "message": "suédois"
   },
   "supported_languages_TR": {
     "description": "Name of language",
-    "message": "トルコ語"
+    "message": "turc"
+  },
+  "supported_languages_UK": {
+    "message": "ukrainien"
   },
   "supported_languages_ZH": {
     "description": "Name of language",
-    "message": "中国語（簡体字）"
+    "message": "chinois (simplifié)"
   },
   "supported_languages_undefined": {
     "description": "The user has not yet selected a target language.",
-    "message": "お選びください"
+    "message": "Sélectionnez une langue"
   }
 }

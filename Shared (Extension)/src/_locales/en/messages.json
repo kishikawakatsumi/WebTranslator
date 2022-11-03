@@ -31,7 +31,7 @@
     "message": "Log out"
   },
   "menu_feedback_label": {
-    "description": "Logout Label in the Menu",
+    "description": "The link to our feedback survey.",
     "message": "Share feedback"
   },
   "login_error_validation_error_message": {
