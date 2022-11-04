@@ -52,8 +52,8 @@
   "error_message_session_expired": {
     "message": "Sorry, your session expired. Please log in again."
   },
-  "login_error_not_pro_message": {
-    "message": "You are not a DeepL Pro user."
+  "warning_message_different_subscription_needed": {
+    "message": "Sorry, your plan doesn’t include access to that feature."
   },
   "ui_target_language_select": {
     "message": "Which language do you want to translate into?"

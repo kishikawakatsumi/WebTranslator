@@ -399,7 +399,9 @@ class App {
         break;
       case LoginErorr.NotPro:
         this.#loginView.setErrorMessage(
-          browser.i18n.getMessage("login_error_not_pro_message")
+          browser.i18n.getMessage(
+            "warning_message_different_subscription_needed"
+          )
         );
         break;
       default:

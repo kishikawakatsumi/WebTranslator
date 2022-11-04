@@ -52,7 +52,7 @@
   "error_message_session_expired": {
     "message": "セッションの有効期間が切れました。もう一度ログインしてください。"
   },
-  "login_error_not_pro_message": {
+  "warning_message_different_subscription_needed": {
     "message": "DeepL Proアカウントではありません。"
   },
   "ui_target_language_select": {
