@@ -1,11 +1,11 @@
 {
-  "appDesc": {
-    "description": "The description of the application, displayed in the web store.",
-    "message": "Translate while you read and write with DeepL Translate, the world’s most accurate translator."
+  "extension_description": {
+    "description": "Description of what the extension does.",
+    "message": "Translate webpages with DeepL Translate, the world’s most accurate translator."
   },
-  "appName": {
-    "description": "The title of the application, displayed in the web store.",
-    "message": "DeepL Translate: Reading & writing translator"
+  "extension_name": {
+    "description": "The display name for the extension.",
+    "message": "Web Translator for DeepL"
   },
   "context_menus_translate_section": {
     "description": "The right click context menu action to trigger an inline translation",
