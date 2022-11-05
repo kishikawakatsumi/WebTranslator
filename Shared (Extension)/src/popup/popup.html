@@ -58,12 +58,13 @@
       <nord-stack align-items="end">
         <nord-dropdown id="settings-menu" size="s" style="height: 0;">
           <nord-button id="settings-button" variant="plain" size="s" slot="toggle">
-            <nord-icon name="navigation-settings" size="s"></nord-icon>
+            <nord-icon name="interface-menu-small" size="s"></nord-icon>
           </nord-button>
           <nord-dropdown-group id="user-display-name" heading="">
-            <nord-dropdown-item id="dropdown-feedback">
-              <nord-icon slot="start" name="interface-chat" size="s"></nord-icon>
-              <span id="dropdown-feedback-text">Share feedback</span>
+            <nord-dropdown-item id="dropdown-settings">
+              <nord-icon slot="start" name="navigation-settings" size="s"></nord-icon>
+              <span id="dropdown-settings-text">Settings</span>
+              <nord-icon slot="end" name="arrow-right-small" size="s"></nord-icon>
             </nord-dropdown-item>
             <nord-dropdown-item id="dropdown-logout" class="disabled">
               <nord-icon slot="start" name="interface-logout" size="s"></nord-icon>

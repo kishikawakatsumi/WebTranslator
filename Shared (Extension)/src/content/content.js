@@ -242,20 +242,27 @@ class App {
           }
         }
 
-        const tooltip = this.#createTooltip({ x, y });
-        tooltip.addEventListener("tooltipClick", (event) => {
-          event.preventDefault();
-          event.stopPropagation();
+        browser.storage.local.get(["settingsShowsIconForReading"], (result) => {
+          const showsIconForReading =
+            result.settingsShowsIconForReading === undefined ||
+            result.settingsShowsIconForReading;
+          if (showsIconForReading) {
+            const tooltip = this.#createTooltip({ x, y });
+            tooltip.addEventListener("tooltipClick", (event) => {
+              event.preventDefault();
+              event.stopPropagation();
 
-          if (selectionText) {
-            browser.runtime.sendMessage({
-              method: "translateSelection",
-              selectionText,
+              if (selectionText) {
+                browser.runtime.sendMessage({
+                  method: "translateSelection",
+                  selectionText,
+                });
+              }
+              tooltip.remove();
+
+              return false;
             });
           }
-          tooltip.remove();
-
-          return false;
         });
       }, 100);
     });

@@ -12,6 +12,7 @@ module.exports = {
     content: "./src/content/content.js",
     content_ui: "./src/content/content_ui.js",
     popup: "./src/popup/popup.js",
+    options: "./src/options/options.js",
   },
   output: {
     filename: "[name].js",
@@ -71,6 +72,11 @@ module.exports = {
       chunks: ["popup"],
       filename: "popup.html",
       template: "./src/popup/popup.html",
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ["options"],
+      filename: "options.html",
+      template: "./src/options/options.html",
     }),
   ],
   optimization: {

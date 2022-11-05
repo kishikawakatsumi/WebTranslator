@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <nord-header>
+    <nord-stack direction="horizontal" gap="m" align-items="center">
+      <nord-icon size="xl">
+        <svg width="36px" height="36px" viewBox="0 0 366 366" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <rect fill="#FFFFFF" x="-23" y="-23" width="412" height="412" rx="92"></rect>
+            <g>
+              <path
+                d="M195,6.92820323 L329.482649,84.5717968 C336.908275,88.8589838 341.482649,96.7820323 341.482649,105.356406 L341.482649,260.643594 C341.482649,269.217968 336.908275,277.141016 329.482649,281.428203 L195,359.071797 C187.574374,363.358984 178.425626,363.358984 171,359.071797 L36.5173511,281.428203 C29.0917253,277.141016 24.5173511,269.217968 24.5173511,260.643594 L24.5173511,105.356406 C24.5173511,96.7820323 29.0917253,88.8589838 36.5173511,84.5717968 L171,6.92820323 C178.425626,2.64101615 187.574374,2.64101615 195,6.92820323 Z"
+                fill="#0F2B46"></path>
+              <g transform="translate(73.000000, 73.000000)" fill-rule="nonzero">
+                <path d="M220,0 L137.731134,138 L82,82.2688664 C82.0014576,82.2688664 220,0 220,0 Z" fill="#E2574C">
+                </path>
+                <path d="M0,220 L138,137.731134 L82.2688664,82 C82.2688664,82.0014576 0,220 0,220 Z" fill="#E4E7E7">
+                </path>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </nord-icon>
+      <h1 class="n-typescale-l">Web Translator for DeepL</h1>
+    </nord-stack>
+  </nord-header>
+
+  <main class="n-reset n-stack-horizontal-s">
+    <nord-stack class="stack">
+      <nord-card padding="l">
+        <h1 id="settings-header" slot="header">Settings</h1>
+        <nord-stack>
+          <nord-toggle id="reading-icon-toggle" class="n-padding-s" label="Always show the DeepL icon for reading"
+            hint="The icon shows up when you select text" size="m" reverse checked>
+          </nord-toggle>
+          <nord-nav-group>
+            <nord-nav-item id="nav-feedback" icon="interface-chat">Share feedback</nord-nav-item>
+          </nord-nav-group>
+        </nord-stack>
+      </nord-card>
+    </nord-stack>
+  </main>
+  <style>
+    html,
+    body {
+      block-size: 100%;
+      background: var(--n-color-surface-raised);
+    }
+
+    main {
+      block-size: 100%;
+    }
+
+    .stack {
+      inline-size: 90%;
+      max-inline-size: 480px;
+      margin: var(--n-space-xl) auto;
+    }
+  </style>
+</body>
+
+</html>
