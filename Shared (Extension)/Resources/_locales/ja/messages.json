@@ -34,6 +34,10 @@
     "description": "Logout Label in the Menu",
     "message": "フィードバック"
   },
+  "menu_settings_label": {
+    "message": "設定",
+    "description": "Settings Label for the Menu"
+  },
   "login_error_validation_error_message": {
     "message": "メールアドレスとパスワードを入力してください。"
   },

@@ -25,7 +25,7 @@ import { runColorMode, loadColorScheme } from "../shared/utils";
 class App {
   #settingsMenu;
   #userDisplayName;
-  #dropdownFeedback;
+  #dropdownSettings;
   #dropdownLogout;
 
   #translateView;
@@ -166,15 +166,15 @@ class App {
 
     this.#settingsMenu = document.getElementById("settings-menu");
     this.#userDisplayName = document.getElementById("user-display-name");
-    this.#dropdownFeedback = document.getElementById("dropdown-feedback");
-    this.#dropdownFeedback.addEventListener("click", (event) => {
+
+    this.#dropdownSettings = document.getElementById("dropdown-settings");
+    this.#dropdownSettings.addEventListener("click", (event) => {
       event.preventDefault();
-      browser.tabs.create({
-        url: "https://forms.gle/rGdfU5Kr9QtzPWtv5",
-      });
+      browser.runtime.openOptionsPage();
     });
-    document.getElementById("dropdown-feedback-text").textContent =
-      browser.i18n.getMessage("menu_feedback_label");
+
+    document.getElementById("dropdown-settings-text").textContent =
+      browser.i18n.getMessage("menu_settings_label");
     this.#dropdownLogout = document.getElementById("dropdown-logout");
     this.#dropdownLogout.addEventListener("click", async (event) => {
       event.preventDefault();

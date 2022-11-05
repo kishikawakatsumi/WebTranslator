@@ -34,6 +34,18 @@
     "description": "Logout Label in the Menu",
     "message": "Share feedback"
   },
+  "menu_settings_label": {
+    "description": "Settings Label for the Menu",
+    "message": "Settings"
+  },
+  "settings_reading_enable_icon_everywhere_description": {
+    "description": "Text describing the translate while reading icon functionality",
+    "message": "The icon shows up when you select text"
+  },
+  "settings_reading_enable_icon_everywhere_label": {
+    "description": "Switch button label to toggle select to translate functionality everywhere",
+    "message": "Always show the DeepL icon for reading"
+  },
   "login_error_validation_error_message": {
     "message": "Email and password are required."
   },
