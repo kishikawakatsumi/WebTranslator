@@ -1,0 +1,15 @@
+html,
+body {
+  block-size: 100%;
+  background: var(--n-color-surface-raised);
+}
+
+main {
+  block-size: 100%;
+}
+
+.stack {
+  inline-size: 90%;
+  max-inline-size: 480px;
+  margin: var(--n-space-xl) auto;
+}

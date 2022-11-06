@@ -52,6 +52,30 @@ class App {
 
       return true;
     });
+
+    browser.commands.onCommand.addListener((command) => {
+      if (command === "trigger-translation") {
+        browser.storage.local.get(["settingsReadingShortcut"], (result) => {
+          const settingsReadingShortcut =
+            result.settingsReadingShortcut === undefined ||
+            result.settingsReadingShortcut;
+          if (settingsReadingShortcut) {
+            browser.tabs
+              .executeScript({
+                code: `window.getSelection().toString();`,
+              })
+              .then((selection) => {
+                if (selection) {
+                  const selectionText = selection.toString().trim();
+                  if (selectionText) {
+                    this.#translateSelection(selectionText);
+                  }
+                }
+              });
+          }
+        });
+      }
+    });
   }
 
   #setupContextMenu() {
