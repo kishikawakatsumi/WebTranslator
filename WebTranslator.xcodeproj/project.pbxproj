@@ -236,9 +236,9 @@
 			isa = PBXGroup;
 			children = (
 				147D1B6628DA02F20026A73F /* SafariWebExtensionHandler.swift */,
-				147D1CF928DB9FD70026A73F /* Translator.swift */,
 				147D1C5428DAA49C0026A73F /* CFSolver.swift */,
 				147D1C5728DAA4AD0026A73F /* Authenticator.swift */,
+				147D1CF928DB9FD70026A73F /* Translator.swift */,
 				147D1BD728DA15E20026A73F /* Credentials.swift */,
 				147D1BD128DA15300026A73F /* LoginRequest.swift */,
 				147D1BD428DA153A0026A73F /* LoginResponse.swift */,
