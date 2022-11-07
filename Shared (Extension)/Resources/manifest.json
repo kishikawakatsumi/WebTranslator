@@ -42,6 +42,18 @@
     "page": "options.html"
   },
 
+  "commands": {
+    "trigger-translation": {
+      "description": "__MSG_extension_settings_keyboard_shortcut_perform_translation__",
+      "name": "trigger-translation",
+      "suggested_key": {
+        "default": "Shift+Command+Y",
+        "mac": "Shift+Command+Y",
+        "ios": "Shift+Command+Y"
+      }
+    }
+  },
+
   "permissions": ["menus", "nativeMessaging", "storage"],
 
   "web_accessible_resources": ["assets/*"]

@@ -67,6 +67,13 @@
   "warning_message_different_subscription_needed": {
     "message": "Sorry, your plan doesn’t include access to that feature."
   },
+  "extension_settings_keyboard_shortcut_perform_translation": {
+    "description": "This text will be displayed in the settings screen of the browser (we can only set the label here).",
+    "message": "Translate text"
+  },
+  "settings_reading_shortcut_label": {
+    "message": "Use a shortcut to translate what you read"
+  },
   "ui_target_language_select": {
     "message": "Which language do you want to translate into?"
   },

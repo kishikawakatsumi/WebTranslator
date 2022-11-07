@@ -39,6 +39,9 @@
           <nord-toggle id="reading-icon-toggle" class="n-padding-s" label="Always show the DeepL icon for reading"
             hint="The icon shows up when you select text" size="m" reverse checked>
           </nord-toggle>
+          <nord-toggle id="reading-shortcut-toggle" class="n-padding-s"
+            label="Use a shortcut to translate what you read" hint="⇧Shift + ⌘Command + Y" size="m" reverse checked>
+          </nord-toggle>
           <nord-nav-group>
             <nord-nav-item id="nav-feedback" icon="interface-chat">Share feedback</nord-nav-item>
           </nord-nav-group>
@@ -46,23 +49,6 @@
       </nord-card>
     </nord-stack>
   </main>
-  <style>
-    html,
-    body {
-      block-size: 100%;
-      background: var(--n-color-surface-raised);
-    }
-
-    main {
-      block-size: 100%;
-    }
-
-    .stack {
-      inline-size: 90%;
-      max-inline-size: 480px;
-      margin: var(--n-space-xl) auto;
-    }
-  </style>
 </body>
 
 </html>

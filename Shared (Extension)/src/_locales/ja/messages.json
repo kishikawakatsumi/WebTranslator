@@ -59,6 +59,13 @@
   "warning_message_different_subscription_needed": {
     "message": "DeepL Proアカウントではありません。"
   },
+  "extension_settings_keyboard_shortcut_perform_translation": {
+    "message": "テキストの翻訳",
+    "description": "This text will be displayed in the settings screen of the browser (we can only set the label here)."
+  },
+  "settings_reading_shortcut_label": {
+    "message": "読みながら翻訳するためのショートカットキー"
+  },
   "ui_target_language_select": {
     "message": "どの言語に翻訳しますか？"
   },
