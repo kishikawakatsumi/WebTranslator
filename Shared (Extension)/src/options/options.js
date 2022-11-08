@@ -66,6 +66,17 @@ feedback.addEventListener("click", (event) => {
 });
 
 requestAnimationFrame(() => {
+  // Workaround for Safari 14
+  const toggles = document.querySelectorAll("nord-toggle");
+  if (toggles) {
+    for (const toggle of toggles) {
+      const style = document.createElement("style");
+      style.innerHTML = `.n-toggle::before { width: 18px; height: 18px; }`;
+      toggle.shadowRoot.appendChild(style);
+    }
+  }
+
+  // Workaround for iOS not showing the icon
   const card = document.querySelector("nord-card");
   if (card) {
     const group = card.querySelector("nord-nav-group");
