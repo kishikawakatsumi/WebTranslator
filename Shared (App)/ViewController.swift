@@ -10,7 +10,6 @@ class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHan
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    print("viewDidLoad")
 
     self.webView.navigationDelegate = self
     self.webView.configuration.userContentController.add(self, name: "controller")
