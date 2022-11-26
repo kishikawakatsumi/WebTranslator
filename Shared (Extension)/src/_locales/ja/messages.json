@@ -7,42 +7,13 @@
     "description": "Description of what the extension does.",
     "message": "Translate webpages with DeepL Translate, the world’s most accurate translator."
   },
-  "ui_login_body": {
-    "message": "ページ全体を翻訳するにはDeepL Proにログインしてください。"
+  "context_menus_translate_section": {
+    "description": "The right click context menu action to trigger an inline translation",
+    "message": "選択したテキストを翻訳"
   },
-  "login_link_label": {
-    "description": "Login to DeepL Pro link label",
-    "message": "DeepL Proにログインする"
-  },
-  "ui_email_input_label": {
-    "description": "",
-    "message": "メールアドレス"
-  },
-  "ui_password_input_label": {
-    "description": "",
-    "message": "パスワード"
-  },
-  "login_button_label": {
-    "description": "Login to DeepL Pro button label",
-    "message": "ログイン"
-  },
-  "menu_logout_label": {
-    "description": "Logout Label in the Menu",
-    "message": "ログアウト"
-  },
-  "menu_feedback_label": {
-    "description": "Logout Label in the Menu",
-    "message": "フィードバック"
-  },
-  "menu_settings_label": {
-    "message": "設定",
-    "description": "Settings Label for the Menu"
-  },
-  "login_error_validation_error_message": {
-    "message": "メールアドレスとパスワードを入力してください。"
-  },
-  "login_error_invalid_credentials_message": {
-    "message": "メールアドレスまたはパスワードが正しくありません。"
+  "error_message_generic_error": {
+    "description": "Genric error to tell the user that there is a technical problem",
+    "message": "テキストを翻訳できませんでした。時間をおいてもう一度お試しください。"
   },
   "error_message_internet_connection": {
     "message": "インターネット接続に問題があります。もう一度お試しください。"
@@ -50,61 +21,12 @@
   "error_message_please_login": {
     "message": "テキストを翻訳するには再度ログインしてください。"
   },
-  "login_error_default_message": {
-    "message": "ログインに失敗しました。"
-  },
-  "error_message_session_expired": {
-    "message": "セッションの有効期間が切れました。もう一度ログインしてください。"
-  },
-  "warning_message_different_subscription_needed": {
-    "message": "DeepL Proアカウントではありません。"
-  },
-  "extension_settings_keyboard_shortcut_perform_translation": {
-    "message": "テキストの翻訳",
-    "description": "This text will be displayed in the settings screen of the browser (we can only set the label here)."
-  },
-  "settings_reading_shortcut_label": {
-    "message": "読みながら翻訳するためのショートカットキー"
-  },
-  "ui_target_language_select": {
-    "message": "どの言語に翻訳しますか？"
-  },
-  "full_page_translation_menu_translate_button": {
-    "message": "翻訳"
-  },
-  "full_page_translation_auto_translate_message": {
-    "message": "次の原文言語を自動で翻訳済み："
-  },
-  "full_page_translation_show_original": {
-    "message": "元の言語で表示する"
-  },
-  "full_page_translation_ongoing_translation": {
-    "message": "翻訳しています"
-  },
-  "context_menus_translate_section": {
-    "description": "The right click context menu action to trigger an inline translation",
-    "message": "選択したテキストを翻訳"
-  },
-  "layout_header_label_language_switch": {
-    "description": "Label for the \"Translate to\" inline select to translate popup.",
-    "message": "訳文："
-  },
-  "translate_selection_button_tooltip": {
-    "message": "先にブラウザでテキストを選択してください。"
-  },
-  "ui_inline_translation_copied": {
-    "message": "訳文をコピーしました"
-  },
-  "ui_inline_translation_copy": {
-    "message": "クリップボードにコピー"
-  },
-  "error_message_generic_error": {
-    "description": "Genric error to tell the user that there is a technical problem",
-    "message": "テキストを翻訳できませんでした。時間をおいてもう一度お試しください。"
-  },
   "error_message_quota_has_been_reached": {
     "description": "There is an API error when the user reaches his quota and therefore is not longer able to use the pro endpoint and if does not get logged out he can not longer use the extension. We need to show him a message so the user knows why he logged out",
     "message": "アカウントの利用上限に達しました。"
+  },
+  "error_message_session_expired": {
+    "message": "セッションの有効期間が切れました。もう一度ログインしてください。"
   },
   "error_message_technical_issue": {
     "message": "技術的な問題により、テキストを翻訳できませんでした。問題は既知であり、近いうちに解決策を講じられるよう準備を進めています。"
@@ -112,6 +34,59 @@
   "error_message_too_many_requests": {
     "description": "Info for free users that too many requests are triggered",
     "message": "テキストを翻訳できませんでした。ご利用のネットワークから大量のリクエストが送信されているようです。"
+  },
+  "extension_settings_keyboard_shortcut_perform_translation": {
+    "description": "This text will be displayed in the settings screen of the browser (we can only set the label here).",
+    "message": "テキストの翻訳"
+  },
+  "full_page_translation_menu_translate_button": {
+    "message": "翻訳"
+  },
+  "full_page_translation_auto_translate_message": {
+    "message": "次の原文言語を自動で翻訳済み："
+  },
+  "full_page_translation_ongoing_translation": {
+    "message": "翻訳しています"
+  },
+  "full_page_translation_show_original": {
+    "message": "元の言語で表示する"
+  },
+  "layout_header_label_language_switch": {
+    "description": "Label for the \"Translate to\" inline select to translate popup.",
+    "message": "訳文："
+  },
+  "login_error_default_message": {
+    "message": "ログインに失敗しました。"
+  },
+  "login_link_label": {
+    "description": "Login to DeepL Pro link label",
+    "message": "DeepL Proにログインする"
+  },
+  "menu_login_label": {
+    "description": "Log in to DeepL Pro Link label\n\nPlease check the Jira ticket for more context on this key: https://jira.deepl.dev/browse/TNL-711",
+    "message": "DeepL Proにログイン"
+  },
+  "menu_logout_label": {
+    "description": "Logout Label in the Menu",
+    "message": "ログアウト"
+  },
+  "menu_settings_label": {
+    "message": "設定",
+    "description": "Settings Label for the Menu"
+  },
+  "settings_reading_enable_icon_everywhere_description": {
+    "description": "Text describing the translate while reading icon functionality",
+    "message": "テキスト選択時に表示されるアイコンです。"
+  },
+  "settings_reading_enable_icon_everywhere_label": {
+    "description": "Switch button label to toggle select to translate functionality everywhere",
+    "message": "DeepLのアイコンを常に表示"
+  },
+  "settings_reading_shortcut_label": {
+    "message": "読みながら翻訳するためのショートカットキー"
+  },
+  "settings_title": {
+    "message": "設定"
   },
   "supported_languages_BG": {
     "description": "Name of language",
@@ -213,6 +188,9 @@
     "description": "Name of language",
     "message": "トルコ語"
   },
+  "supported_languages_UK": {
+    "message": "ウクライナ語"
+  },
   "supported_languages_ZH": {
     "description": "Name of language",
     "message": "中国語（簡体字）"
@@ -220,5 +198,39 @@
   "supported_languages_undefined": {
     "description": "The user has not yet selected a target language.",
     "message": "お選びください"
+  },
+  "ui_login_body": {
+    "message": "ページ全体を翻訳するにはDeepL Proにログインしてください。"
+  },
+  "ui_target_language_select": {
+    "message": "どの言語に翻訳しますか？"
+  },
+  "warning_message_different_subscription_needed": {
+    "message": "DeepL Proアカウントではありません。"
+  },
+  "login_error_validation_error_message": {
+    "message": "メールアドレスとパスワードを入力してください。"
+  },
+  "login_error_invalid_credentials_message": {
+    "message": "メールアドレスまたはパスワードが正しくありません。"
+  },
+  "ui_email_input_label": {
+    "description": "",
+    "message": "メールアドレス"
+  },
+  "ui_password_input_label": {
+    "description": "",
+    "message": "パスワード"
+  },
+  "login_button_label": {
+    "description": "Login to DeepL Pro button label",
+    "message": "ログイン"
+  },
+  "menu_feedback_label": {
+    "description": "Logout Label in the Menu",
+    "message": "フィードバック"
+  },
+  "translate_selection_button_tooltip": {
+    "message": "先にブラウザでテキストを選択してください。"
   }
 }

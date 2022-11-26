@@ -7,32 +7,68 @@
     "description": "Description of what the extension does.",
     "message": "Translate webpages with DeepL Translate, the world’s most accurate translator."
   },
-  "ui_login_body": {
-    "message": "Log in to DeepL Pro to translate full pages"
+  "context_menus_translate_section": {
+    "description": "The right click context menu action to trigger an inline translation",
+    "message": "Translate this selection"
+  },
+  "error_message_generic_error": {
+    "description": "Genric error to tell the user that there is a technical problem",
+    "message": "Sorry, we couldn't translate your text. Please try again later."
+  },
+  "error_message_internet_connection": {
+    "message": "Sorry, there’s an issue with the internet connection. Please try again."
+  },
+  "error_message_please_login": {
+    "message": "Please log in again to translate this text. "
+  },
+  "error_message_quota_has_been_reached": {
+    "description": "There is an API error when the user reaches his quota and therefore is not longer able to use the pro endpoint and if does not get logged out he can not longer use the extension. We need to show him a message so the user knows why he logged out",
+    "message": "You've reached your account usage limit."
+  },
+  "error_message_session_expired": {
+    "message": "Sorry, your session expired. Please log in again."
+  },
+  "error_message_technical_issue": {
+    "message": "Sorry, we couldn’t translate your text due to a known technical issue. We are working to fix this issue in the near future."
+  },
+  "error_message_too_many_requests": {
+    "description": "Info for free users that too many requests are triggered",
+    "message": "Sorry, we couldn't translate your text. It appears that your network is sending too many requests to our servers."
+  },
+  "extension_settings_keyboard_shortcut_perform_translation": {
+    "description": "This text will be displayed in the settings screen of the browser (we can only set the label here).",
+    "message": "Translate text"
+  },
+  "full_page_translation_auto_translate_message": {
+    "message": "Translated automatically from:"
+  },
+  "full_page_translation_menu_translate_button": {
+    "message": "Translate"
+  },
+  "full_page_translation_ongoing_translation": {
+    "message": "Translation in progress"
+  },
+  "full_page_translation_show_original": {
+    "message": "Show original"
+  },
+  "layout_header_label_language_switch": {
+    "description": "Label for the \"Translate to\" inline select to translate popup.",
+    "message": "Translate to:"
+  },
+  "login_error_default_message": {
+    "message": "Login failed."
   },
   "login_link_label": {
     "description": "Login to DeepL Pro link label",
     "message": "Log in to DeepL Pro"
   },
-  "ui_email_input_label": {
-    "description": "",
-    "message": "Email"
-  },
-  "ui_password_input_label": {
-    "description": "",
-    "message": "Password"
-  },
-  "login_button_label": {
-    "description": "Login to DeepL Pro button label",
-    "message": "Login"
+  "menu_login_label": {
+    "description": "Log in to DeepL Pro Link label\n\nPlease check the Jira ticket for more context on this key: https://jira.deepl.dev/browse/TNL-711",
+    "message": "Log in to DeepL Pro"
   },
   "menu_logout_label": {
     "description": "Logout Label in the Menu",
     "message": "Log out"
-  },
-  "menu_feedback_label": {
-    "description": "Logout Label in the Menu",
-    "message": "Share feedback"
   },
   "menu_settings_label": {
     "description": "Settings Label for the Menu",
@@ -46,80 +82,11 @@
     "description": "Switch button label to toggle select to translate functionality everywhere",
     "message": "Always show the DeepL icon for reading"
   },
-  "login_error_validation_error_message": {
-    "message": "Email and password are required."
-  },
-  "login_error_invalid_credentials_message": {
-    "message": "Your email or password is incorrect."
-  },
-  "error_message_internet_connection": {
-    "message": "Sorry, there’s an issue with the internet connection. Please try again."
-  },
-  "error_message_please_login": {
-    "message": "Please log in again to translate this text. "
-  },
-  "login_error_default_message": {
-    "message": "Login failed."
-  },
-  "error_message_session_expired": {
-    "message": "Sorry, your session expired. Please log in again."
-  },
-  "warning_message_different_subscription_needed": {
-    "message": "Sorry, your plan doesn’t include access to that feature."
-  },
-  "extension_settings_keyboard_shortcut_perform_translation": {
-    "description": "This text will be displayed in the settings screen of the browser (we can only set the label here).",
-    "message": "Translate text"
-  },
   "settings_reading_shortcut_label": {
     "message": "Use a shortcut to translate what you read"
   },
-  "ui_target_language_select": {
-    "message": "Which language do you want to translate into?"
-  },
-  "full_page_translation_menu_translate_button": {
-    "message": "Translate"
-  },
-  "full_page_translation_auto_translate_message": {
-    "message": "Translated automatically from:"
-  },
-  "full_page_translation_show_original": {
-    "message": "Show original"
-  },
-  "full_page_translation_ongoing_translation": {
-    "message": "Translation in progress"
-  },
-  "context_menus_translate_section": {
-    "description": "The right click context menu action to trigger an inline translation",
-    "message": "Translate Selection"
-  },
-  "layout_header_label_language_switch": {
-    "description": "Label for the \"Translate to\" inline select to translate popup.",
-    "message": "Translate to:"
-  },
-  "translate_selection_button_tooltip": {
-    "message": "Select text in the browser."
-  },
-  "ui_inline_translation_copied": {
-    "message": "Translation copied"
-  },
-  "ui_inline_translation_copy": {
-    "message": "Copy to clipboard"
-  },
-  "error_message_generic_error": {
-    "description": "Genric error to tell the user that there is a technical problem",
-    "message": "Sorry, we couldn't translate your text. Please try again later."
-  },
-  "error_message_quota_has_been_reached": {
-    "description": "There is an API error when the user reaches his quota and therefore is not longer able to use the pro endpoint and if does not get logged out he can not longer use the extension. We need to show him a message so the user knows why he logged out",
-    "message": "You've reached your account usage limit."
-  },
-  "error_message_technical_issue": {
-    "message": "Sorry, we couldn’t translate your text due to a known technical issue. We are working to fix this issue in the near future."
-  },
-  "error_message_too_many_requests": {
-    "description": "Info for free users that too many requests are triggered",
-    "message": "Sorry, we couldn't translate your text. It appears that your network is sending too many requests to our servers."
+  "settings_title": {
+    "message": "Settings"
   },
   "supported_languages_BG": {
     "description": "Name of language",
@@ -231,5 +198,39 @@
   "supported_languages_undefined": {
     "description": "The user has not yet selected a target language.",
     "message": "Please select"
+  },
+  "ui_login_body": {
+    "message": "Log in to DeepL Pro to translate full pages"
+  },
+  "ui_target_language_select": {
+    "message": "Which language do you want to translate into?"
+  },
+  "warning_message_different_subscription_needed": {
+    "message": "Sorry, your plan doesn’t include access to that feature."
+  },
+  "login_error_validation_error_message": {
+    "message": "Email and password are required."
+  },
+  "login_error_invalid_credentials_message": {
+    "message": "Your email or password is incorrect."
+  },
+  "ui_email_input_label": {
+    "description": "",
+    "message": "Email"
+  },
+  "ui_password_input_label": {
+    "description": "",
+    "message": "Password"
+  },
+  "login_button_label": {
+    "description": "Login to DeepL Pro button label",
+    "message": "Login"
+  },
+  "menu_feedback_label": {
+    "description": "Logout Label in the Menu",
+    "message": "Share feedback"
+  },
+  "translate_selection_button_tooltip": {
+    "message": "Select text in the browser."
   }
 }

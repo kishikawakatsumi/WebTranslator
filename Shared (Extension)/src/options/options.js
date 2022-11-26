@@ -12,7 +12,7 @@ import "@nordhealth/components/lib/Toggle";
 import "./options.css";
 
 const settingsHeader = document.getElementById("settings-header");
-settingsHeader.textContent = browser.i18n.getMessage("menu_settings_label");
+settingsHeader.textContent = browser.i18n.getMessage("settings_title");
 
 {
   const toggle = document.getElementById("reading-icon-toggle");
