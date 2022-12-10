@@ -4,7 +4,7 @@ struct ContentView: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .center, spacing: 0) {
-        Text("Enable Web Translator Safri Web Extension")
+        Text("Enable Web Translator Safari Web Extension")
           .font(.title2)
           .bold()
           .padding(.horizontal, 8)
