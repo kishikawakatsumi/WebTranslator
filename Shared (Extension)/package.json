@@ -17,7 +17,7 @@
     "terser-webpack-plugin": "5.3.6",
     "webpack": "5.75.0",
     "webpack-bundle-analyzer": "4.7.0",
-    "webpack-cli": "5.0.0"
+    "webpack-cli": "5.0.1"
   },
   "dependencies": {
     "@nordhealth/components": "2.13.0",
