@@ -20,7 +20,7 @@
     "webpack-cli": "5.0.0"
   },
   "dependencies": {
-    "@nordhealth/components": "2.12.0",
+    "@nordhealth/components": "2.13.0",
     "@nordhealth/css": "2.4.1",
     "@nordhealth/fonts": "2.0.15",
     "@nordhealth/icons": "1.8.0",
