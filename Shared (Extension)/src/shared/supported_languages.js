@@ -105,4 +105,16 @@ export const supportedLanguages = [
     code: "TR",
     name: "Turkish",
   },
+  {
+    code: "UK",
+    name: "Ukrainian",
+  },
+  {
+    code: "NB",
+    name: "Norwegian",
+  },
+  {
+    code: "KO",
+    name: "Korean",
+  },
 ];

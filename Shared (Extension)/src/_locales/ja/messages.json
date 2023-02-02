@@ -144,6 +144,10 @@
     "description": "Name of language",
     "message": "日本語"
   },
+  "supported_languages_KO": {
+    "description": "Name of language",
+    "message": "韓国語"
+  },
   "supported_languages_LT": {
     "description": "Name of language",
     "message": "リトアニア語"
@@ -151,6 +155,10 @@
   "supported_languages_LV": {
     "description": "Name of language",
     "message": "ラトビア語"
+  },
+  "supported_languages_NB": {
+    "description": "Name of language",
+    "message": "ノルウェー語（ブークモール）"
   },
   "supported_languages_NL": {
     "description": "Name of language",
