@@ -1,5 +1,7 @@
 "use strict";
 
+import { supportedLanguages } from "../shared/supported_languages";
+
 export class Translator {
   #id = 1e4 * Math.round(1e4 * Math.random());
 
@@ -43,7 +45,9 @@ export class Translator {
         html: isHtmlEnabled ? "enabled" : undefined,
         splitting: isHtmlEnabled ? undefined : "newlines",
         lang: {
-          target_lang: this.#targetLanguage,
+          target_lang: isValidLanguage(this.#targetLanguage)
+            ? this.#targetLanguage
+            : supportedLanguages[0].code,
           source_lang_user_selected: this.#sourceLanguage || "auto",
         },
         timestamp,
@@ -88,4 +92,10 @@ export class Translator {
       );
     });
   }
+}
+
+function isValidLanguage(language) {
+  return supportedLanguages.some((supportedLanguage) => {
+    return supportedLanguage.code === language;
+  });
 }

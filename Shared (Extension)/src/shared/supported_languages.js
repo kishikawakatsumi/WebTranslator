@@ -2,56 +2,12 @@
 
 export const supportedLanguages = [
   {
-    code: "DE",
-    name: "German",
-  },
-  {
-    code: "EN",
-    name: "English",
-  },
-  {
-    code: "FR",
-    name: "French",
-  },
-  {
-    code: "ES",
-    name: "Spanish",
-  },
-  {
-    code: "IT",
-    name: "Italian",
-  },
-  {
-    code: "ID",
-    name: "Indonesian",
-  },
-  {
-    code: "PL",
-    name: "Polish",
-  },
-  {
-    code: "NL",
-    name: "Dutch",
-  },
-  {
-    code: "PT",
-    name: "Portuguese",
-  },
-  {
-    code: "RU",
-    name: "Russian",
+    code: "BG",
+    name: "Bulgarian",
   },
   {
     code: "ZH",
-    name: "Chinese",
-  },
-  {
-    code: "JA",
-    name: "Japanese",
-  },
-  {
-    code: "BG",
-    name: "Bulgarian",
+    name: "Chinese (simplified)",
   },
   {
     code: "CS",
@@ -62,12 +18,28 @@ export const supportedLanguages = [
     name: "Danish",
   },
   {
+    code: "NL",
+    name: "Dutch",
+  },
+  {
+    code: "EN",
+    name: "English",
+  },
+  {
     code: "ET",
     name: "Estonian",
   },
   {
     code: "FI",
     name: "Finnish",
+  },
+  {
+    code: "FR",
+    name: "French",
+  },
+  {
+    code: "DE",
+    name: "German",
   },
   {
     code: "EL",
@@ -78,6 +50,22 @@ export const supportedLanguages = [
     name: "Hungarian",
   },
   {
+    code: "ID",
+    name: "Indonesian",
+  },
+  {
+    code: "IT",
+    name: "Italian",
+  },
+  {
+    code: "JA",
+    name: "Japanese",
+  },
+  {
+    code: "KO",
+    name: "Korean",
+  },
+  {
     code: "LV",
     name: "Latvian",
   },
@@ -86,8 +74,24 @@ export const supportedLanguages = [
     name: "Lithuanian",
   },
   {
+    code: "NB",
+    name: "Norwegian",
+  },
+  {
+    code: "PL",
+    name: "Polish",
+  },
+  {
+    code: "PT",
+    name: "Portuguese",
+  },
+  {
     code: "RO",
     name: "Romanian",
+  },
+  {
+    code: "RU",
+    name: "Russian",
   },
   {
     code: "SK",
@@ -96,6 +100,10 @@ export const supportedLanguages = [
   {
     code: "SL",
     name: "Slovenian",
+  },
+  {
+    code: "ES",
+    name: "Spanish",
   },
   {
     code: "SV",
@@ -108,13 +116,5 @@ export const supportedLanguages = [
   {
     code: "UK",
     name: "Ukrainian",
-  },
-  {
-    code: "NB",
-    name: "Norwegian",
-  },
-  {
-    code: "KO",
-    name: "Korean",
   },
 ];

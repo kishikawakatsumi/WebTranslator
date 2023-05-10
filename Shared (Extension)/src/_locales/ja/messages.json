@@ -112,6 +112,14 @@
     "description": "Name of language",
     "message": "英語"
   },
+  "supported_languages_EN_UK": {
+    "description": "English (British)",
+    "message": "英語（イギリス）"
+  },
+  "supported_languages_EN_US": {
+    "description": "English (American)",
+    "message": "英語（アメリカ）"
+  },
   "supported_languages_ES": {
     "description": "Name of language",
     "message": "スペイン語"
@@ -170,6 +178,12 @@
   },
   "supported_languages_PT": {
     "description": "Name of language",
+    "message": "ポルトガル語"
+  },
+  "supported_languages_PT_BR": {
+    "message": "ポルトガル語（ブラジル）"
+  },
+  "supported_languages_PT_PT": {
     "message": "ポルトガル語"
   },
   "supported_languages_RO": {
