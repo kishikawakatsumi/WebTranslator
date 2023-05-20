@@ -13,7 +13,7 @@
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "6.7.4",
     "html-webpack-plugin": "5.5.1",
-    "style-loader": "3.3.2",
+    "style-loader": "3.3.3",
     "terser-webpack-plugin": "5.3.9",
     "webpack": "5.83.1",
     "webpack-bundle-analyzer": "4.8.0",
