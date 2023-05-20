@@ -11,7 +11,7 @@
     "@babel/preset-env": "7.21.5",
     "babel-loader": "9.1.2",
     "copy-webpack-plugin": "11.0.0",
-    "css-loader": "6.7.3",
+    "css-loader": "6.7.4",
     "html-webpack-plugin": "5.5.1",
     "style-loader": "3.3.2",
     "terser-webpack-plugin": "5.3.9",
