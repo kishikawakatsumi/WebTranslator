@@ -136,9 +136,6 @@
   --n-index-toast: 900;
   --n-index-modal: 1000;
 }
-:not(:defined) {
-  visibility: hidden;
-}
 * {
   -webkit-tap-highlight-color: transparent;
 }
