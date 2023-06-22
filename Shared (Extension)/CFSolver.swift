@@ -31,7 +31,7 @@ class CFSolver: NSObject, WKNavigationDelegate {
       )
     )
 
-    let timer = Timer(timeInterval: 20, repeats: false, block: { (timer) in
+    let timer = Timer(timeInterval: 300, repeats: false, block: { (timer) in
       completionHandler(.failure(URLError(.timedOut)))
       timer.invalidate()
     })
