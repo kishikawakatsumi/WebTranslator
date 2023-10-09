@@ -28,9 +28,6 @@ settingsHeader.textContent = browser.i18n.getMessage("settings_title");
     });
   });
 
-  browser.runtime.getPlatformInfo().then((info) => {
-    toggle.disabled = info.os !== "ios";
-  });
   browser.storage.local.get(["settingsShowsIconForReading"], (result) => {
     if (result.settingsShowsIconForReading === undefined) {
       toggle.checked = true;
