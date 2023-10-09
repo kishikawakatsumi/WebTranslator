@@ -84,7 +84,7 @@ export class Translator {
         request,
         (response) => {
           if (response && response.result) {
-            resolve(response.result);
+            resolve(JSON.parse(response.result));
           } else {
             resolve(undefined);
           }

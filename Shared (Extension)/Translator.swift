@@ -37,12 +37,8 @@ class Translator {
           return
         }
 
-        do {
-          let result = try JSONSerialization.jsonObject(with: data)
-          completionHandler(.success(result))
-        } catch {
-          completionHandler(.failure(error))
-        }
+        let result = String(decoding: data, as: UTF8.self)
+        completionHandler(.success(result))
       }
       .resume()
   }
@@ -72,12 +68,8 @@ class Translator {
           return
         }
 
-        do {
-          let result = try JSONSerialization.jsonObject(with: data)
-          completionHandler(.success(result))
-        } catch {
-          completionHandler(.failure(error))
-        }
+        let result = String(decoding: data, as: UTF8.self)
+        completionHandler(.success(result))
       }
       .resume()
   }
