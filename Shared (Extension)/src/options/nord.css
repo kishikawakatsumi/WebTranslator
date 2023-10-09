@@ -1626,3 +1626,22 @@ html {
 .n-clinic-icon-s {
   --n-clinic-icon-size: calc(var(--n-size-icon-l) / 1.2);
 }
+.n-counter {
+  display: block;
+  inset-block-start: calc(var(--n-space-s) * -1);
+  inset-inline-end: calc(calc(var(--n-space-s) + var(--n-space-xs)) * -1);
+  pointer-events: none;
+  min-inline-size: 17px;
+  line-height: var(--n-line-height-tight);
+  border-radius: var(--n-border-radius-pill);
+  color: #fff;
+  text-align: center;
+  font-size: 10px;
+  padding: calc(var(--n-space-xs) - 1.5px) var(--n-space-xs);
+  z-index: var(--n-index-mask);
+  font-feature-settings: var(--n-font-features-reduced);
+  font-weight: var(--n-font-weight-heading);
+  box-shadow: 0 0 0 1px var(--n-color-accent-secondary),
+    0 1px 5px rgba(0, 0, 0, 0.4), inset 0 0 5px rgba(255, 255, 255, 0.2);
+  background: var(--n-color-status-notification);
+}

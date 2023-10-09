@@ -75,7 +75,7 @@ export const supportedLanguages = [
   },
   {
     code: "NB",
-    name: "Norwegian",
+    name: "Norwegian (bokmål)",
   },
   {
     code: "PL",
