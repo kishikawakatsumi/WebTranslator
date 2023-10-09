@@ -11,6 +11,8 @@ import "@nordhealth/components/lib/Toggle";
 
 import "./options.css";
 
+import { isTouchDevice } from "./utils";
+
 const settingsHeader = document.getElementById("settings-header");
 settingsHeader.textContent = browser.i18n.getMessage("settings_title");
 
@@ -30,7 +32,7 @@ settingsHeader.textContent = browser.i18n.getMessage("settings_title");
 
   browser.storage.local.get(["settingsShowsIconForReading"], (result) => {
     if (result.settingsShowsIconForReading === undefined) {
-      toggle.checked = true;
+      toggle.checked = isTouchDevice();
     } else {
       toggle.checked = result.settingsShowsIconForReading;
     }

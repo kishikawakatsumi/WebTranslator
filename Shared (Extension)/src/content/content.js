@@ -7,7 +7,6 @@ import {
   hasNoBlockElement,
   once,
   scrollDidStop,
-  isTouchDevice,
 } from "./utils";
 
 class App {
@@ -44,9 +43,7 @@ class App {
     this.#toastError = this.#createToastError();
 
     this.#setupListeners();
-    if (isTouchDevice()) {
-      this.#observeTextSelection();
-    }
+    this.#observeTextSelection();
   }
 
   #restoreState() {
