@@ -7,6 +7,7 @@ import {
   hasNoBlockElement,
   once,
   scrollDidStop,
+  isTouchDevice,
 } from "./utils";
 
 class App {
@@ -241,7 +242,8 @@ class App {
 
         browser.storage.local.get(["settingsShowsIconForReading"], (result) => {
           const showsIconForReading =
-            result.settingsShowsIconForReading === undefined ||
+            (result.settingsShowsIconForReading === undefined &&
+              isTouchDevice()) ||
             result.settingsShowsIconForReading;
           if (showsIconForReading) {
             const tooltip = this.#createTooltip({ x, y });
