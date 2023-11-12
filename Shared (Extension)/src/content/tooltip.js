@@ -13,6 +13,7 @@ const template = `<style>
   }
 
   .container {
+    background: #fff;
     width: 40px;
     height: 40px;
     position: absolute;
@@ -32,17 +33,6 @@ const template = `<style>
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 8px solid #fff;
-  }
-
-  @media (prefers-color-scheme: light) {
-    .container {
-      background: #fff;
-    }
-  }
-  @media (prefers-color-scheme: dark) {
-    .container {
-      background: rgb(24, 27, 32);
-    }
   }
 
   .icon {
