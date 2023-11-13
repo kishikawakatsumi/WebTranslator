@@ -12,7 +12,6 @@ import "@nordhealth/components/lib/Stack";
 import { supportedLanguages } from "../shared/supported_languages";
 import { makeDraggable } from "./draggable";
 import { escapeHTML } from "./utils";
-import { runColorMode, loadColorScheme } from "../shared/utils";
 
 const template = `<style>
   * {

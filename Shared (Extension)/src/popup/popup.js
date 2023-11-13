@@ -156,13 +156,13 @@ class App {
           .classList.add("d-collapse");
       }
     });
-    runColorMode((isDarkMode) => {
-      loadColorScheme(
-        isDarkMode
-          ? browser.runtime.getURL("assets/nord-dark.css")
-          : browser.runtime.getURL("assets/nord.css")
-      );
-    });
+    // runColorMode((isDarkMode) => {
+    //   loadColorScheme(
+    //     isDarkMode
+    //       ? browser.runtime.getURL("assets/nord-dark.css")
+    //       : browser.runtime.getURL("assets/nord.css")
+    //   );
+    // });
 
     this.#settingsMenu = document.getElementById("settings-menu");
     this.#userDisplayName = document.getElementById("user-display-name");
