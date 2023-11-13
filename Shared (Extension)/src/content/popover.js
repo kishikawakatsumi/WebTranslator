@@ -155,14 +155,6 @@ export class Popover extends HTMLElement {
     popover.innerHTML = template;
     this.shadow.append(popover);
 
-    runColorMode((isDarkMode) => {
-      loadColorScheme(
-        isDarkMode
-          ? browser.runtime.getURL("assets/nord-dark.css")
-          : browser.runtime.getURL("assets/nord.css")
-      );
-    });
-
     this.#draggable = this.shadowRoot.getElementById("draggable");
     const dragzone = this.shadowRoot.getElementById("dragzone");
     makeDraggable(this.#draggable, dragzone);
