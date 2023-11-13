@@ -22,6 +22,7 @@ const template = `<style>
     text-size-adjust: 100%;
   }
   .translate-popover {
+    background: #fff;
     width: 550px;
     position: absolute;
     border-radius: 5px;
@@ -32,17 +33,6 @@ const template = `<style>
   @media screen and (max-width: 767px) {
     .translate-popover {
       width: 84vw;
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    .translate-popover {
-      background: #fff;
-    }
-  }
-  @media (prefers-color-scheme: dark) {
-    .translate-popover {
-      background: rgb(24, 27, 32);
     }
   }
 
