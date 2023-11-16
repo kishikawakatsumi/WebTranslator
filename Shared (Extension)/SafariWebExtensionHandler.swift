@@ -111,16 +111,16 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
       }
 
       let authenticator = Authenticator(session: session)
-      authenticator.getUserDisplayName() { (result) in
+      authenticator.getAccount() { (result) in
         switch result {
         case .success(let result):
           sendResponse(
             data: [
               "result": [
-                "displayName": result.displayName ?? "",
-                "email": result.email ?? "",
-                "isStarterPlan": result.isStarterPlan ?? false,
-                "isPro": result.isPro ?? false,
+                "displayName": result.account.name ?? "",
+                "email": result.account.email ?? "",
+                "isStarterPlan": result.account.isAccountEligibleForFreeTrial ?? false,
+                "isPro": result.account.accountStatus == 100,
 
                 "credentials": [
                   "email": credential["email"] ?? "",

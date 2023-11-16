@@ -45,15 +45,15 @@ class Authenticator {
       .resume()
   }
 
-  func getUserDisplayName(completionHandler: @escaping (Result<UserDisplayNameResponse.Result, Error>) -> Void) {
-    var request = URLRequest(url: URL(string: "https://www.deepl.com/PHP/backend/account.php?request_type=jsonrpc&method=getUserDisplayName")!)
+  func getAccount(completionHandler: @escaping (Result<AccountResponse.Result, Error>) -> Void) {
+    var request = URLRequest(url: URL(string: "https://backend-l.deepl.com/PHP/backend/account.php?request_type=jsonrpc&method=refresh")!)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-type")
     request.setValue(session, forHTTPHeaderField: "Cookie")
 
     let encoder = JSONEncoder()
     request.httpBody = try! encoder.encode(
-      UserDisplayNameRequest()
+      AccountRequest()
     )
 
     URLSession(configuration: .ephemeral)
@@ -69,7 +69,7 @@ class Authenticator {
 
         do {
           let decoder = JSONDecoder()
-          let response = try decoder.decode(UserDisplayNameResponse.self, from: data)
+          let response = try decoder.decode(AccountResponse.self, from: data)
 
           completionHandler(.success(response.result))
         } catch {

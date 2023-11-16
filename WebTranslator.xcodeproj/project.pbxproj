@@ -55,10 +55,10 @@
 		147D1C5628DAA49C0026A73F /* CFSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1C5428DAA49C0026A73F /* CFSolver.swift */; };
 		147D1C5828DAA4AD0026A73F /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1C5728DAA4AD0026A73F /* Authenticator.swift */; };
 		147D1C5928DAA4AD0026A73F /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1C5728DAA4AD0026A73F /* Authenticator.swift */; };
-		147D1CF428DB91D20026A73F /* UserDisplayNameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF328DB91D20026A73F /* UserDisplayNameResponse.swift */; };
-		147D1CF528DB91D20026A73F /* UserDisplayNameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF328DB91D20026A73F /* UserDisplayNameResponse.swift */; };
-		147D1CF728DB976B0026A73F /* UserDisplayNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF628DB976B0026A73F /* UserDisplayNameRequest.swift */; };
-		147D1CF828DB976B0026A73F /* UserDisplayNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF628DB976B0026A73F /* UserDisplayNameRequest.swift */; };
+		147D1CF428DB91D20026A73F /* AccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF328DB91D20026A73F /* AccountResponse.swift */; };
+		147D1CF528DB91D20026A73F /* AccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF328DB91D20026A73F /* AccountResponse.swift */; };
+		147D1CF728DB976B0026A73F /* AccountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF628DB976B0026A73F /* AccountRequest.swift */; };
+		147D1CF828DB976B0026A73F /* AccountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF628DB976B0026A73F /* AccountRequest.swift */; };
 		147D1CFA28DB9FD70026A73F /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF928DB9FD70026A73F /* Translator.swift */; };
 		147D1CFB28DB9FD70026A73F /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D1CF928DB9FD70026A73F /* Translator.swift */; };
 		14984F7328EC294500493D97 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 14984F7228EC294500493D97 /* assets */; };
@@ -150,8 +150,8 @@
 		147D1C5728DAA4AD0026A73F /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		147D1CF128DB75D50026A73F /* WebTranslator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebTranslator.entitlements; sourceTree = "<group>"; };
 		147D1CF228DB76140026A73F /* WebTranslator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebTranslator.entitlements; sourceTree = "<group>"; };
-		147D1CF328DB91D20026A73F /* UserDisplayNameResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDisplayNameResponse.swift; sourceTree = "<group>"; };
-		147D1CF628DB976B0026A73F /* UserDisplayNameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDisplayNameRequest.swift; sourceTree = "<group>"; };
+		147D1CF328DB91D20026A73F /* AccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponse.swift; sourceTree = "<group>"; };
+		147D1CF628DB976B0026A73F /* AccountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRequest.swift; sourceTree = "<group>"; };
 		147D1CF928DB9FD70026A73F /* Translator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
 		14984F7228EC294500493D97 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		14984F7928EE662000493D97 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -242,8 +242,8 @@
 				147D1BD728DA15E20026A73F /* Credentials.swift */,
 				147D1BD128DA15300026A73F /* LoginRequest.swift */,
 				147D1BD428DA153A0026A73F /* LoginResponse.swift */,
-				147D1CF628DB976B0026A73F /* UserDisplayNameRequest.swift */,
-				147D1CF328DB91D20026A73F /* UserDisplayNameResponse.swift */,
+				147D1CF628DB976B0026A73F /* AccountRequest.swift */,
+				147D1CF328DB91D20026A73F /* AccountResponse.swift */,
 				147D1B6728DA02F20026A73F /* Resources */,
 			);
 			path = "Shared (Extension)";
@@ -536,12 +536,12 @@
 			files = (
 				147D1C5528DAA49C0026A73F /* CFSolver.swift in Sources */,
 				147D1BAF28DA02F20026A73F /* SafariWebExtensionHandler.swift in Sources */,
-				147D1CF428DB91D20026A73F /* UserDisplayNameResponse.swift in Sources */,
+				147D1CF428DB91D20026A73F /* AccountResponse.swift in Sources */,
 				147D1BD228DA15300026A73F /* LoginRequest.swift in Sources */,
 				147D1CFA28DB9FD70026A73F /* Translator.swift in Sources */,
 				147D1BD828DA15E20026A73F /* Credentials.swift in Sources */,
 				147D1BD528DA153A0026A73F /* LoginResponse.swift in Sources */,
-				147D1CF728DB976B0026A73F /* UserDisplayNameRequest.swift in Sources */,
+				147D1CF728DB976B0026A73F /* AccountRequest.swift in Sources */,
 				147D1C5828DAA4AD0026A73F /* Authenticator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -552,12 +552,12 @@
 			files = (
 				147D1C5628DAA49C0026A73F /* CFSolver.swift in Sources */,
 				147D1BB028DA02F20026A73F /* SafariWebExtensionHandler.swift in Sources */,
-				147D1CF528DB91D20026A73F /* UserDisplayNameResponse.swift in Sources */,
+				147D1CF528DB91D20026A73F /* AccountResponse.swift in Sources */,
 				147D1BD328DA15300026A73F /* LoginRequest.swift in Sources */,
 				147D1CFB28DB9FD70026A73F /* Translator.swift in Sources */,
 				147D1BD928DA15E20026A73F /* Credentials.swift in Sources */,
 				147D1BD628DA153A0026A73F /* LoginResponse.swift in Sources */,
-				147D1CF828DB976B0026A73F /* UserDisplayNameRequest.swift in Sources */,
+				147D1CF828DB976B0026A73F /* AccountRequest.swift in Sources */,
 				147D1C5928DAA4AD0026A73F /* Authenticator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
