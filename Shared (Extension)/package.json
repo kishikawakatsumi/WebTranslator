@@ -7,8 +7,8 @@
   "author": "kishikawa katsumi",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "7.23.3",
-    "@babel/preset-env": "7.23.3",
+    "@babel/core": "7.23.5",
+    "@babel/preset-env": "7.23.5",
     "babel-loader": "9.1.3",
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "6.8.1",
