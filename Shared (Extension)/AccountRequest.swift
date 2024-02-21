@@ -2,10 +2,11 @@ import Foundation
 
 struct AccountRequest: Codable {
   var jsonrpc = "2.0"
-  var method = "refresh"
+  var method = "getClientState"
   var params = Params()
 
   struct Params: Codable {
-    var types = ["account"]
+    var v = "20180814"
+    var clientVars = [String: String]()
   }
 }
