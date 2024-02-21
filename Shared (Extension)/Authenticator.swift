@@ -46,7 +46,7 @@ class Authenticator {
   }
 
   func getAccount(completionHandler: @escaping (Result<AccountResponse.Result, Error>) -> Void) {
-    var request = URLRequest(url: URL(string: "https://backend-l.deepl.com/PHP/backend/account.php?request_type=jsonrpc&method=refresh")!)
+    var request = URLRequest(url: URL(string: "https://w.deepl.com/web?request_type=jsonrpc&il=ja&method=getClientState")!)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-type")
     request.setValue(session, forHTTPHeaderField: "Cookie")

@@ -4,16 +4,14 @@ struct AccountResponse: Codable {
   var result: Result
 
   struct Result: Codable {
-    var account: Account
+    var featureSet: FeatureSet
   }
 
-  struct Account: Codable {
-    var id: String?
-    var email: String?
-    var token: String?
-    var name: String?
-    var accountStatus: Int?
-    var isAccountEligibleForFreeTrial: Bool?
-    var timeout: Int?
+  struct FeatureSet: Codable {
+    var translator: Translator?
+  }
+
+  struct Translator: Codable {
+    var service: String?
   }
 }

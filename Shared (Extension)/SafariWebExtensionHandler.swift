@@ -117,11 +117,9 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
           sendResponse(
             data: [
               "result": [
-                "displayName": result.account.name ?? "",
-                "email": result.account.email ?? "",
-                "isStarterPlan": result.account.isAccountEligibleForFreeTrial ?? false,
-                "isPro": result.account.accountStatus == 100,
-
+                "displayName": "",
+                "email": credential["email"] ?? "",
+                "isPro": result.featureSet.translator?.service == "pro",
                 "credentials": [
                   "email": credential["email"] ?? "",
                   "password": credential["password"] ?? "",
