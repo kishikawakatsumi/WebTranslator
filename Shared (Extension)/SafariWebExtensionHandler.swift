@@ -119,7 +119,8 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
               "result": [
                 "displayName": "",
                 "email": credential["email"] ?? "",
-                "isPro": result.featureSet.translator?.service == "pro",
+                "isPro": result.featureSet?.translator?.service == "pro",
+                "isLoggedIn": result.loginState != nil,
                 "credentials": [
                   "email": credential["email"] ?? "",
                   "password": credential["password"] ?? "",

@@ -4,7 +4,8 @@ struct AccountResponse: Codable {
   var result: Result
 
   struct Result: Codable {
-    var featureSet: FeatureSet
+    var featureSet: FeatureSet?
+    var loginState: LoginState?
   }
 
   struct FeatureSet: Codable {
@@ -13,5 +14,11 @@ struct AccountResponse: Codable {
 
   struct Translator: Codable {
     var service: String?
+  }
+
+  struct LoginState: Codable {
+    var accountId: String?
+    var ssoIdentityProviderName: String?
+    var ssoIdentityProviderId: String?
   }
 }

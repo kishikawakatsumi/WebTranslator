@@ -355,7 +355,7 @@ class App {
     }
 
     // Session expired
-    if (response.result.isPro === undefined) {
+    if (!response.result.isLoggedIn) {
       if (response.result.credentials) {
         this.#loginView.setCredentials(response.result.credentials);
       }
