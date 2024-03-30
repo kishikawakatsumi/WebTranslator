@@ -54,6 +54,19 @@ module.exports = {
         { from: "./src/images/*.*", to: "images/[name][ext]" },
         { from: "./src/manifest.json", to: "[name][ext]" },
         {
+          from: "./src/content/popover.css",
+          to: "assets/[name][ext]",
+        },
+        {
+          from: "./src/content/tooltip.css",
+          to: "assets/[name][ext]",
+        },
+        {
+          from: "@nordhealth/css/lib/nord.min.css",
+          to: "assets/[name][ext]",
+          context: "node_modules",
+        },
+        {
           from: "@nordhealth/themes/lib/nord.css",
           to: "assets/[name][ext]",
           context: "node_modules",

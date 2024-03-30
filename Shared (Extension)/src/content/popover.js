@@ -1,6 +1,5 @@
 "use strict";
 
-import "./nord.css";
 import "@nordhealth/components/lib/Banner";
 import "@nordhealth/components/lib/Button";
 import "@nordhealth/components/lib/Divider";
@@ -13,69 +12,7 @@ import { supportedLanguages } from "../shared/supported_languages";
 import { makeDraggable } from "./draggable";
 import { escapeHTML } from "./utils";
 
-const template = `<style>
-  * {
-    -webkit-tap-highlight-color: transparent;
-  }
-  html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-  .translate-popover {
-    background: #fff;
-    width: 550px;
-    position: absolute;
-    border-radius: 5px;
-    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.16);
-    z-index: 9998;
-  }
-
-  @media screen and (max-width: 767px) {
-    .translate-popover {
-      width: 84vw;
-    }
-  }
-
-  .title-bar {
-    height: 16px;
-    cursor: move;
-  }
-
-  .drag-handle {
-    display: block;
-    position: absolute;
-    height: 7px;
-    width: 70px;
-    top: .5rem;
-    left: calc(50% - 35px);
-  }
-
-  .close-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
-  .translate-content {
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-  }
-
-  #result {
-    max-height: 300px;
-    overflow: auto;
-    line-height: 1.6em;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
-  }
-
-  .d-none,
-  .d-hide {
-    display: none !important;
-  }
-</style>
-
-<nord-stack class="translate-popover" gap="s" id="draggable">
+const template = `<nord-stack class="translate-popover" gap="s" id="draggable">
   <nord-button variant="plain" class="close-button" id="close-button">
     <nord-icon>
       <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
@@ -92,24 +29,24 @@ const template = `<style>
       </svg>
   </div>
 
-  <nord-stack gap="s" class="translate-content" style="padding-top: 0.2rem;">
-    <nord-stack gap="s" style="gap: 4px;">
-      <nord-stack gap="s" style="padding-left: 0.8rem; padding-right: 0.8rem;">
+  <nord-stack gap="s" class="translate-content">
+    <nord-stack gap="s" class="gap-4">
+      <nord-stack gap="s" class="padding-8">
         <nord-stack direction="horizontal" gap="s" align-items="center">
-          <div id="language-select-label" style="font-size: 12px;">Translate to:</div>
+          <div id="language-select-label">Translate to:</div>
           <nord-select id="language-select" size="s" hide-label></nord-select>
         </nord-stack>
 
         <nord-divider></nord-divider>
       </nord-stack>
 
-      <nord-stack id="spinner" align-items="center" style="padding-top: 8px; padding-bottom: 8px;">
+      <nord-stack id="spinner" align-items="center">
         <nord-spinner size="xl"></nord-spinner>
       </nord-stack>
-      <div id="result" class="d-none" style="font-size: 14px;"></div>
+      <div id="result" class="d-none"></div>
     </nord-stack>
 
-    <nord-stack align-items="end" style="padding-top: 0.2rem; padding-left: 0.8rem; padding-right: 0.8rem;">
+    <nord-stack align-items="end" class="padding-2-8">
       <nord-button size="s" id="copy-button">
         <nord-icon>
           <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
@@ -137,6 +74,11 @@ export class Popover extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
+
+    const link = document.createElement("link");
+    link.setAttribute("rel", "stylesheet");
+    link.setAttribute("href", browser.runtime.getURL("assets/popover.css"));
+    this.shadowRoot.appendChild(link);
   }
 
   #render() {
