@@ -1,0 +1,84 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.translate-popover {
+  background: #fff;
+  width: 550px;
+  position: absolute;
+  border-radius: 5px;
+  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.16);
+  z-index: 9998;
+}
+
+@media screen and (max-width: 767px) {
+  .translate-popover {
+    width: 84vw;
+  }
+}
+
+.title-bar {
+  height: 16px;
+  cursor: move;
+}
+
+.drag-handle {
+  display: block;
+  position: absolute;
+  height: 7px;
+  width: 70px;
+  top: 0.5rem;
+  left: calc(50% - 35px);
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.translate-content {
+  padding-top: 0.2rem;
+  padding-bottom: 0.8rem;
+}
+
+.gap-4 {
+  gap: 4px;
+}
+
+.padding-8 {
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+}
+
+.padding-2-8 {
+  padding-top: 0.2rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+}
+
+#language-select-label {
+  font-size: 12px;
+}
+
+#spinner {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#result {
+  max-height: 300px;
+  overflow: auto;
+  line-height: 1.6em;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  font-size: 14px;
+}
+
+.d-none,
+.d-hide {
+  display: none !important;
+}

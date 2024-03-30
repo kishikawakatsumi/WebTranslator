@@ -1,54 +1,8 @@
 "use strict";
 
-import "./nord.css";
 import "@nordhealth/components/lib/Icon";
 
-const template = `<style>
-  * {
-    -webkit-tap-highlight-color: transparent;
-  }
-  html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-
-  .container {
-    background: #fff;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    border-radius: 5px;
-    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.16));
-    transform: translateZ(0);
-    z-index: 9997;
-  }
-  .container:after {
-    position: absolute;
-    top: -7.5px;
-    left: 50%;
-    margin-left: -8px;
-    content:'';
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid #fff;
-  }
-
-  .icon {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-  }
-
-  .d-none,
-  .d-hide {
-    display: none !important;
-  }
-</style>
-
-<div class="container">
+const template = `<div class="container">
   <nord-icon size="l" class="icon">
     <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -68,6 +22,11 @@ export class Tooltip extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
+
+    const link = document.createElement("link");
+    link.setAttribute("rel", "stylesheet");
+    link.setAttribute("href", browser.runtime.getURL("assets/tooltip.css"));
+    this.shadowRoot.appendChild(link);
   }
 
   #render() {

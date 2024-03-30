@@ -29,6 +29,11 @@ class App {
   }
 
   #init() {
+    const link = document.createElement("link");
+    link.setAttribute("rel", "stylesheet");
+    link.setAttribute("href", browser.runtime.getURL("assets/nord.min.css"));
+    document.head.appendChild(link);
+
     this.#restoreState();
 
     const popover = this.#getPopover();
@@ -58,10 +63,8 @@ class App {
       }
       return;
     }
-    document.body.insertAdjacentHTML(
-      "beforeend",
-      `<div id="${id}" style="display: none;"></div>`
-    );
+    document.body.insertAdjacentHTML("beforeend", `<div id="${id}"></div>`);
+    document.getElementById(id).style.display = "none";
   }
 
   #saveState() {
