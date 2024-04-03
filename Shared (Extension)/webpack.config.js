@@ -62,9 +62,8 @@ module.exports = {
           to: "assets/[name][ext]",
         },
         {
-          from: "@nordhealth/css/lib/nord.min.css",
+          from: "./src/content/nord.min.css",
           to: "assets/[name][ext]",
-          context: "node_modules",
         },
         {
           from: "@nordhealth/themes/lib/nord.css",
