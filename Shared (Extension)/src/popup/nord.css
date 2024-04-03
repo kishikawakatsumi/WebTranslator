@@ -157,10 +157,6 @@ html {
   color: var(--n-color-text);
   accent-color: var(--n-color-accent);
 }
-.n-reset,
-.n-reset body {
-  overscroll-behavior-block: none;
-}
 :where(.n-reset a) {
   color: var(--n-color-text-link);
   text-decoration: underline;
