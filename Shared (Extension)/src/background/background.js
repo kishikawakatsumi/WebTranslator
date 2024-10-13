@@ -24,7 +24,18 @@ class App {
           const texts = request.texts;
           translate(texts, request.sourceLanguage, request.targetLanguage)
             .then((result) => {
-              sendResponse({ result });
+              browser.tabs.query(
+                { active: true, currentWindow: true },
+                (tabs) => {
+                  browser.tabs.sendMessage(tabs[0].id, {
+                    method: "responseTranslate",
+                    targetLanguage: request.targetLanguage,
+                    key: request.key,
+                    result,
+                  });
+                }
+              );
+              sendResponse();
             })
             .catch((error) => {
               sendResponse();

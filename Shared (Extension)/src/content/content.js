@@ -16,6 +16,7 @@ class App {
   #targetLanguage = undefined;
   #originalTexts = {};
   #translatedTexts = {};
+  #visibleElements = {};
 
   #toastProgress = undefined;
   #toastError = undefined;
@@ -99,6 +100,64 @@ class App {
 
             sendResponse();
             break;
+          }
+          case "responseTranslate": {
+            const handleError = (error) => {
+              const message =
+                error || browser.i18n.getMessage("error_message_generic_error");
+              this.#abortTranslation(message);
+            };
+
+            const response = request;
+            if (!response || !response.result) {
+              handleError();
+              return;
+            }
+
+            const result = response.result.result;
+            if (result && result.texts) {
+              this.#sourceLanguage = result.lang;
+              this.#targetLanguage = request.targetLanguage;
+
+              const translatedTexts = result.texts;
+
+              const visibleElements = this.#visibleElements[response.key];
+              this.#visibleElements[response.key] = undefined;
+
+              if (translatedTexts.length === visibleElements.length) {
+                for (let i = 0; i < visibleElements.length; i++) {
+                  const element = visibleElements[i].element;
+                  const text = translatedTexts[i].text;
+                  const uid = element.dataset.wtdlUid || this.#uid++;
+
+                  if (element.dataset.wtdlOriginal !== "true") {
+                    this.#originalTexts[uid] = element.innerHTML;
+                  }
+                  this.#translatedTexts[uid] = text;
+                  element.innerHTML = text;
+
+                  element.dataset.wtdlUid = `${uid}`;
+                  element.dataset.wtdlOriginal = "true";
+                  element.dataset.wtdlTranslated = "true";
+                }
+
+                this.#saveState();
+              }
+            } else if (response.result.error) {
+              const message =
+                response.result.error.code === 1045601
+                  ? browser.i18n.getMessage(
+                      "error_message_quota_has_been_reached"
+                    )
+                  : response.result.error.message;
+              handleError(message);
+              return;
+            } else {
+              handleError();
+              return;
+            }
+
+            this.#finishTranslation();
           }
           case "getContentState": {
             if (this.#isProcessing) {
@@ -420,62 +479,17 @@ class App {
     }
     this.#startTranslation();
 
+    const key = Math.random().toString(36).substr(2, 9);
+    this.#visibleElements[key] = visibleElements;
+
     const texts = visibleElements.map((element) => element.text);
-    const response = await browser.runtime.sendMessage({
+    await browser.runtime.sendMessage({
       method: "translate",
       texts,
       sourceLanguage: request.sourceLanguage,
       targetLanguage: request.targetLanguage,
+      key,
     });
-
-    const handleError = (error) => {
-      const message =
-        error || browser.i18n.getMessage("error_message_generic_error");
-      this.#abortTranslation(message);
-    };
-
-    if (!response || !response.result) {
-      handleError();
-      return;
-    }
-    const result = response.result.result;
-    if (result && result.texts) {
-      this.#sourceLanguage = result.lang;
-      this.#targetLanguage = request.targetLanguage;
-
-      const translatedTexts = result.texts;
-      if (translatedTexts.length === visibleElements.length) {
-        for (let i = 0; i < visibleElements.length; i++) {
-          const element = visibleElements[i].element;
-          const text = translatedTexts[i].text;
-          const uid = element.dataset.wtdlUid || this.#uid++;
-
-          if (element.dataset.wtdlOriginal !== "true") {
-            this.#originalTexts[uid] = element.innerHTML;
-          }
-          this.#translatedTexts[uid] = text;
-          element.innerHTML = text;
-
-          element.dataset.wtdlUid = `${uid}`;
-          element.dataset.wtdlOriginal = "true";
-          element.dataset.wtdlTranslated = "true";
-        }
-
-        this.#saveState();
-      }
-    } else if (response.result.error) {
-      const message =
-        response.result.error.code === 1045601
-          ? browser.i18n.getMessage("error_message_quota_has_been_reached")
-          : response.result.error.message;
-      handleError(message);
-      return;
-    } else {
-      handleError();
-      return;
-    }
-
-    this.#finishTranslation();
   }
 
   #startTranslation() {
