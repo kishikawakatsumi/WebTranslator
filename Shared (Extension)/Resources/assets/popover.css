@@ -7,6 +7,7 @@ html {
 }
 .translate-popover {
   background: #fff;
+  color: #000;
   width: 550px;
   position: absolute;
   border-radius: 5px;
