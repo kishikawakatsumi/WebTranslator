@@ -6,8 +6,8 @@ html {
   text-size-adjust: 100%;
 }
 .translate-popover {
+  color: #0c1a3d;
   background: #fff;
-  color: #000;
   width: 550px;
   position: absolute;
   border-radius: 5px;

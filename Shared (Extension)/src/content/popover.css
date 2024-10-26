@@ -6,6 +6,7 @@ html {
   text-size-adjust: 100%;
 }
 .translate-popover {
+  color: #0c1a3d;
   background: #fff;
   width: 550px;
   position: absolute;
