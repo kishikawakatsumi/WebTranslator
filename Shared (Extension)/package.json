@@ -25,7 +25,7 @@
     "@nordhealth/fonts": "3.0.4",
     "@nordhealth/icons": "3.15.0",
     "@nordhealth/themes": "8.1.1",
-    "@nordhealth/tokens": "7.1.2",
+    "@nordhealth/tokens": "8.0.1",
     "tippy.js": "6.3.7"
   }
 }
