@@ -23,7 +23,7 @@
     "@nordhealth/components": "3.22.0",
     "@nordhealth/css": "3.4.0",
     "@nordhealth/fonts": "3.0.4",
-    "@nordhealth/icons": "3.15.0",
+    "@nordhealth/icons": "3.15.1",
     "@nordhealth/themes": "8.1.1",
     "@nordhealth/tokens": "7.1.2",
     "tippy.js": "6.3.7"
