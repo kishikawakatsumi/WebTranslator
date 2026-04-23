@@ -57,7 +57,7 @@ class App {
         } else {
           this.#translateView.showResultView(
             response.result.sourceLanguage,
-            response.result.targetLanguage
+            response.result.targetLanguage,
           );
         }
       } else {
@@ -98,8 +98,7 @@ class App {
         .getElementById("settings-menu")
         .shadowRoot.querySelector(".n-dropdown-content");
       if (dropdownContent) {
-        dropdownContent.style.padding =
-          "var(--n-space-s) 0 calc(var(--n-space-s) + 21px)";
+        dropdownContent.style.padding = "var(--n-space-s) 0";
       }
     };
     placeSettingsButtonTop();
@@ -110,6 +109,36 @@ class App {
     }
     browser.runtime.getPlatformInfo().then((info) => {
       if (info.os === "ios") {
+        const emailInput = document.getElementById("email-input");
+        const passwordInput = document.getElementById("password-input");
+        const loginButton = document.getElementById("login-button");
+        const errorLabel = document.getElementById("login-error-label");
+        const openAppLoginButton = document.getElementById(
+          "open-app-login-button",
+        );
+        if (emailInput) emailInput.classList.add("d-hide");
+        if (passwordInput) passwordInput.classList.add("d-hide");
+        if (loginButton) loginButton.classList.add("d-hide");
+        if (errorLabel) errorLabel.classList.add("d-hide");
+        if (openAppLoginButton) {
+          openAppLoginButton.classList.remove("d-hide");
+          openAppLoginButton.addEventListener("click", () => {
+            browser.tabs.query(
+              { active: true, currentWindow: true },
+              (tabs) => {
+                const tabId = tabs && tabs[0] && tabs[0].id;
+                if (typeof tabId === "number") {
+                  browser.tabs.sendMessage(tabId, {
+                    method: "openUniversalLink",
+                    url: "https://webtranslator.kishikawakatsumi.com/webtranslator/login",
+                  });
+                }
+                window.close();
+              },
+            );
+          });
+        }
+
         if (window.screen.width < 744) {
           this.#isMobile = true;
 
@@ -154,13 +183,46 @@ class App {
         document
           .getElementById("translate-selection-button-container")
           .classList.add("d-collapse");
+
+        if (info.os === "mac") {
+          const emailInput = document.getElementById("email-input");
+          const passwordInput = document.getElementById("password-input");
+          const loginButton = document.getElementById("login-button");
+          const errorLabel = document.getElementById("login-error-label");
+          const openAppLoginButton = document.getElementById(
+            "open-app-login-button",
+          );
+          if (emailInput) emailInput.classList.add("d-hide");
+          if (passwordInput) passwordInput.classList.add("d-hide");
+          if (loginButton) loginButton.classList.add("d-hide");
+          if (errorLabel) errorLabel.classList.add("d-hide");
+          if (openAppLoginButton) {
+            openAppLoginButton.classList.remove("d-hide");
+            openAppLoginButton.addEventListener("click", () => {
+              browser.tabs.query(
+                { active: true, currentWindow: true },
+                (tabs) => {
+                  const tabId = tabs && tabs[0] && tabs[0].id;
+                  if (typeof tabId === "number") {
+                    browser.tabs.update(tabId, {
+                      url: "webtranslator://login",
+                    });
+                  } else {
+                    window.location.href = "webtranslator://login";
+                  }
+                  window.close();
+                },
+              );
+            });
+          }
+        }
       }
     });
     runColorMode((isDarkMode) => {
       loadColorScheme(
         isDarkMode
           ? browser.runtime.getURL("assets/nord-dark.css")
-          : browser.runtime.getURL("assets/nord.css")
+          : browser.runtime.getURL("assets/nord.css"),
       );
     });
 
@@ -185,6 +247,20 @@ class App {
     document.getElementById("dropdown-logout-text").textContent =
       browser.i18n.getMessage("menu_logout_label");
 
+    const dropdownRefreshSession = document.getElementById(
+      "dropdown-refresh-session",
+    );
+    dropdownRefreshSession.addEventListener("click", async (event) => {
+      event.preventDefault();
+      await browser.runtime.sendNativeMessage("application.id", {
+        method: "refreshSession",
+      });
+      this.#settingsMenu.hide(false);
+      this.run();
+    });
+    document.getElementById("dropdown-refresh-session-text").textContent =
+      browser.i18n.getMessage("menu_refresh_session_label");
+
     this.#translateView = new TranslateView();
     this.#translateView.on("change", this.#onTranslateViewChange.bind(this));
     this.#translateView.on("translate", this.#onTranslate.bind(this));
@@ -192,7 +268,7 @@ class App {
     browser.storage.local.get(["selectedTargetLanguage"], (result) => {
       if (result && result.selectedTargetLanguage) {
         this.#translateView.setSelectedTargetLanguage(
-          result.selectedTargetLanguage
+          result.selectedTargetLanguage,
         );
       }
     });
@@ -202,13 +278,13 @@ class App {
 
     this.#loginSpinner = document.getElementById("login-spinner");
     this.#translateSelectionDivider = document.getElementById(
-      "translate-selection-button-divider"
+      "translate-selection-button-divider",
     );
 
     this.#translateSelectionButton = new TranslateSelectionButton();
     this.#translateSelectionButton.on(
       "click",
-      this.#onTranslateSelection.bind(this)
+      this.#onTranslateSelection.bind(this),
     );
     browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       browser.tabs
@@ -217,7 +293,7 @@ class App {
         })
         .then((response) => {
           this.#setTranslateSelectionButtonEnabled(
-            response && response.result && response.result.trim()
+            response && response.result && response.result.trim(),
           );
         });
     });
@@ -254,7 +330,7 @@ class App {
           this.#translateView.setLoading(false);
           this.#translateView.showResultView(
             request.result.sourceLanguage,
-            request.result.targetLanguage
+            request.result.targetLanguage,
           );
           sendResponse();
           break;
@@ -265,6 +341,14 @@ class App {
         default:
           sendResponse();
           break;
+      }
+    });
+
+    // Re-check login state when Safari brings the popover back to the
+    // foreground (e.g. after the user returned from the host app).
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        this.run();
       }
     });
   }
@@ -284,7 +368,7 @@ class App {
             method: "getContentState",
           });
           resolve(response);
-        }
+        },
       );
     });
   }
@@ -292,27 +376,14 @@ class App {
   #login(email, password) {
     browser.runtime.sendNativeMessage(
       "application.id",
-      { method: "cf_clearance" },
+      { method: "login", email, password, cookies: "" },
       (response) => {
-        if (response && response.result) {
-          const cookies = response.result;
-
-          const request = { method: "login", email, password, cookies };
-          browser.runtime.sendNativeMessage(
-            "application.id",
-            request,
-            (response) => {
-              if (!response || !response.result) {
-                this.#handleLoginError(LoginErorr.InvalidCredentials);
-              } else {
-                this.#getUserDisplayName();
-              }
-            }
-          );
+        if (!response || !response.result) {
+          this.#handleLoginError(LoginErorr.InvalidCredentials);
         } else {
-          this.#handleLoginError(LoginErorr.ConnectionError);
+          this.#getUserDisplayName();
         }
-      }
+      },
     );
   }
 
@@ -340,13 +411,14 @@ class App {
 
         this.#handleLoginSession(response);
         this.#loginView.setLoading(false);
-      }
+      },
     );
   }
 
   #handleLoginSession(response) {
     this.#userDisplayName.setAttribute("heading", "");
     this.#dropdownLogout.classList.add("disabled");
+    this.#updateExpiryDisplay(undefined);
 
     // No stored credentials
     if (!response || !response.result) {
@@ -365,10 +437,12 @@ class App {
 
     if (response.result.isPro) {
       // Pro user
-      if (response.result.email) {
-        this.#userDisplayName.setAttribute("heading", response.result.email);
-        this.#dropdownLogout.classList.remove("disabled");
-      }
+      this.#userDisplayName.setAttribute(
+        "heading",
+        response.result.email || "DeepL Pro",
+      );
+      this.#dropdownLogout.classList.remove("disabled");
+      this.#updateExpiryDisplay(response.result.expiresAt);
       this.#updateViewState(ViewState.TranslateView);
     } else {
       // Free user
@@ -384,33 +458,52 @@ class App {
     switch (error) {
       case LoginErorr.ConnectionError:
         this.#loginView.setErrorMessage(
-          browser.i18n.getMessage("error_message_internet_connection")
+          browser.i18n.getMessage("error_message_internet_connection"),
         );
         break;
       case LoginErorr.InvalidCredentials:
         this.#loginView.setErrorMessage(
-          browser.i18n.getMessage("login_error_invalid_credentials_message")
+          browser.i18n.getMessage("login_error_invalid_credentials_message"),
         );
         break;
       case LoginErorr.SessionExpired:
         this.#loginView.setErrorMessage(
-          browser.i18n.getMessage("error_message_session_expired")
+          browser.i18n.getMessage("error_message_session_expired"),
         );
         break;
       case LoginErorr.NotPro:
         this.#loginView.setErrorMessage(
           browser.i18n.getMessage(
-            "warning_message_different_subscription_needed"
-          )
+            "warning_message_different_subscription_needed",
+          ),
         );
         break;
       default:
         this.#loginView.setErrorMessage(
-          browser.i18n.getMessage("login_error_default_message")
+          browser.i18n.getMessage("login_error_default_message"),
         );
         break;
     }
     this.#loginView.setLoading(false);
+  }
+
+  #updateExpiryDisplay(expiresAt) {
+    const item = document.getElementById("dropdown-expiry");
+    const text = document.getElementById("dropdown-expiry-text");
+    if (!item || !text) return;
+    if (typeof expiresAt !== "number") {
+      item.classList.add("d-hide");
+      return;
+    }
+    const date = new Date(expiresAt);
+    const formatted = date.toLocaleString(undefined, {
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    text.textContent = `Expires ${formatted}`;
+    item.classList.remove("d-hide");
   }
 
   #updateViewState(viewState) {

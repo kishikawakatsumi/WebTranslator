@@ -63,7 +63,7 @@ export class LoginView extends EventTarget {
 
     this.#passwordInput = document.getElementById("password-input");
     this.#passwordInput.label = browser.i18n.getMessage(
-      "ui_password_input_label"
+      "ui_password_input_label",
     );
 
     this.#errorLabel = document.getElementById("login-error-label");
@@ -75,6 +75,13 @@ export class LoginView extends EventTarget {
     this.#loginButton.addEventListener("click", (event) => {
       this.#onLoginButtonClick(event);
     });
+
+    const openAppLoginButton = document.getElementById("open-app-login-button");
+    if (openAppLoginButton) {
+      openAppLoginButton.textContent = browser.i18n.getMessage(
+        "login_open_app_button_label",
+      );
+    }
 
     this.#emailInput.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
@@ -97,14 +104,14 @@ export class LoginView extends EventTarget {
 
     if (!email || !password) {
       const errorMessage = browser.i18n.getMessage(
-        "login_error_validation_error_message"
+        "login_error_validation_error_message",
       );
       this.setErrorMessage(errorMessage);
       return;
     }
 
     this.dispatchEvent(
-      new CustomEvent("login", { detail: { email, password } })
+      new CustomEvent("login", { detail: { email, password } }),
     );
   }
 }

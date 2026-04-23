@@ -64,6 +64,9 @@ class App {
       return true;
     });
 
+    if (!browser.commands || !browser.commands.onCommand) {
+      return;
+    }
     browser.commands.onCommand.addListener((command) => {
       if (command === "trigger-translation") {
         browser.storage.local.get(["settingsReadingShortcut"], (result) => {
@@ -90,7 +93,7 @@ class App {
   }
 
   #setupContextMenu() {
-    if (browser.menus.create) {
+    if (browser.menus && browser.menus.create) {
       browser.menus.create({
         id: "translateSelection",
         title: browser.i18n.getMessage("context_menus_translate_section"),

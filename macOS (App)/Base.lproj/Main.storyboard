@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21225"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="21225"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="24128"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -45,6 +45,44 @@
                                         <menuItem title="Quit Web Translator" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Edit" id="yGI-uK-qM9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Edit" id="uQs-gB-Onh">
+                                    <items>
+                                        <menuItem title="Undo" keyEquivalent="z" id="ltv-Ln-Cex">
+                                            <connections>
+                                                <action selector="undo:" target="Ady-hI-5gd" id="67A-bj-ctH"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Redo" keyEquivalent="Z" id="OyA-un-rh2">
+                                            <connections>
+                                                <action selector="redo:" target="Ady-hI-5gd" id="ohs-4F-lzX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="QXh-AE-xgF"/>
+                                        <menuItem title="Cut" keyEquivalent="x" id="006-TP-J5h">
+                                            <connections>
+                                                <action selector="cut:" target="Ady-hI-5gd" id="qx1-dS-o4B"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Copy" keyEquivalent="c" id="AAB-hY-eFc">
+                                            <connections>
+                                                <action selector="copy:" target="Ady-hI-5gd" id="ltE-JS-7ta"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Paste" keyEquivalent="v" id="mNs-RJ-13g">
+                                            <connections>
+                                                <action selector="paste:" target="Ady-hI-5gd" id="lWQ-hL-l1D"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Select All" keyEquivalent="a" id="lAZ-tr-TuO">
+                                            <connections>
+                                                <action selector="selectAll:" target="Ady-hI-5gd" id="c6c-F7-I6x"/>
                                             </connections>
                                         </menuItem>
                                     </items>

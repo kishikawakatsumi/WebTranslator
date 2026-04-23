@@ -58,6 +58,14 @@
   "login_error_default_message": {
     "message": "ログインに失敗しました。"
   },
+  "login_open_app_button_label": {
+    "description": "Button that launches the companion app via the webtranslator:// URL scheme so the user can sign in to DeepL there.",
+    "message": "アプリでサインイン"
+  },
+  "menu_refresh_session_label": {
+    "description": "Debug menu item that forces a silent access-token refresh via DeepL's OIDC refresh endpoint.",
+    "message": "セッションを更新"
+  },
   "login_link_label": {
     "description": "Login to DeepL Pro link label",
     "message": "DeepL Proにログインする"

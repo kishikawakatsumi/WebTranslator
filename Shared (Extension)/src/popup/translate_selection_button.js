@@ -26,10 +26,10 @@ export class TranslateSelectionButton extends EventTarget {
 
   #init() {
     this.#translateSelectionButton = document.getElementById(
-      "translate-selection-button"
+      "translate-selection-button",
     );
     this.#translateSelectionButton.textContent = browser.i18n.getMessage(
-      "context_menus_translate_section"
+      "context_menus_translate_section",
     );
     this.#translateSelectionButton.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("click"));

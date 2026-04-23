@@ -18,7 +18,7 @@ html {
 }
 .container:after {
   position: absolute;
-  top: -7.5px;
+  bottom: -7.5px;
   left: 50%;
   margin-left: -8px;
   content: "";
@@ -26,7 +26,7 @@ html {
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid #fff;
+  border-top: 8px solid #fff;
 }
 
 .icon {

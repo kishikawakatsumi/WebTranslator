@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "27AEDK3C9F.com.kishikawakatsumi.WebTranslator",
+          "9NXEJ2L8Q6.com.kishikawakatsumi.WebTranslator"
+        ],
+        "paths": [
+          "/webtranslator/login"
+        ]
+      }
+    ]
+  }
+}

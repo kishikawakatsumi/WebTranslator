@@ -20,5 +20,6 @@ struct AccountResponse: Codable {
     var accountId: String?
     var ssoIdentityProviderName: String?
     var ssoIdentityProviderId: String?
+    var accessTokenExpiresAt: Int?
   }
 }

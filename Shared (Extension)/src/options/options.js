@@ -19,10 +19,10 @@ settingsHeader.textContent = browser.i18n.getMessage("settings_title");
 {
   const toggle = document.getElementById("reading-icon-toggle");
   toggle.label = browser.i18n.getMessage(
-    "settings_reading_enable_icon_everywhere_label"
+    "settings_reading_enable_icon_everywhere_label",
   );
   toggle.hint = browser.i18n.getMessage(
-    "settings_reading_enable_icon_everywhere_description"
+    "settings_reading_enable_icon_everywhere_description",
   );
   toggle.addEventListener("change", () => {
     browser.storage.local.set({
@@ -98,7 +98,7 @@ requestAnimationFrame(() => {
       stroke-linejoin="round"
       stroke-width="14"
     ></path>
-  </svg>`
+  </svg>`,
               );
             }
           }

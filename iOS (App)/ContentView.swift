@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
+  var onSignInTapped: () -> Void
+
   var body: some View {
     ScrollView {
       VStack(alignment: .center, spacing: 0) {
@@ -57,6 +59,29 @@ struct ContentView: View {
           maxWidth: 300
         )
         .padding()
+
+        Button {
+          onSignInTapped()
+        } label: {
+          Text("Sign in to DeepL")
+            .fontWeight(.semibold)
+            .frame(maxWidth: 300)
+        }
+        .buttonStyle(.borderedProminent)
+        .controlSize(.large)
+
+        Color.clear
+          .frame(height: 12)
+
+        Button {
+          activateSafari()
+        } label: {
+          Text("Back to Safari")
+            .fontWeight(.semibold)
+            .frame(maxWidth: 300)
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.large)
       }
       .frame(
         maxWidth: 560
@@ -93,6 +118,6 @@ struct ItemView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView()
+    ContentView(onSignInTapped: {})
   }
 }

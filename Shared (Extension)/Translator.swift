@@ -22,6 +22,9 @@ class Translator {
     if let session = credential["session"] {
       request.setValue(session, forHTTPHeaderField: "Cookie")
     }
+    if let userAgent = credential["userAgent"] {
+      request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+    }
     if let body = payload["body"] as? String {
       request.httpBody = body.data(using: .utf8)
     }
@@ -52,6 +55,9 @@ class Translator {
       for (name, value) in headers {
         request.setValue(value, forHTTPHeaderField: name)
       }
+    }
+    if let userAgent = Credentials().fetch()?["userAgent"] {
+      request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
     }
     if let body = payload["body"] as? String {
       request.httpBody = body.data(using: .utf8)

@@ -10,6 +10,166 @@ import {
   isTouchDevice,
 } from "./utils";
 
+browser.runtime.onMessage.addListener((request) => {
+  if (
+    request &&
+    request.method === "openUniversalLink" &&
+    typeof request.url === "string"
+  ) {
+    try {
+      showUniversalLinkOverlay(request.url);
+    } catch (_) {}
+  }
+});
+
+function showUniversalLinkOverlay(url) {
+  const existing = document.getElementById("wt-ul-overlay");
+  if (existing) existing.remove();
+
+  // 全画面 dim をせず、透明な scrim をアウトサイドタップ検知に使うだけ。
+  // セーフエリアに暗色が届かない違和感を避けるため背景色は透明。
+  const scrim = document.createElement("div");
+  scrim.id = "wt-ul-overlay";
+  scrim.setAttribute(
+    "style",
+    [
+      "position:fixed !important",
+      "inset:0 !important",
+      "margin:0 !important",
+      "padding:24px !important",
+      "background:transparent !important",
+      "z-index:2147483647 !important",
+      "display:flex !important",
+      "align-items:center !important",
+      "justify-content:center !important",
+      "box-sizing:border-box !important",
+    ].join(";")
+  );
+  scrim.addEventListener("click", (event) => {
+    if (event.target === scrim) scrim.remove();
+  });
+
+  const card = document.createElement("div");
+  card.setAttribute(
+    "style",
+    [
+      "all:revert",
+      "position:relative !important",
+      "box-sizing:border-box !important",
+      "max-width:320px !important",
+      "width:100% !important",
+      "margin:0 !important",
+      "padding:28px 20px 20px !important",
+      "background:#ffffff !important",
+      "color:#111827 !important",
+      "border-radius:14px !important",
+      "box-shadow:0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.08) !important",
+      "font-family:system-ui,-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif !important",
+    ].join(";")
+  );
+
+  const closeButton = document.createElement("button");
+  closeButton.setAttribute("aria-label", "Close");
+  closeButton.textContent = "×";
+  closeButton.setAttribute(
+    "style",
+    [
+      "all:revert",
+      "position:absolute !important",
+      "top:6px !important",
+      "right:6px !important",
+      "inline-size:32px !important",
+      "block-size:32px !important",
+      "margin:0 !important",
+      "padding:0 !important",
+      "border:none !important",
+      "background:transparent !important",
+      "color:#6b7280 !important",
+      "font-family:system-ui,-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif !important",
+      "font-size:22px !important",
+      "line-height:1 !important",
+      "border-radius:8px !important",
+      "cursor:pointer !important",
+    ].join(";")
+  );
+  closeButton.addEventListener("click", () => scrim.remove());
+
+  const title = document.createElement("div");
+  title.textContent = "Sign in to DeepL";
+  title.setAttribute(
+    "style",
+    [
+      "all:revert",
+      "margin:0 0 6px !important",
+      "padding:0 !important",
+      "color:#111827 !important",
+      "font-family:system-ui,-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif !important",
+      "font-size:17px !important",
+      "font-weight:600 !important",
+      "line-height:1.3 !important",
+      "text-align:left !important",
+    ].join(";")
+  );
+
+  const description = document.createElement("div");
+  description.textContent =
+    "Open the app to complete sign-in. You'll be returned to Safari when finished.";
+  description.setAttribute(
+    "style",
+    [
+      "all:revert",
+      "margin:0 0 18px !important",
+      "padding:0 !important",
+      "color:#4b5563 !important",
+      "font-family:system-ui,-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif !important",
+      "font-size:13px !important",
+      "font-weight:400 !important",
+      "line-height:1.5 !important",
+      "text-align:left !important",
+    ].join(";")
+  );
+
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.textContent = "Open app to sign in";
+  anchor.setAttribute(
+    "style",
+    [
+      "all:revert",
+      "display:flex !important",
+      "align-items:center !important",
+      "justify-content:center !important",
+      "box-sizing:border-box !important",
+      "width:100% !important",
+      "min-block-size:44px !important",
+      "margin:0 !important",
+      "padding:10px 16px !important",
+      "background:rgb(42, 71, 157) !important",
+      "color:#ffffff !important",
+      "border:1px solid transparent !important",
+      "border-radius:8px !important",
+      "text-decoration:none !important",
+      "text-align:center !important",
+      "font-family:system-ui,-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif !important",
+      "font-size:16px !important",
+      "font-weight:600 !important",
+      "line-height:1.2 !important",
+      "letter-spacing:normal !important",
+      "text-transform:none !important",
+    ].join(";")
+  );
+  anchor.addEventListener("click", () => {
+    setTimeout(() => scrim.remove(), 300);
+  });
+
+  card.appendChild(closeButton);
+  card.appendChild(title);
+  card.appendChild(description);
+  card.appendChild(anchor);
+  scrim.appendChild(card);
+  document.body.appendChild(scrim);
+}
+
 class App {
   #uid = 1;
   #sourceLanguage = undefined;
@@ -292,7 +452,14 @@ class App {
         const selectionRect = textRange.getBoundingClientRect();
 
         const x = selectionRect.right + window.scrollX - 20;
-        const y = selectionRect.bottom + window.scrollY + 40;
+        // Tooltip を選択範囲の「上」に出す(iOS の標準 Copy/Paste メニューは
+        // 選択範囲の上下どちらかに出るため、重なりを避けるために上側に寄せる)。
+        // tooltip 高 40px + 矢印 8px + 余白 ≈ 56px を選択範囲の top より上に置く。
+        // 画面上端に近い場合はクランプしてビューポート内に留める。
+        const tooltipOffset = 56;
+        const aboveY = selectionRect.top + window.scrollY - tooltipOffset;
+        const minY = window.scrollY + 8;
+        const y = Math.max(aboveY, minY);
 
         {
           const selection = window.getSelection();

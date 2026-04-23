@@ -4,5 +4,18 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>AppIdentifierPrefix</key>
+	<string>$(AppIdentifierPrefix)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.kishikawakatsumi.WebTranslator.login</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>webtranslator</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
