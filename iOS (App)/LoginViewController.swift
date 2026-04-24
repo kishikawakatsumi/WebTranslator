@@ -10,7 +10,6 @@ final class LoginViewController: UIViewController, WKNavigationDelegate {
   private var didCaptureSession = false
 
   var onFinish: (() -> Void)?
-  var returnToSafariOnFinish = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -215,15 +214,8 @@ final class LoginViewController: UIViewController, WKNavigationDelegate {
         Credentials().update(item)
         DispatchQueue.main.async {
           self.onFinish?()
-          if self.returnToSafariOnFinish {
-            self.returnToSafari()
-          }
         }
       }
     }
-  }
-
-  private func returnToSafari() {
-    activateSafari()
   }
 }

@@ -1,7 +1,19 @@
 import SwiftUI
 
+private struct SignInButtonWidthKey: PreferenceKey {
+  static var defaultValue: CGFloat = 300
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = nextValue()
+  }
+}
+
 struct ContentView: View {
+  let reloadToken: Int
   var onSignInTapped: () -> Void
+  @State private var sessionInfo: SessionInfo?
+  @State private var signInButtonWidth: CGFloat = 300
+  @State private var isRefreshingSession = false
+  @Environment(\.scenePhase) private var scenePhase
 
   var body: some View {
     ScrollView {
@@ -69,25 +81,112 @@ struct ContentView: View {
         }
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
-
-        Color.clear
-          .frame(height: 12)
-
-        Button {
-          activateSafari()
-        } label: {
-          Text("Back to Safari")
-            .fontWeight(.semibold)
-            .frame(maxWidth: 300)
+        .background(
+          GeometryReader { proxy in
+            Color.clear
+              .preference(
+                key: SignInButtonWidthKey.self,
+                value: proxy.size.width
+              )
+          }
+        )
+        .onPreferenceChange(SignInButtonWidthKey.self) { width in
+          signInButtonWidth = width
         }
-        .buttonStyle(.bordered)
-        .controlSize(.large)
+
+        if let info = sessionInfo {
+          Color.clear
+            .frame(height: 16)
+          SessionInfoCard(
+            info: info,
+            isRefreshing: isRefreshingSession,
+            onRefresh: refreshSessionTapped
+          )
+          .frame(width: signInButtonWidth)
+        }
       }
       .frame(
         maxWidth: 560
       )
       .padding()
     }
+    .onAppear {
+      sessionInfo = loadSessionInfo()
+    }
+    .onChange(of: reloadToken) { _ in
+      sessionInfo = loadSessionInfo()
+    }
+    .onChange(of: scenePhase) { newPhase in
+      if newPhase == .active {
+        sessionInfo = loadSessionInfo()
+      }
+    }
+  }
+
+  private func refreshSessionTapped() {
+    guard !isRefreshingSession else { return }
+    isRefreshingSession = true
+    refreshSession { result in
+      isRefreshingSession = false
+      if case .success = result {
+        sessionInfo = loadSessionInfo()
+      }
+    }
+  }
+}
+
+struct SessionInfoCard: View {
+  let info: SessionInfo
+  let isRefreshing: Bool
+  var onRefresh: () -> Void
+
+  private var expiryLine: String {
+    let formatted = info.accessTokenExpiresAt.formatted(
+      .dateTime
+        .month(.defaultDigits)
+        .day(.defaultDigits)
+        .hour(.twoDigits(amPM: .omitted))
+        .minute(.twoDigits)
+    )
+    return "Session expires \(formatted)"
+  }
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 6) {
+      HStack(spacing: 6) {
+        Image(systemName: "checkmark.seal.fill")
+          .foregroundStyle(.green)
+        Text("Signed in")
+          .fontWeight(.semibold)
+        Spacer()
+        Button(action: onRefresh) {
+          Group {
+            if isRefreshing {
+              ProgressView()
+            } else {
+              Image(systemName: "arrow.clockwise")
+            }
+          }
+          .font(.footnote)
+          .foregroundStyle(.secondary)
+          .frame(width: 18, height: 18)
+        }
+        .buttonStyle(.plain)
+        .disabled(isRefreshing)
+      }
+      Text(info.email)
+        .font(.subheadline)
+        .foregroundStyle(.secondary)
+      Text(expiryLine)
+        .font(.caption)
+        .foregroundStyle(.secondary)
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(14)
+    .background(
+      RoundedRectangle(cornerRadius: 12, style: .continuous)
+        .fill(Color(UIColor.secondarySystemBackground))
+    )
   }
 }
 
@@ -118,6 +217,6 @@ struct ItemView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView(onSignInTapped: {})
+    ContentView(reloadToken: 0, onSignInTapped: {})
   }
 }

@@ -2,14 +2,14 @@ import SwiftUI
 
 @main
 struct Application: App {
-  @State private var pendingLogin: LoginRequest?
+  @State private var isPresentingLogin = false
+  @State private var reloadToken = 0
 
   var body: some Scene {
     WindowGroup {
       ContentView(
-        onSignInTapped: {
-          pendingLogin = LoginRequest(returnToSafari: false)
-        }
+        reloadToken: reloadToken,
+        onSignInTapped: { isPresentingLogin = true }
       )
       .onOpenURL { url in
         handle(url: url)
@@ -19,11 +19,12 @@ struct Application: App {
           handle(url: url)
         }
       }
-      .sheet(item: $pendingLogin) { request in
-        LoginScreen(returnToSafariOnFinish: request.returnToSafari) {
-          pendingLogin = nil
-        }
-        .ignoresSafeArea(edges: .bottom)
+      .sheet(
+        isPresented: $isPresentingLogin,
+        onDismiss: { reloadToken += 1 }
+      ) {
+        LoginScreen { isPresentingLogin = false }
+          .ignoresSafeArea(edges: .bottom)
       }
     }
   }
@@ -35,23 +36,16 @@ struct Application: App {
     else {
       return
     }
-    pendingLogin = LoginRequest(returnToSafari: true)
+    isPresentingLogin = true
   }
 }
 
-private struct LoginRequest: Identifiable {
-  let id = UUID()
-  let returnToSafari: Bool
-}
-
 private struct LoginScreen: UIViewControllerRepresentable {
-  let returnToSafariOnFinish: Bool
   let onFinish: () -> Void
 
   func makeUIViewController(context: Context) -> UIViewController {
     let viewController = LoginViewController()
     viewController.onFinish = onFinish
-    viewController.returnToSafariOnFinish = returnToSafariOnFinish
     let navigationController = UINavigationController(rootViewController: viewController)
     navigationController.navigationBar.prefersLargeTitles = false
     return navigationController
