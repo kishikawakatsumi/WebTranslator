@@ -14,10 +14,14 @@ func loadSessionInfo() -> SessionInfo? {
     return nil
   }
   let storedEmail = credential["email"] ?? ""
-  let email =
-    storedEmail.isEmpty ? (emailFromSession(session) ?? "") : storedEmail
-  guard !email.isEmpty else { return nil }
-  guard let exp = accessTokenExp(from: session) else { return nil }
+  let email = storedEmail.isEmpty ? (emailFromSession(session) ?? "") : storedEmail
+
+  guard !email.isEmpty else {
+    return nil
+  }
+  guard let exp = accessTokenExp(from: session) else {
+    return nil
+  }
   return SessionInfo(
     email: email,
     accessTokenExpiresAt: Date(timeIntervalSince1970: TimeInterval(exp))
@@ -38,7 +42,10 @@ private func emailFromJWTCookie(
   cookieName: String
 ) -> String? {
   let prefix = "\(cookieName)="
-  guard let range = session.range(of: prefix) else { return nil }
+  guard let range = session.range(of: prefix) else {
+    return nil
+  }
+
   let afterPrefix = session[range.upperBound...]
   let end = afterPrefix.firstIndex(of: ";") ?? afterPrefix.endIndex
   let jwt = String(afterPrefix[..<end])
@@ -51,6 +58,7 @@ private func emailFromJWTCookie(
   else {
     return nil
   }
+
   for key in ["email", "preferred_username", "upn", "user_email", "mail"] {
     if let value = dict[key] as? String, value.contains("@") {
       return value
@@ -60,7 +68,10 @@ private func emailFromJWTCookie(
 }
 
 private func accessTokenExp(from session: String) -> Int? {
-  guard let range = session.range(of: "dl_access=") else { return nil }
+  guard let range = session.range(of: "dl_access=") else {
+    return nil
+  }
+
   let afterPrefix = session[range.upperBound...]
   let end = afterPrefix.firstIndex(of: ";") ?? afterPrefix.endIndex
   let jwt = String(afterPrefix[..<end])
@@ -73,6 +84,7 @@ private func accessTokenExp(from session: String) -> Int? {
   else {
     return nil
   }
+
   return (dict["exp"] as? NSNumber)?.intValue
 }
 
@@ -146,7 +158,9 @@ func refreshSession(completion: @escaping (Result<Void, Error>) -> Void) {
       updated["session"] = newSession
       Credentials().update(updated)
 
-      DispatchQueue.main.async { completion(.success(())) }
+      DispatchQueue.main.async {
+        completion(.success(()))
+      }
     }
     .resume()
 }

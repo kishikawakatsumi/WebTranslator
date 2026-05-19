@@ -1,5 +1,7 @@
 import SafariServices
 
+private let safariExtensionMessageKey = "message"
+
 class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
   private var authenticator: Authenticator?
   private var translator: Translator?
@@ -69,12 +71,13 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         sendErrorResponse(context: context)
         return
       }
+
       let authenticator = Authenticator(
         session: session,
         userAgent: credential["userAgent"]
       )
       let before = accessTokenExp(from: session)
-      authenticator.refreshSession { result in
+      authenticator.refreshSession { (result) in
         switch result {
         case .success(let newSession):
           var updated = credential
@@ -180,9 +183,7 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             let expiresAt = accountData.loginState?.accessTokenExpiresAt
 
             var derivedEmail = storedEmail
-            if derivedEmail.isEmpty,
-               let emailFromJWT = emailFromSession(freshSession)
-            {
+            if derivedEmail.isEmpty, let emailFromJWT = emailFromSession(freshSession) {
               derivedEmail = emailFromJWT
               var updated = refreshed
               updated["email"] = emailFromJWT
@@ -278,22 +279,17 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
   }
 }
 
-/// `SFExtensionMessageKey` は macOS 11.0+ / iOS 15.0+ のみで利用可能な
-/// availability 修飾付き定数のため、その値である "message" をリテラルで
-/// 代替することで古い macOS ターゲットの availability エラーを回避する。
-let safariExtensionMessageKey = "message"
-
-func sendResponse(data: [String: Any], context: NSExtensionContext) {
+private func sendResponse(data: [String: Any], context: NSExtensionContext) {
   let item = NSExtensionItem()
   item.userInfo = [safariExtensionMessageKey: data]
   context.completeRequest(returningItems: [item])
 }
 
-func sendErrorResponse(context: NSExtensionContext) {
+private func sendErrorResponse(context: NSExtensionContext) {
   context.completeRequest(returningItems: nil)
 }
 
-func emailFromSession(_ session: String) -> String? {
+private func emailFromSession(_ session: String) -> String? {
   for cookieName in ["dl_id", "dl_access"] {
     if let email = emailFromJWTCookie(session, cookieName: cookieName) {
       return email
@@ -304,7 +300,10 @@ func emailFromSession(_ session: String) -> String? {
 
 private func emailFromJWTCookie(_ session: String, cookieName: String) -> String? {
   let prefix = "\(cookieName)="
-  guard let range = session.range(of: prefix) else { return nil }
+  guard let range = session.range(of: prefix) else {
+    return nil
+  }
+
   let afterPrefix = session[range.upperBound...]
   let end = afterPrefix.firstIndex(of: ";") ?? afterPrefix.endIndex
   let jwt = String(afterPrefix[..<end])
@@ -317,6 +316,7 @@ private func emailFromJWTCookie(_ session: String, cookieName: String) -> String
   else {
     return nil
   }
+
   for key in ["email", "preferred_username", "upn", "user_email", "mail"] {
     if let value = dict[key] as? String, value.contains("@") {
       return value
@@ -325,9 +325,11 @@ private func emailFromJWTCookie(_ session: String, cookieName: String) -> String
   return nil
 }
 
-/// `dl_access` JWT の `exp` (UNIX 秒) を取り出す。取れない場合は nil。
-func accessTokenExp(from session: String) -> Int? {
-  guard let range = session.range(of: "dl_access=") else { return nil }
+private func accessTokenExp(from session: String) -> Int? {
+  guard let range = session.range(of: "dl_access=") else {
+    return nil
+  }
+
   let afterPrefix = session[range.upperBound...]
   let end = afterPrefix.firstIndex(of: ";") ?? afterPrefix.endIndex
   let jwt = String(afterPrefix[..<end])
@@ -340,10 +342,11 @@ func accessTokenExp(from session: String) -> Int? {
   else {
     return nil
   }
+
   return (dict["exp"] as? NSNumber)?.intValue
 }
 
-func ensureFreshSession(
+private func ensureFreshSession(
   credential: [String: String],
   completion: @escaping (Result<[String: String], Error>) -> Void
 ) {
@@ -351,16 +354,18 @@ func ensureFreshSession(
     completion(.failure(URLError(.userAuthenticationRequired)))
     return
   }
+
   let now = Int(Date().timeIntervalSince1970)
   if let exp = accessTokenExp(from: session), exp > now + 30 {
     completion(.success(credential))
     return
   }
+
   let authenticator = Authenticator(
     session: session,
     userAgent: credential["userAgent"]
   )
-  authenticator.refreshSession { result in
+  authenticator.refreshSession { (result) in
     switch result {
     case .success(let newSession):
       var updated = credential
