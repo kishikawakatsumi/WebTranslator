@@ -16,7 +16,7 @@
     "style-loader": "4.0.0",
     "terser-webpack-plugin": "5.6.1",
     "webpack": "5.108.4",
-    "webpack-bundle-analyzer": "5.3.0",
+    "webpack-bundle-analyzer": "5.3.1",
     "webpack-cli": "7.2.1"
   },
   "dependencies": {
