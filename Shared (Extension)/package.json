@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@nordhealth/components": "4.26.2",
-    "@nordhealth/css": "5.2.4",
+    "@nordhealth/css": "5.3.0",
     "@nordhealth/fonts": "3.0.4",
     "@nordhealth/icons": "3.21.0",
     "@nordhealth/themes": "9.0.9",
